@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webChargeテストプロジェクト</title>
+</head>
+<body>
+<h1>amazonテスト</h1>
+<form action="/amazon" method="get">
+    <label>ユーザー名</label>
+    <br>
+    <input type="text" value="" name="user_name">
+    <br>
+
+    <label>パスワード</label>
+    <br>
+    <input type="text" value="" name="password">
+    <br>
+
+    <label>コード</label>
+    <br>
+    <input type="text" value="" name="code0">
+    <br>
+    <input type="text" value="" name="code1">
+    <br>
+    <input type="text" value="" name="code2">
+    <br>
+
+    <input type="submit" value="送信">
+</form>
+
+{% if captcha %}
+    <form action="/amazon" method="get">
+
+        <label>認証画面</label>
+        <br>
+        <img src={{captcha}}>
+        <br>
+        <input type="text" value="" name="captcha">
+        <br>
+        <input type="submit" value="送信">
+
+    </form>
+{% endif %}
+
+<br><hr><br>
+
+<h1>Lineテスト</h1>
+<form action="/line" method="get">
+    <label>ユーザー名</label>
+    <br>
+    <input type="text" value="" name="user_name">
+    <br>
+
+    <label>パスワード</label>
+    <br>
+    <input type="text" value="" name="password">
+    <br>
+
+    <label>コード</label>
+    <br>
+    <input type="text" value="" name="code">
+    <br>
+
+    <input type="submit" value="送信">
+</form>
+
+<br><hr><br>
+
+<h1>GooglePlayテスト</h1>
+<form action="/google_play" method="get">
+    <label>ユーザー名</label>
+    <br>
+    <input type="text" value="" name="user_name">
+    <br>
+
+    <label>パスワード</label>
+    <br>
+    <input type="text" value="" name="password">
+    <br>
+
+    <label>コード</label>
+    <br>
+    <input type="text" value="" name="code">
+    <br>
+
+    <input type="submit" value="送信">
+</form>
+
+
+</body>
+</html>

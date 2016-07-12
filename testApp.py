@@ -14,15 +14,11 @@ app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
 
 
 @app.route('/')
-
-
 def index():
     return render_template('test.html')
 
 
 @app.route('/run_test')
-
-
 def run_test():
     url = request.args.get('url')
     print url
@@ -43,4 +39,4 @@ def clear_session():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True, port=3000)
+    app.run(debug=True, threaded=True, port=3030)

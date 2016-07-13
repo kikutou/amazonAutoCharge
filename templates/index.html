@@ -3,6 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <title>webChargeテストプロジェクト</title>
+
+    <script>
+        function charge_status(){
+            function show_status(){
+                var xmlhttp;
+                if (window.XMLHttpRequest){
+                    xmlhttp = new XMLHttpRequest()
+                }else {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+                }
+                xmlhttp.onreadystatechange = function(){
+//                    alert(xmlhttp.readyState +"_"+ xmlhttp.status);
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 404){
+                            document.getElementById("charge_status").innerHTML = 'チャージ開始'
+                        }else if (xmlhttp.status == 200){
+                            document.getElementById("charge_status").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                };
+                xmlhttp.open("GET", "chargeStatus", true);
+                xmlhttp.send();
+            }
+            window.setInterval(show_status, 5000)
+        }
+    </script>
 </head>
 <body>
 <h1>amazonテスト</h1>
@@ -26,22 +52,23 @@
     <input type="text" value="" name="code2">
     <br>
 
-    <input type="submit" value="送信">
-</form>
+    <!--<input type="submit" value="送信">-->
+
 
 {% if captcha %}
-    <form action="/amazon" method="get">
+    <!--<form action="/amazon" method="get">-->
 
-        <label>認証画面</label>
-        <br>
-        <img src={{captcha}}>
-        <br>
-        <input type="text" value="" name="captcha">
-        <br>
-        <input type="submit" value="送信">
-
-    </form>
+    <label>認証画面</label>
+    <br>
+    <img src={{captcha}}>
+    <br>
+    <input type="text" value="" name="captcha">
+    <br>
+    <!--</form>-->
 {% endif %}
+    <input type="submit" value="送信" onclick="charge_status()">
+    <p id="charge_status"></p>
+</form>
 
 <br><hr><br>
 

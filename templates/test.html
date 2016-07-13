@@ -3,16 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>テキスト</title>
+    <script>
+        function myajax(){
+
+            var xmlhttp;
+            if (window.XMLHttpRequest){
+                xmlhttp = new XMLHttpRequest()
+            }else {
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+            }
+            xmlhttp.onreadystatechange = function(){
+
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+
+                    document.getElementById("mydiv").innerHTML = xmlhttp.responseXML;
+                }
+            };
+            xmlhttp.open("GET", "../test.py", true);
+            xmlhttp.send();
+
+            window.setInterval()
+
+        }
+    </script>
+
+
 </head>
 <body>
-    <form method="get" action="/run_test">
-        <input type="text" name="url">
-        <br>
-        <input type="submit" value="送信">
-    </form>
-
-    <form method="get" action="/clear_session">
-        <input type="submit" value="Clear Session and TxT">
-    </form>
+<div id="mydiv">
+    <p>lsafj;laf</p>
+</div>
+<button type="button" onclick="myajax()">type click</button>
 </body>
 </html>

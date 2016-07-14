@@ -3,69 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <title>webChargeテストプロジェクト</title>
-
+    <!--チャージの状態を表示する-->
     <script>
         function charge_status(){
+            var interval = window.setInterval(show_status, 1000);
             function show_status(){
-                var xmlhttp;
+                var charge_status_xmlhttp;
                 if (window.XMLHttpRequest){
-                    xmlhttp = new XMLHttpRequest()
+                    charge_status_xmlhttp = new XMLHttpRequest()
                 }else {
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+                    charge_status_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
                 }
-                xmlhttp.onreadystatechange = function(){
-//                    alert(xmlhttp.readyState +"_"+ xmlhttp.status);
-                    if (xmlhttp.readyState == 4) {
-                        if (xmlhttp.status == 404){
-                            document.getElementById("charge_status").innerHTML = 'チャージ開始'
-                        }else if (xmlhttp.status == 200){
-                            document.getElementById("charge_status").innerHTML = xmlhttp.responseText;
+                charge_status_xmlhttp.onreadystatechange = function(){
+                    if (charge_status_xmlhttp.readyState == 4) {
+                        if (charge_status_xmlhttp.status == 404){
+                            window.clearInterval(interval)
+                        }else if (charge_status_xmlhttp.status == 200){
+                            if (charge_status_xmlhttp.responseText == "None"){
+                                window.clearInterval(interval)
+                            }else {
+                                document.getElementById("charge_status").innerHTML = charge_status_xmlhttp.responseText;
+                            }
+                        }else {
+                            window.clearInterval(interval)
                         }
                     }
                 };
-                xmlhttp.open("GET", "chargeStatus", true);
-                xmlhttp.send();
+                charge_status_xmlhttp.open("GET", "/checkStatus", true);
+                charge_status_xmlhttp.send();
             }
-            window.setInterval(show_status, 5000)
+
         }
     </script>
+    
+    <script>
+        function change_captcha(){
+            var change_captcha_xmlhttp;
+            if (window.XMLHttpRequest){
+                change_captcha_xmlhttp = new XMLHttpRequest()
+            }else {
+                change_captcha_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+            }
+            change_captcha_xmlhttp.onreadystatechange = function(){
+                if (change_captcha_xmlhttp.readyState == 4 && change_captcha_xmlhttp.status == 200){
+                    document.getElementById("captcha_img").src = change_captcha_xmlhttp.responseText
+                }
+            };
+            var user_name = document.getElementById("user_name").value;
+
+            change_captcha_xmlhttp.open("GET", "/changeCaptcha?user_name="+user_name, true);
+            change_captcha_xmlhttp.send()
+        }
+    </script>
+
 </head>
 <body>
 <h1>amazonテスト</h1>
 <form action="/amazon" method="get">
     <label>ユーザー名</label>
     <br>
-    <input type="text" value="" name="user_name">
+
+{% if user_name %}
+    <input type="text" value={{user_name}} name="user_name" id="user_name">
+{% else %}
+    <input type="text" value="" name="user_name" id="user_name">
+{% endif %}
+
     <br>
 
     <label>パスワード</label>
     <br>
+
+{% if user_name %}
+    <input type="text" value={{password}} name="password">
+{% else %}
     <input type="text" value="" name="password">
+{% endif %}
+
     <br>
 
     <label>コード</label>
     <br>
+
+{% if codes %}
+    <input type="text" value={{codes[0]}} name="code0">
+    <br>
+    <input type="text" value={{codes[1]}} name="code1">
+    <br>
+    <input type="text" value={{codes[2]}} name="code2">
+{% else %}
     <input type="text" value="" name="code0">
     <br>
     <input type="text" value="" name="code1">
     <br>
     <input type="text" value="" name="code2">
+{% endif %}
+
     <br>
-
-    <!--<input type="submit" value="送信">-->
-
 
 {% if captcha %}
-    <!--<form action="/amazon" method="get">-->
-
     <label>認証画面</label>
     <br>
-    <img src={{captcha}}>
+    <img src={{captcha}} id="captcha_img">
     <br>
+    <a onclick="change_captcha()" href="#">ほかの画像に切り替える</a>
+    <br>
+    <p>表示されている文字を入力してください</p>
     <input type="text" value="" name="captcha">
     <br>
-    <!--</form>-->
 {% endif %}
+
     <input type="submit" value="送信" onclick="charge_status()">
     <p id="charge_status"></p>
 </form>

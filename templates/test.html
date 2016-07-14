@@ -4,25 +4,14 @@
     <meta charset="UTF-8">
     <title>テキスト</title>
     <script>
-        function myajax(){
-
-            var xmlhttp;
-            if (window.XMLHttpRequest){
-                xmlhttp = new XMLHttpRequest()
-            }else {
-                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
-            }
-            xmlhttp.onreadystatechange = function(){
-
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-
-                    document.getElementById("mydiv").innerHTML = xmlhttp.responseXML;
-                }
-            };
-            xmlhttp.open("GET", "../test.py", true);
-            xmlhttp.send();
-
-            window.setInterval()
+        var code = 0;
+        function add(){
+            code += 1;
+            id = 'test'+ code;
+            alert(code);
+            var testvalue = document.getElementById("testdiv").innerHTML;
+            var addvalue = "<input type='text' id="+id+">";
+            document.getElementById("testdiv").innerHTML = testvalue + addvalue
 
         }
     </script>
@@ -30,9 +19,11 @@
 
 </head>
 <body>
-<div id="mydiv">
-    <p>lsafj;laf</p>
+<div id="testdiv" style="float: left">
+    <input type="text" id="test0">
 </div>
-<button type="button" onclick="myajax()">type click</button>
+<div style="float: left">
+        <button id="add" onclick="add()">+</button>
+</div>
 </body>
 </html>

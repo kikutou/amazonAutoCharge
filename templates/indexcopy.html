@@ -8,10 +8,10 @@
 
     <!--チャージの状態を表示する-->
     <script>
-        $(function(){
-            var user_name = $("#user_name").value;
-            var password = $("#password").value;
-            var code = $("#code0").value;
+        function charge_status(){
+            var user_name = document.getElementById("user_name").value;
+            var password = document.getElementById("password").value;
+            var code = document.getElementById("code0").value;
 
             if (user_name.length == 0){
                 alert("メールをご入力ください");
@@ -23,9 +23,34 @@
                 alert("コードをご入力ください");
                 return false
             }else {
-                
+                var interval = window.setInterval(show_status, 1000);
+                function show_status(){
+                    var charge_status_xmlhttp;
+                    if (window.XMLHttpRequest){
+                        charge_status_xmlhttp = new XMLHttpRequest()
+                    }else {
+                        charge_status_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+                    }
+                    charge_status_xmlhttp.onreadystatechange = function(){
+                        if (charge_status_xmlhttp.readyState == 4) {
+                            if (charge_status_xmlhttp.status == 404){
+                                window.clearInterval(interval)
+                            }else if (charge_status_xmlhttp.status == 200){
+                                if (charge_status_xmlhttp.responseText == "None"){
+                                    window.clearInterval(interval)
+                                }else {
+                                    document.getElementById("charge_status").innerHTML = charge_status_xmlhttp.responseText;
+                                }
+                            }else {
+                                window.clearInterval(interval)
+                            }
+                        }
+                    };
+                    charge_status_xmlhttp.open("GET", "/checkStatus?user_name="+user_name+"&password="+password, true);
+                    charge_status_xmlhttp.send();
+                }
             }
-        })
+        }
     </script>
     
     <script>

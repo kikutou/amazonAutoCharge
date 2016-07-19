@@ -7,7 +7,7 @@ import urllib
 import codecs
 import os
 import BrowserSaver
-from xvfbwrapper import Xvfb
+# from xvfbwrapper import Xvfb
 
 
 def amazon_login(browser, user_name, password, login_captcha):

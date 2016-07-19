@@ -3,36 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>webChargeテストプロジェクト</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
     <!--チャージの状態を表示する-->
     <script>
         function charge_status(){
-            var interval = window.setInterval(show_status, 1000);
-            function show_status(){
-                var charge_status_xmlhttp;
-                if (window.XMLHttpRequest){
-                    charge_status_xmlhttp = new XMLHttpRequest()
-                }else {
-                    charge_status_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
-                }
-                charge_status_xmlhttp.onreadystatechange = function(){
-                    if (charge_status_xmlhttp.readyState == 4) {
-                        if (charge_status_xmlhttp.status == 404){
-                            window.clearInterval(interval)
-                        }else if (charge_status_xmlhttp.status == 200){
-                            if (charge_status_xmlhttp.responseText == "None"){
-                                window.clearInterval(interval)
-                            }else {
-                                document.getElementById("charge_status").innerHTML = charge_status_xmlhttp.responseText;
-                            }
-                        }else {
-                            window.clearInterval(interval)
-                        }
-                    }
-                };
-                charge_status_xmlhttp.open("GET", "/checkStatus", true);
-                charge_status_xmlhttp.send();
-            }
+            var user_name = document.getElementById("user_name").value;
+            var password = document.getElementById("password").value;
+            var code = document.getElementById("code0").value;
 
+            if (user_name.length == 0){
+                alert("メールをご入力ください");
+                return false
+            }else if (password.length == 0){
+                alert("パスワードをご入力ください");
+                return false
+            }else if (code.length == 0){
+                alert("コードをご入力ください");
+                return false
+            }else {
+                var interval = window.setInterval(show_status, 1000);
+                function show_status(){
+                    var charge_status_xmlhttp;
+                    if (window.XMLHttpRequest){
+                        charge_status_xmlhttp = new XMLHttpRequest()
+                    }else {
+                        charge_status_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+                    }
+                    charge_status_xmlhttp.onreadystatechange = function(){
+                        if (charge_status_xmlhttp.readyState == 4) {
+                            if (charge_status_xmlhttp.status == 404){
+                                window.clearInterval(interval)
+                            }else if (charge_status_xmlhttp.status == 200){
+                                if (charge_status_xmlhttp.responseText == "None"){
+                                    window.clearInterval(interval)
+                                }else {
+                                    document.getElementById("charge_status").innerHTML = charge_status_xmlhttp.responseText;
+                                }
+                            }else {
+                                window.clearInterval(interval)
+                            }
+                        }
+                    };
+                    charge_status_xmlhttp.open("GET", "/checkStatus?user_name="+user_name+"&password="+password, true);
+                    charge_status_xmlhttp.send();
+                }
+            }
         }
     </script>
     
@@ -56,110 +73,124 @@
         }
     </script>
 
+    <script>
+        var code = 0;
+        function add(){
+            code += 1;
+            id = 'code'+ code;
+
+            var codeinput = document.getElementById("codes").innerHTML;
+            var addinput = "<input type='text' name="+ id +" value='' id="+ id +">";
+            document.getElementById("codes").insertAdjacentHTML("beforeEnd", addinput)
+        }
+    </script>
+
 </head>
 <body>
-<h1>amazonテスト</h1>
-<form action="/amazon" method="get">
-    <label>ユーザー名</label>
+    <h1>amazonテスト</h1>
+    <form action="/amazon" method="get">
+    <div style="width: 100%">
+        <label>ユーザー名</label>
+        <br>
+
+    {% if user_name %}
+        <input type="text" value={{user_name}} name="user_name" id="user_name">
+    {% else %}
+        <input type="text" value="" name="user_name" id="user_name">
+    {% endif %}
+
+        <br>
+
+        <label>パスワード</label>
+        <br>
+
+    {% if user_name %}
+        <input type="text" value={{password}} name="password" id="password">
+    {% else %}
+        <input type="text" value="" name="password" id="password">
+    {% endif %}
+
+        <br>
+
+        <label>コード</label>
+        <br>
+
+    <div id="codes" style="float:left;">
+    {% if codes %}
+        <input type="text" id="code0" name="code0" value={{codes[0]}}>
+    {% else %}
+        <input type="text" id="code0" name="code0" value="">
+    {% endif %}
+    </div>
+    <div style="float:left;">
+        <button onclick="add()" type="button">+</button>
+    </div>
     <br>
 
-{% if user_name %}
-    <input type="text" value={{user_name}} name="user_name" id="user_name">
-{% else %}
-    <input type="text" value="" name="user_name" id="user_name">
-{% endif %}
+    {% if captcha %}
+        <label>認証画面</label>
+        <br>
+        <img src={{captcha}} id="captcha_img">
+        <br>
+        <a onclick="change_captcha()" href="#">ほかの画像に切り替える</a>
+        <br>
+        <p>表示されている文字を入力してください</p>
+        <input type="text" value="" name="captcha">
+        <br>
+    {% endif %}
+    </div>
+    <div style="width: 100%">
+        <br>
+        <!--<input type="submit" value="送信" onclick="charge_status(); return false;">-->
+        <input type="submit" value="送信" onclick="return charge_status();">
+        <p id="charge_status"></p>
+    </div>
+    </form>
 
-    <br>
+    <br><hr><br>
 
-    <label>パスワード</label>
-    <br>
+    <h1>Lineテスト</h1>
+    <form action="/line" method="get" onsubmit="validate()">
+        <label>ユーザー名</label>
+        <br>
+        <input type="text" value="" name="user_name">
+        <br>
 
-{% if user_name %}
-    <input type="text" value={{password}} name="password">
-{% else %}
-    <input type="text" value="" name="password">
-{% endif %}
+        <label>パスワード</label>
+        <br>
+        <input type="text" value="" name="password">
+        <br>
 
-    <br>
+        <label>コード</label>
+        <br>
+        <input type="text" value="" name="code">
+        <br>
 
-    <label>コード</label>
-    <br>
+        <input type="submit" value="送信">
+    </form>
 
-{% if codes %}
-    <input type="text" value={{codes[0]}} name="code0">
-    <br>
-    <input type="text" value={{codes[1]}} name="code1">
-    <br>
-    <input type="text" value={{codes[2]}} name="code2">
-{% else %}
-    <input type="text" value="" name="code0">
-    <br>
-    <input type="text" value="" name="code1">
-    <br>
-    <input type="text" value="" name="code2">
-{% endif %}
+    <br><hr><br>
 
-    <br>
+    <h1>GooglePlayテスト</h1>
+    <form action="/google_play" method="get">
+        <label>ユーザー名</label>
+        <br>
+        <input type="text" value="" name="user_name">
+        <br>
 
-{% if captcha %}
-    <label>認証画面</label>
-    <br>
-    <img src={{captcha}} id="captcha_img">
-    <br>
-    <a onclick="change_captcha()" href="#">ほかの画像に切り替える</a>
-    <br>
-    <p>表示されている文字を入力してください</p>
-    <input type="text" value="" name="captcha">
-    <br>
-{% endif %}
+        <label>パスワード</label>
+        <br>
+        <input type="text" value="" name="password">
+        <br>
 
-    <input type="submit" value="送信" onclick="charge_status()">
-    <p id="charge_status"></p>
-</form>
+        <label>コード</label>
+        <br>
+        <input type="text" value="" name="code">
+        <br>
 
-<br><hr><br>
+        <input type="submit" value="送信">
+    </form>
 
-<h1>Lineテスト</h1>
-<form action="/line" method="get">
-    <label>ユーザー名</label>
-    <br>
-    <input type="text" value="" name="user_name">
-    <br>
-
-    <label>パスワード</label>
-    <br>
-    <input type="text" value="" name="password">
-    <br>
-
-    <label>コード</label>
-    <br>
-    <input type="text" value="" name="code">
-    <br>
-
-    <input type="submit" value="送信">
-</form>
-
-<br><hr><br>
-
-<h1>GooglePlayテスト</h1>
-<form action="/google_play" method="get">
-    <label>ユーザー名</label>
-    <br>
-    <input type="text" value="" name="user_name">
-    <br>
-
-    <label>パスワード</label>
-    <br>
-    <input type="text" value="" name="password">
-    <br>
-
-    <label>コード</label>
-    <br>
-    <input type="text" value="" name="code">
-    <br>
-
-    <input type="submit" value="送信">
-</form>
 
 
 </body>

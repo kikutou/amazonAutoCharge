@@ -25,7 +25,15 @@ def amazon():
 
     user_name = request.args.get('user_name')
     password = request.args.get('password')
-    codes = [request.args.get('code0'), request.args.get('code1'), request.args.get('code2')]
+
+    codes = []
+    i = 0
+    while True:
+        if request.args.get('code' + str(i)):
+            codes = codes + [request.args.get('code' + str(i))]
+            i += 1
+        else:
+            break
 
     captcha = request.args.get('captcha')
 
@@ -33,6 +41,8 @@ def amazon():
         result = amazonBrowser.amazon_main(user_name, password, codes, captcha)
     else:
         result = amazonBrowser.amazon_main(user_name, password, codes, False)
+
+    print result
 
     if len(result) == 2 and result[1]['code'] == 0:
 
@@ -47,13 +57,16 @@ def amazon():
             codes=codes
         )
 
-
     else:
-        return render_template('amazon.html', result=result)
+        return render_template('amazon.html', results=result)
 
 
 @app.route('/checkStatus', methods=['get'])
 def status():
+
+    user_name = request.args.get('user_name')
+    password = request.args.get('password')
+
     fileName = 'charge_status'
 
     if os.path.exists(fileName):
@@ -71,5 +84,10 @@ def changeCaptcha():
     return amazonBrowser.change_captcha(user_name)
 
 
+# @app.route('/addCode', methods=['get'])
+# def addCode():
+
+
+
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True, port=4010)
+    app.run(debug=True, threaded=True, port=4060)

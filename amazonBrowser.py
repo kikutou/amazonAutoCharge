@@ -92,7 +92,9 @@ def amazon_captcha_check(browser, password, login_captcha):
         result = login_alert_text.value
         print result
 
-        if result.find(unicode('メールアドレスまたはパスワードが正しくありません。','utf8')) != -1:
+        if result.find(unicode('メールアドレスまたはパスワードが正しくありません。','utf8')) != -1\
+                or result.find(unicode('パスワードの入力','utf8')) != -1\
+                or result.find(unicode('Eメールアドレスまたは携帯電話番号を入力','utf8')) != -1:
 
             html_code = browser.html
 
@@ -450,7 +452,6 @@ def amazon_main(user_name, password, codes, login_captcha):
         for code_string in codes:
 
             serial_number += 1
-            # code_serial = str(serial_number)
 
             create_status_text('チャージ開始...')
 

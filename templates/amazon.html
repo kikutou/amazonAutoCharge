@@ -3,32 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>amazon結果</title>
+
 </head>
 <body>
-<h1>amazon結果</h1>
 
-<h3>コード</h3>
-<!--{{result.code}}-->
-{{result[0].code}}
-<br>
-{% if result[1] %}
-{{result[1].code}}
-{% endif %}
-<br>
-{% if result[2] %}
-{{result[2].code}}
-{% endif %}
+    <h1>amazon結果</h1>
 
+    {% for result in results %}
 
+        {{result.code}}
+        <br>
 
-<h3>メッセージ</h3>
-{{result[0].message}}
-<br>
-{{result[1].message}}
-<br>
-{{result[2].message}}
+    {% else %}
 
+        <p><strong>ERROR: NO RESULT FOUND IN PAGE</strong></p>
 
+    {% endfor %}
+
+    <h1>amazonメセージ</h1>
+    {% for result in results %}
+
+        {{result.message}}
+        <br>
+
+    {% else %}
+
+        <p><strong>ERROR: NO RESULT FOUND IN PAGE</strong></p>
+
+    {% endfor %}
 
 </body>
 </html>

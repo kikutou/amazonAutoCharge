@@ -90,4 +90,4 @@ def changeCaptcha():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True, port=4060)
+    app.run(debug=True, threaded=True, port=4000)

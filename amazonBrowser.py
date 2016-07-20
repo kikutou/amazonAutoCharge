@@ -116,6 +116,8 @@ def amazon_captcha_check(browser, password, login_captcha):
 
     print 'no captcha in login'
 
+    create_status_text('登録成功、チャージへ移動する...')
+
     print 'go to charge page'
 
     # チャージ画面に移動する
@@ -442,7 +444,7 @@ def amazon_main(user_name, password, codes, login_captcha):
 
     elif result[0]['code'] == 7:
 
-        create_status_text('登録成功、チャージ準備中...')
+        create_status_text('チャージ準備中...')
         time.sleep(1)
 
         # clear result

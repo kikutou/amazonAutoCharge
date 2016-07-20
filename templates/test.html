@@ -3,27 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>テキスト</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script>
-        var code = 0;
-        function add(){
-            code += 1;
-            id = 'test'+ code;
-            alert(code);
-            var testvalue = document.getElementById("testdiv").innerHTML;
-            var addvalue = "<input type='text' id="+id+">";
-            document.getElementById("testdiv").innerHTML = testvalue + addvalue
-
+        function clickon(){
+            alert("wwetwtet");
+            var text = $("#text").val();
+            alert("this is "+ text);
+            $("p").html(text)
         }
     </script>
 
 
+
 </head>
 <body>
-<div id="testdiv" style="float: left">
-    <input type="text" id="test0">
-</div>
-<div style="float: left">
-        <button id="add" onclick="add()">+</button>
-</div>
+    <div>
+        <p>1251263274838</p>
+        <form method="get">
+            <input type="text" id="text">
+            <input type="button" id="sub" value="submit" onclick="clickon()">
+        </form>
+    </div>
+
 </body>
 </html>

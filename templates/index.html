@@ -8,10 +8,11 @@
 
     <!--チャージの状態を表示する-->
     <script>
-        $(function(){
-            var user_name = $("#user_name").value;
-            var password = $("#password").value;
-            var code = $("#code0").value;
+        function charge_status(){
+
+            var user_name = $("#user_name").val();
+            var password = $("#password").val();
+            var code = $("#code0").val();
 
             if (user_name.length == 0){
                 alert("メールをご入力ください");
@@ -23,41 +24,56 @@
                 alert("コードをご入力ください");
                 return false
             }else {
-                
+                var interval = window.setInterval(show_status, 1000);
+                function show_status(){
+                    $.ajax({
+                        url: "/checkStatus",
+                        data: {user_name: user_name, password: password},
+                        success: function(result){
+                            if (result != "None"){
+                                $("#charge_status").html(result)
+                            }else {
+                                window.clearInterval(interval)
+                            }
+                        },
+                        timeout: 60000,
+                        error: function(){
+                            window.clearInterval(interval)
+                        }
+                    });
+                }
             }
-        })
+        }
     </script>
     
     <script>
         function change_captcha(){
-            var change_captcha_xmlhttp;
-            if (window.XMLHttpRequest){
-                change_captcha_xmlhttp = new XMLHttpRequest()
-            }else {
-                change_captcha_xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
-            }
-            change_captcha_xmlhttp.onreadystatechange = function(){
-                if (change_captcha_xmlhttp.readyState == 4 && change_captcha_xmlhttp.status == 200){
-                    document.getElementById("captcha_img").src = change_captcha_xmlhttp.responseText
-                }
-            };
-            var user_name = document.getElementById("user_name").value;
 
-            change_captcha_xmlhttp.open("GET", "/changeCaptcha?user_name="+user_name, true);
-            change_captcha_xmlhttp.send()
+            var user_name = $("#user_name").val();
+
+            $.ajax({
+                url: "/changeCaptcha",
+                data: {user_name: user_name},
+                success: function(result){
+                    $("#captcha_img").attr("src", result)
+                },
+                timeout: 30000
+            })
         }
     </script>
 
     <script>
-        var code = 0;
-        function add(){
-            code += 1;
-            id = 'code'+ code;
+        $(function(){
+            var code = 0;
+            $("#add").click(function(){
+                code += 1;
+                var id = 'code'+ code;
 
-            var codeinput = document.getElementById("codes").innerHTML;
-            var addinput = "<input type='text' name="+ id +" value='' id="+ id +">";
-            document.getElementById("codes").insertAdjacentHTML("beforeEnd", addinput)
-        }
+                var codeinput = $("#codes").html();
+                var addinput = "<input type='text' name="+ id +" value='' id="+ id +">";
+                $("#codes").append(addinput)
+            })
+        })
     </script>
 
 </head>
@@ -98,7 +114,7 @@
     {% endif %}
     </div>
     <div style="float:left;">
-        <button onclick="add()" type="button">+</button>
+        <button id="add" type="button">+</button>
     </div>
     <br>
 
@@ -121,52 +137,6 @@
         <p id="charge_status"></p>
     </div>
     </form>
-
-    <br><hr><br>
-
-    <h1>Lineテスト</h1>
-    <form action="/line" method="get" onsubmit="validate()">
-        <label>ユーザー名</label>
-        <br>
-        <input type="text" value="" name="user_name">
-        <br>
-
-        <label>パスワード</label>
-        <br>
-        <input type="text" value="" name="password">
-        <br>
-
-        <label>コード</label>
-        <br>
-        <input type="text" value="" name="code">
-        <br>
-
-        <input type="submit" value="送信">
-    </form>
-
-    <br><hr><br>
-
-    <h1>GooglePlayテスト</h1>
-    <form action="/google_play" method="get">
-        <label>ユーザー名</label>
-        <br>
-        <input type="text" value="" name="user_name">
-        <br>
-
-        <label>パスワード</label>
-        <br>
-        <input type="text" value="" name="password">
-        <br>
-
-        <label>コード</label>
-        <br>
-        <input type="text" value="" name="code">
-        <br>
-
-        <input type="submit" value="送信">
-    </form>
-
-
 
 </body>
 </html>

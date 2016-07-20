@@ -12,7 +12,13 @@
 
             var user_name = $("#user_name").val();
             var password = $("#password").val();
-            var code = $("#code0").val();
+            var code = [];
+            var serial = 0;
+            $("#codes input[type='text']").each(function (){
+                code[serial] = $(this).val();
+                serial += 1;
+            });
+
 
             if (user_name.length == 0){
                 alert("メールをご入力ください");
@@ -20,7 +26,7 @@
             }else if (password.length == 0){
                 alert("パスワードをご入力ください");
                 return false
-            }else if (code.length == 0){
+            }else if (code.indexOf("") != -1){
                 alert("コードをご入力ください");
                 return false
             }else {
@@ -37,7 +43,7 @@
                             }
                         },
                         timeout: 60000,
-                        error: function(){
+                        error: function (){
                             window.clearInterval(interval)
                         }
                     });
@@ -54,7 +60,7 @@
             $.ajax({
                 url: "/changeCaptcha",
                 data: {user_name: user_name},
-                success: function(result){
+                success: function (result){
                     $("#captcha_img").attr("src", result)
                 },
                 timeout: 30000
@@ -64,14 +70,29 @@
 
     <script>
         $(function(){
-            var code = 0;
-            $("#add").click(function(){
+
+            var code = -1;
+
+            $("#codes input[type='text']").each(function (){
+                code += 1
+            });
+
+            $("#add").click(function (){
                 code += 1;
                 var id = 'code'+ code;
 
                 var codeinput = $("#codes").html();
                 var addinput = "<input type='text' name="+ id +" value='' id="+ id +">";
-                $("#codes").append(addinput)
+                $("#codes").append(addinput);
+            });
+
+            $("#remove").click(function (){
+                if (code != 0){
+
+                    $("#code"+code).remove();
+
+                    code -= 1;
+                }
             })
         })
     </script>
@@ -91,7 +112,6 @@
     {% endif %}
 
         <br>
-
         <label>パスワード</label>
         <br>
 
@@ -102,23 +122,38 @@
     {% endif %}
 
         <br>
-
         <label>コード</label>
         <br>
 
     <div id="codes" style="float:left;">
+
     {% if codes %}
-        <input type="text" id="code0" name="code0" value={{codes[0]}}>
+
+        {% set serial = 0 %}
+
+        {% for code in codes %}
+
+            {% set name = "code"~serial %}
+            <input type="text" id={{ name }} name={{ name }} value={{codes[serial]}}>
+            {% set serial = serial + 1 %}
+
+        {% endfor %}
+
     {% else %}
+
         <input type="text" id="code0" name="code0" value="">
+
     {% endif %}
+
     </div>
     <div style="float:left;">
         <button id="add" type="button">+</button>
+        <button id="remove" type="button">-</button>
     </div>
     <br>
 
     {% if captcha %}
+
         <label>認証画面</label>
         <br>
         <img src={{captcha}} id="captcha_img">
@@ -128,7 +163,9 @@
         <p>表示されている文字を入力してください</p>
         <input type="text" value="" name="captcha">
         <br>
+
     {% endif %}
+
     </div>
     <div style="width: 100%">
         <br>

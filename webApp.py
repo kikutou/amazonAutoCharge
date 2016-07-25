@@ -42,7 +42,7 @@ def amazon():
     else:
         result = amazonBrowser.amazon_main(user_name, password, codes, False)
 
-    print result
+    # print result
 
     if len(result) == 2 and result[1]['code'] == 0:
 

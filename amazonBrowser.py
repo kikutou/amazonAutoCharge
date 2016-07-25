@@ -269,6 +269,8 @@ def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field,
 
         # 画像を文字に変更する
         image = Image.open(path)
+        image.load()
+        # print image.filename
         captcha = pytesseract.image_to_string(image).replace(" ", "").replace("　", "")
         print captcha
 
@@ -479,7 +481,7 @@ def amazon_main(user_name, password, codes, login_captcha):
 
         browser.quit()
         os.remove('charge_status')
-        print result
+        # print result
         # vdisplay.stop()
         return result
     else:
@@ -499,11 +501,11 @@ if __name__ == '__main__':
             'password': 'sc07051989',
             'codes': ['code0', 'code1', 'code2', 'code3']
         },
-        {
-            'user_name': '512317052@qq.com',
-            'password': 'sc0705198',
-            'codes': ['hello']
-        },
+        # {
+        #     'user_name': '512317052@qq.com',
+        #     'password': 'sc0705198',
+        #     'codes': ['hello']
+        # },
         # {
         #     'user_name': 'juteng2005@gmail.com',
         #     'password': 'Juteng378084190',

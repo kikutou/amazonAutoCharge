@@ -2,7 +2,7 @@
 from flask import Flask, request, render_template, session, redirect
 import BrowserSaver
 
-import amazonBrowser
+import amazonBrowserCopy
 
 import sys
 reload(sys)
@@ -28,10 +28,9 @@ def amazon():
 
     captcha = request.args.get('captcha')
 
-    if captcha:
-        result = amazonBrowser.amazon_main(user_name, password, codes, captcha)
-    else:
-        result = amazonBrowser.amazon_main(user_name, password, codes, 'auto')
+
+    result = amazonBrowserCopy.amazon_main(user_name, password, codes, captcha)
+
 
     if len(result) == 2 and result[1]['code'] == 0:
 
@@ -42,18 +41,6 @@ def amazon():
     else:
         return render_template('amazon.html', result=result)
 
-@app.route('/answer_ajax')
-def answer_ajax():
-    user_name = request.args.get('user_name')
-    password = request.args.get('password')
-    codes = request.args.get('code0')
-
-    #search from db
-
-    return 'ok'
-    exit;
-
-
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True, port=4050)
+    app.run(debug=True, threaded=True, port=4000)

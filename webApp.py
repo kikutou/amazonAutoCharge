@@ -4,7 +4,6 @@ import os
 import time
 import BrowserSaver
 import MySQLdb
-# import sqlalchemy
 
 import amazonBrowser
 

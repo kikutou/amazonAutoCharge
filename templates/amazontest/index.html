@@ -30,8 +30,9 @@
                 alert("コードをご入力ください");
                 return false
             }else {
-                var interval = window.setInterval(show_status, 1000);
+
                 function show_status(){
+                    alert('ajax');
                     $.ajax({
                         url: "/checkStatus",
                         data: {user_name: user_name, password: password},
@@ -48,6 +49,7 @@
                         }
                     });
                 }
+                var interval = window.setInterval(show_status, 1000);
             }
         }
     </script>

@@ -1,7 +1,10 @@
 # coding=utf-8
 from flask import Flask, request, render_template, session, redirect
 import os
+import time
 import BrowserSaver
+import MySQLdb
+# import sqlalchemy
 
 import amazonBrowser
 
@@ -10,14 +13,15 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-app = Flask(__name__)
+# app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 
 #app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
 
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('amazon-check.html')
 
 
 @app.route('/amazon')
@@ -27,6 +31,24 @@ def amazon():
     password = request.args.get('password')
 
     codes = []
+
+    # チャージ開始、ユーザのインフォメーションをダータベースに輸入する
+    # start_time = time.strftime("%Y:%m:%d %H:%M:%S", time.localtime())
+    #
+    # db = MySQLdb.connect("localhost", "root", "sc07051989", "webChargeData")
+    # cursor = db.cursor()
+    #
+    # sql = "insert into charge_data(user_email, start_time) values('%s', '%s')" % (user_name, start_time)
+    #
+    # try:
+    #
+    #     cursor.execute(sql)
+    #     db.commit()
+    #
+    # except:
+    #
+    #     db.rollback()
+
     i = 0
     while True:
         if request.args.get('code' + str(i)):

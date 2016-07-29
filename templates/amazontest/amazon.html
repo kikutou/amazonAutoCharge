@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>amazon結果</title>
+
+</head>
+<body>
+
+    <h1>amazon結果</h1>
+
+    {% for result in results %}
+
+        {{result.code}}
+        <br>
+
+    {% else %}
+
+        <p><strong>ERROR: NO RESULT FOUND IN PAGE</strong></p>
+
+    {% endfor %}
+
+    <h1>amazonメセージ</h1>
+    {% for result in results %}
+
+        {{result.message}}
+        <br>
+
+    {% else %}
+
+        <p><strong>ERROR: NO RESULT FOUND IN PAGE</strong></p>
+
+    {% endfor %}
+
+</body>
+</html>

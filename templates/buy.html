@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,user-scalable=no,minimum-scale=1,maximum-scale=1" />
+	<meta name="format-detection" content="telephone=no">
+	<title>
+		ギフト券を買う｜人気ギフト券の個人売買支援サービス「ギフル」
+	</title>
+	<link href="/img/favicon.ico" type="image/x-icon" rel="icon"/>
+	<link href="/img/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script type="text/javascript" src="js/modal.js"></script><script type="text/javascript" src="/js/common_front.js"></script>
+	<script type="text/javascript" src="js/jquery.validationEngine-ja.js"></script>
+	<script type="text/javascript" src="js/jquery.validationEngine.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css"/>
+	<link rel="stylesheet" type="text/css" href="css/validationEngine.jquery.css"/>
+	<link rel="stylesheet" type="text/css" href="css/hover.css"/>
+	<link rel="stylesheet" type="text/css" href="css/font-awesome-4.5.0/css/font-awesome.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/remodal.css"/>
+	<link rel="stylesheet" type="text/css" href="css/remodal-default-theme.css"/>
+<!-- menu-js -->
+<script>
+$(function(){
+var menu = $('#slide_menu'),     menuBtn = $('#slide-btn'),     body = $(document.body),     
+    menuWidth = menu.outerWidth();                
+     
+        menuBtn.on('click', function(){
+        body.toggleClass('open');
+        if(body.hasClass('open')){
+                        body.animate({'left' : menuWidth }, 300);            
+            menu.animate({'left' : 0 }, 300);                    
+        } else {
+                        menu.animate({'left' : -menuWidth }, 300);
+            body.animate({'left' : 0 }, 300);            
+        }             
+    });
+});    
+</script>
+
+</head>
+<body>
+
+
+<!-- fb -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.5&appId=890055211131538";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+<!--End fb -->
+
+<!----------*contents*---------->
+<div id="container">
+
+
+
+	<a href="/"><img src="img/logo.png" class="sp-logo" /></a>
+
+
+
+			
+<style>
+.checkbox{ float: left; }
+</style>
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+   jQuery("#myForm").validationEngine('attach', {
+    promptPosition:"bottomLeft"
+  });
+	$("#paramRecs").change(function () {
+        $('#buttonSearch').click();
+    });
+});
+function submitBuy(code, sales_amount){
+	var zan = document.getElementById('hidAmmountSum').value - 0;
+	var flg = document.getElementById('oneclick-disp').className;
+	if (zan < sales_amount){
+		document.getElementById('hidModalLinkZan').click();
+	}else{
+		if(flg == "oneclick-on"){
+			//ajaxで購入処理を実行、結果をモーダルで表示する
+			var hidExhibitCode = code;
+			var hidExhibitModified = document.getElementById('hidExhibitModified'+code).value;
+			var data = {hidExhibitCode : code, hidExhibitModified: hidExhibitModified};
+			$.ajax({
+				type: "POST",
+				url: "/buy/oneclick",
+				dataType : 'json',
+				data: data,
+				async: false,
+				success: function(retdata){
+					if(retdata['errorMessage'] == 5){
+						window.location.href = "/proof/";
+					} else {
+						$('td.exectime').text(retdata['exectime']);
+						$('td.gifttype').text(retdata['gifttype']);
+						$('td.amount').text(retdata['amount']);
+						$('td.price').text(retdata['price']);
+						$('td.discount').text(retdata['discount']);
+						if(retdata['expiration'] == "1970/01/01"){
+							$('td.expiration').text('-');
+						} else {
+							$('td.expiration').text(retdata['expiration']);
+						}
+						$('p.numbers').text(retdata['numbers']);
+						document.getElementById('hidModalLinkOne').click();
+					}
+				},
+				error: function(msg){
+					document.getElementById('hidModalLinkErr').click();
+				}
+			});
+		} else {
+			document.getElementById('buttonBuy'+code).click();
+		}
+	}
+}
+function changeOneClickDisplay(){
+	var flg   = document.getElementById('oneclick-disp').className;
+	if(flg == "oneclick-on"){
+		document.getElementById('oneclick-disp').className = "oneclick-off";
+	} else {
+		document.getElementById('oneclick-disp').className = "oneclick-on";
+	}
+}
+
+
+</script>
+
+	<section class="base-contents">
+						<!-- buysellbox --><div class="buysellbox"><button id="slide-btn" class="slide-btn"><i class="fa fa-bars"></i> Menu</button><a class="btn buy" href="buy"><i class="fa fa-shopping-cart"></i>買う</a><a class="btn sell" href="exhibit"><i class="fa fa-ticket"></i>売る</a></div><!-- buysellbox -->
+		<div class="sidebar" id="slide_menu"><!-- sidebar -->
+
+			<a href="/"><img src="img/logo.png" class="logo" /></a>
+
+			<div class="left-frames-s">
+				最終ログイン日<br />
+				2016年06月24日 17:02			</div>
+
+			<div class="left-frames">
+				<h2>ご購入可能額</h2>
+				<span class="yen">2,316</span>
+			</div>
+			
+			<!-- div class="left-frames">
+				<h2>ご出金可能額</h2>
+				<span class="yen">35,908</span>
+				<a class="btn" href="payment">ご出金手続き</a>
+			</div -->
+
+			<nav>
+
+				<a class="btn" href="charge"><i class="fa fa-university"></i>入金する</a>
+				<a class="btn" href="buy.html" class="nav"><i class="fa fa-shopping-cart"></i>ギフト券を買う</a>
+				<a class="btn" href="exhibit" class="nav"><i class="fa fa-ticket"></i>ギフト券を売る</a>
+
+				<a href="mypage" class="nav "><i class="fa fa-home"></i>マイページ</a>
+				<a href="information" class="nav "><i class="fa fa-info-circle"></i>お知らせ</a>
+				<a href="account" class="nav "><i class="fa fa-cog"></i>アカウント</a>
+				<a href="campaigns" class="nav "><i class="fa fa-gift"></i>ポイント追加</a>
+				<a href="alert" class="nav "><i class="fa fa-bell"></i>アラート設定</a>
+				<a href="history" class="nav "><i class="fa fa-history"></i>履歴</a>
+				<a href="payment" class="nav "><i class="fa fa-university"></i>出金申請</a>
+								<a href="/login/logout" class="nav"><i class="fa fa-sign-out"></i>ログアウト</a>
+				<hr class="sp-hide" />
+				<a href="https://giftapple.jp/guide" target="_blank"><i class="fa fa-book"></i>ガイド<i class="fa fa-clone fs-s sp-hide"></i></a>
+				<a href="https://market.giftapple.jp/contact"><i class="fa fa-book"></i>お問い合わせ<i class="fa fa-clone fs-s sp-hide"></i></a>
+				<a href="https://giftapple.jp/camp" target="_blank"><i class="fa fa-gift"></i>キャンペーン<i class="fa fa-clone fs-s sp-hide"></i></a>
+			</nav>
+		</div><!-- /sidebar -->		<div class="maincontents"><!-- maincontents -->
+
+			<ul class="pankuzu">
+				<li><a href="/">HOME</a></li>
+				<li>ギフト券を買う</li>
+			</ul>
+
+
+			<ul class="title-split">
+				<li><h2>Amazonギフト券を買う</h2></li>
+				<li>
+					<a href="#" class="oneclick-on" id="oneclick-disp" onclick="changeOneClickDisplay();">1click購入</a>
+					<a href="#modal" class="link-button sp-serch"><i class="fa fa-search"></i>検索</a>
+				</li>
+			</ul>
+
+
+			<input type="hidden" id="hidAmmountSum" value="2316"/>
+
+			<div class="list">
+
+				<ul class="title-split">
+					<li></li>
+					<li>
+						<div class="input select">
+							<select name="data[paramRecs]" id="paramRecs">
+								<option value="10" selected="selected">10件</option>
+								<option value="20">20件</option>
+								<option value="50">50件</option>
+								<option value="100">100件</option>
+							</select>
+						</div>
+					</li>
+				</ul>
+				<ul class="split item-list-header">
+					<li><p class="data">出品数</p></li>
+					<!-- li><p class="data">券種</p></li -->
+					<li><p class="data">額面</p></li>
+					<li><p class="data">販売価格</p></li>
+					<li><p class="data">割引</p></li>
+					<li><p class="data">有効期限</p></li>
+					<li><p class="data">　</p></li>
+				</ul>
+				
+				<ul class="split item-list sp-buy-items">
+					<li>計1点</li>
+					<!-- li><img src="img/c-01.jpg" width="410" height="260"></li -->
+					<li><span class="yen gakumen">50,000</span></li>
+					<li><span class="yen hanbai"><strong>48,500</strong></span></li>
+					<li><p class="per">97.0</p><p class="yenoff">1,500</p></li>
+					<li class="sp-ex-block">2017/06/17</li>
+					<li class="sp-ex-block"><a href="buy-conf.html" class="link-button">購入する</a>
+				</ul>
+			</div>
+
+			</form>
+			<form action="/buy/." id="Form" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>
+				<ul class="paging"><!-- paging -->
+	        <li><a>先頭</a></li><li class="current"><span><</span></li><li class="current"><span>1</span></li><li><a href="/buy/index/page:2">2</a></li><li><a href="/buy/index/page:3">3</a></li><li><a href="/buy/index/page:4">4</a></li><li><a href="/buy/index/page:5">5</a></li><li><a href="/buy/index/page:6">6</a></li><li><a href="/buy/index/page:7">7</a></li><li><a href="/buy/index/page:8">8</a></li><li><a href="/buy/index/page:9">9</a></li><li class="next"><a href="/buy/index/page:2" rel="next">&gt;</a></li><li><a href="/buy/index/page:10" rel="last">最後</a></li>            </ul><!-- /paging -->
+			</form>
+				<!-- /paging -->
+			</form>
+					</div><!-- /maincontents -->
+	</section>
+
+
+<a id="hidModalLinkOne" style="display:none;" data-target="con1" class="link-button modal-open" ></a>
+<a id="hidModalLinkZan" style="display:none;" data-target="con2" class="link-button modal-open" ></a>
+<a id="hidModalLinkErr" style="display:none;" data-target="con3" class="link-button modal-open" ></a>
+<div id="con1" class="modal-content">
+	<h5>ギフト券の１クリック購入完了</h5>
+	<table id="result">
+		<tr>
+			<th>購入日時</th><td class="exectime">2015/11/5 10:39</td>
+		</tr>
+		<tr>
+			<th>ギフト券種類</th><td class="gifttype">amazonギフト券</td>
+		</tr>
+		<tr>
+			<th>額面</th><td class="amount">3,000円</td>
+		</tr>
+		<tr>
+			<th>販売価格</th><td class="price">2,805円</td>
+		</tr>
+		<tr>
+			<th>割引</th><td class="discount">195円/93.5%</td>
+		</tr>
+		<tr>
+			<th>有効期限</th><td class="expiration">2016/11/1</td>
+		</tr>
+	</table>
+	<div class="code-box">
+		ギフトコード
+		<p class="numbers">xxxx-xxxxxx-xxxxxx-xxxxxx</p>
+	</div>
+	30分以内に購入履歴ページから取引完了またはエラー申請を行ってください。
+	<p><a class="modal-close">閉じる</a></p>
+</div>
+
+<div id="con2" class="modal-content">
+	<h5>残高が足りません</h5>
+	このギフト券を購入するには残高がたりません。<br />
+	チャージ（銀行入金）しますか？
+	<a href="/charge" class="link-button modal-close">チャージする</a>
+	<a class="link-button modal-close">キャンセル</a>
+</div>
+
+<div id="con3" class="modal-content">
+	<h5>購入済みのギフト券です</h5>
+	このギフト券はすでに購入されています。<br />
+	<a class="link-button modal-close">キャンセル</a>
+</div>
+
+
+
+
+<!-- modal controll -->
+<script src="js/remodal.js"></script>
+
+<!-- modal-set -->
+<div class="remodal-bg"></div>
+
+<div class="remodal" data-remodal-id="modal">
+	<!-- modal contents -->
+			<form action="/buy/." id="myForm" onsubmit="if(_isPosting){return false;}else{_isPosting=true;}" method="post" accept-charset="utf-8"><div style="display:none;"><input type="hidden" name="_method" value="POST"/></div>			<div class="serch-form">
+				<h3>絞り込み条件</h3>
+				<ul class="split">
+					<li>ギフト券種</li>
+					<li>
+																								<label for="GiftTypeCheck1"><input type="checkbox" name="data[giftTypeCheck][]" value="1" id="GiftTypeCheck1" />Amazon</label>
+																		<label for="GiftTypeCheck2"><input type="checkbox" name="data[giftTypeCheck][]" value="2" id="GiftTypeCheck2" />iTunes</label>
+																		<label for="GiftTypeCheck3"><input type="checkbox" name="data[giftTypeCheck][]" value="3" id="GiftTypeCheck3" />Google Play</label>
+																		<label for="GiftTypeCheck4"><input type="checkbox" name="data[giftTypeCheck][]" value="4" id="GiftTypeCheck4" />LINE</label>
+											</li>
+				</ul>
+
+				<ul class="split">
+					<li>額面</li>
+					<li>
+						<span class="yen"><input name="data[paramParFrom]" type="text" value="0" class="validate[custom[number]]" id="paramParFrom"/></span> 〜
+						<span class="yen"><input name="data[paramParTo]" type="text" value="0" class="validate[custom[number]]" id="paramParTo"/></span>
+					</li>
+				</ul>
+
+				<ul class="split">
+					<li>販売価格</li>
+					<li>
+						<span class="yen"><input name="data[paramSalesFrom]" type="text" value="0" class="validate[custom[number]]" id="paramSalesFrom"/></span> 〜
+						<span class="yen"><input name="data[paramSalesTo]" type="text" value="0" class="validate[custom[number]]" id="paramSalesTo"/></span>
+					</li>
+				</ul>
+
+				<input type="submit" value="絞り込み" name="buttonSearch">
+			</div>
+	<!-- End modal contents -->
+</div>
+
+<!--End modal-set -->
+
+<!-- End modal controll -->
+
+	<footer><!-- footer -->
+		<section class="footer-box">
+		<div class="logo">
+			<img src="https://giftapple.jp/wp-content/themes/gifma/img/logo-w.png" alt="ギフル" width="" height="" />
+		</div>
+
+
+<ul class="split">
+	<li>
+
+<ol><li><a href="https://giftapple.jp/"><i class="fa-home fa"></i><span class="fontawesome-text"> ギフル トップ</span></a></li>
+<li><a href="https://giftapple.jp/camp"><i class="fa-info fa"></i><span class="fontawesome-text"> キャンペーン情報</span></a></li>
+<li><a href="https://giftapple.jp/regist/"><i class="fa-user-plus fa"></i><span class="fontawesome-text"> 新規登録</span></a></li>
+<li><a href="https://giftapple.jp/login"><i class="fa-sign-in fa"></i><span class="fontawesome-text"> ログイン</span></a></li>
+<li><a href="https://giftapple.jp/preparation"><i class="fa-bullhorn fa"></i><span class="fontawesome-text"> おしらせ</span></a></li>
+<li><a href="https://giftapple.jp/preparation"><i class="fa-rss fa"></i><span class="fontawesome-text"> スタッフブログ</span></a></li>
+<li><a href="https://giftapple.jp/sitemap"><i class="fa-sitemap fa"></i><span class="fontawesome-text"> サイトマップ</span></a></li>
+</ol>
+
+<h3>ギフルの使い方</h3>
+<ol><li><a href="https://giftapple.jp/about"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> ギフルの仕組み</span></a></li>
+<li><a href="https://giftapple.jp/about-safety"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> エスクローと返金保証</span></a></li>
+<li><a href="https://giftapple.jp/regist-low"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> ユーザー登録の流れ</span></a></li>
+<li><a href="https://giftapple.jp/about-sell"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> ギフト券を売るなら</span></a></li>
+<li><a href="https://giftapple.jp/about-buy"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> ギフト券を買うなら</span></a></li>
+<li><a href="https://giftapple.jp/reflection-time"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> 入出金のご案内</span></a></li>
+<li><a href="https://giftapple.jp/commission"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> 手数料のご案内</span></a></li>
+<li><a href="https://giftapple.jp/alert"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> 便利なアラート機能</span></a></li>
+</ol>
+	</li>
+	<li>
+
+<h3>運営者情報</h3>
+<ol><li><a href="https://giftapple.jp/company"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> 運営会社</span></a></li>
+<li><a href="https://giftapple.jp/terms"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> 利用規約</span></a></li>
+<li><a href="https://giftapple.jp/tokushou"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> 特定商取引に基づく表示</span></a></li>
+<li><a href="https://giftapple.jp/shikin"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> 資金決済法に基づく表示</span></a></li>
+<li><a href="https://giftapple.jp/kobutsu"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> 古物営業法に基づく表示</span></a></li>
+<li><a href="https://giftapple.jp/privacy"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> プライバシーポリシー</span></a></li>
+<li><a href="https://faq.giftapple.jp/hc/ja"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> よくある質問</span></a></li>
+<li><a href="https://market.giftapple.jp/contact"><i class="fa-arrow-right fa"></i><span class="fontawesome-text"> お問い合わせ</span></a></li>
+</ol>
+	</li>
+	<li>
+		<a class="twitter-timeline" href="https://twitter.com/giftapple_tw" data-widget-id="709407998481813505">@giftapple_twさんのツイート</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</li>
+</ul>
+
+			<p class="copyrights">
+				(c)Giftprice,Inc
+			</p>
+		</section>
+	</footer><!-- /footer -->
+
+	<!-- page top -->
+	<a href="#top" class="page_top"><i class="fa fa-arrow-up"></i></a>
+	<script type="text/javascript">
+		$(function() {
+		var pageTop = $('.page_top');
+		pageTop.hide();
+		$(window).scroll(function () {
+		if ($(this).scrollTop() > 600) {
+		pageTop.fadeIn();
+		} else {
+		pageTop.fadeOut();
+		}
+		});
+		pageTop.click(function () {
+		$('body, html').animate({scrollTop:0}, 400, 'swing');
+		return false;
+		});
+	});
+	</script>
+	<!-- End page top -->
+
+	
+
+
+</body>
+</html>
+

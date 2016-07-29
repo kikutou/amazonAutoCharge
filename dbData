@@ -1,0 +1,21 @@
+
+charge_data(
+    -> id int not null auto_increment unique,
+    -> user_email char(50) not null,
+    -> start_time datetime not null,
+    -> finish_time datetime not null,
+    -> status char(50)
+    -> )
+
+
+
+
+codes(
+    -> id int not null auto_increment unique,
+    -> code char(10) not null unique,
+    -> user_id int,
+    -> sum int,
+    -> result char(100),
+    -> message char(100),
+    # (-> screen_shot (file_name = code))
+    )

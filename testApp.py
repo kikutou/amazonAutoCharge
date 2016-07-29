@@ -33,6 +33,11 @@ def index():
 #     print browser_list.get_browser(5)
 #     return render_template('test.html')
 
+@app.route('/ajaxtest', methods=['get'])
+def ajaxtest():
+    str = 'ajajajajajajajajaj'
+    return str
+
 
 @app.route('/run_test')
 def run_test():

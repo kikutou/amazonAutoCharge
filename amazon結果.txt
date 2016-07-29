@@ -1,0 +1,67 @@
+結果として、以下の状況がある。
+
+①成功
+{
+	"code": 1,
+	"message": "XXX(金額)がチャージされました。",
+	"htmlcode": htmlcode
+}
+
+②アカウントまたはパスワードが間違った。
+{
+	"code": 2,
+	"message": "アカウントまたはパスワードが間違いました。",
+	"htmlcode": htmlcode
+}
+
+③コードが無効
+{
+	"code": 3,
+	"message": "XXX(コード)が無効です。",
+	"htmlcode": htmlcode
+}
+
+④サイトの問題
+{
+	"code": 4,
+	"message": "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
+	"htmlcode": htmlcode
+}
+
+⑤ほかの問題
+{
+	"code": 5,
+	"message": "原因不明",
+	"htmlcode": htmlcode
+}
+
+⑦登録成功
+{
+	"code": 7,
+	"message": "ユーザー登録成功しました"
+	"htmlcode": htmlcode
+}
+
+内部状態
+⑥画像認証が失敗
+{
+	"code": 6,
+	"message": "画像認証が失敗しました。",
+	"htmlcode": htmlcode
+}
+
+⑧画像が複雑すぎて認証できない
+{
+	"code": 8,
+	"message": "画像が認証できない",
+	"htmlcode": captcha_image_field['src']
+}
+
+○認証画像を解析ができない場合は、画像を取って得意先に送信する必要なデータ
+｛
+	"code": 0,
+	"message": "認証画面が得意先に送信する"
+	"browser": browser
+｝
+
+

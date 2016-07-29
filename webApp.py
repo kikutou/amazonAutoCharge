@@ -109,6 +109,18 @@ def changeCaptcha():
 # def addCode():
 
 
+@app.route('/answer_ajax')
+def answer_ajax():
+    user_name = request.args.get('user_name')
+    password = request.args.get('password')
+    codes = request.args.get('code0')
+
+    #search from db
+
+    return 'ok'
+    exit;
+
+
 
 if __name__ == '__main__':
     app.run(debug=True, threaded=True, port=4000)

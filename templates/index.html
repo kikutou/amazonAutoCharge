@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>webChargeテストプロジェクト</title>
+
+    <script>
+        function charge_status(){
+            function show_status(){
+                var xmlhttp;
+                if (window.XMLHttpRequest){
+                    xmlhttp = new XMLHttpRequest()
+                }else {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+                }
+                xmlhttp.onreadystatechange = function(){
+//                    alert(xmlhttp.readyState +"_"+ xmlhttp.status);
+                    if (xmlhttp.readyState == 4) {
+                        if (xmlhttp.status == 404){
+                            document.getElementById("charge_status").innerHTML = 'チャージ開始'
+                        }else if (xmlhttp.status == 200){
+                            document.getElementById("charge_status").innerHTML = xmlhttp.responseText;
+                        }
+                    }
+                };
+                xmlhttp.open("GET", "../captchaFile.txt", true);
+                xmlhttp.send();
+            }
+            window.setInterval(show_status, 5000)
+        }
+    </script>
+</head>
+<body>
+<h1>amazonテスト</h1>
+<form action="/amazon" method="get">
+    <label>ユーザー名</label>
+    <br>
+    <input type="text" value="" name="user_name">
+    <br>
+
+    <label>パスワード</label>
+    <br>
+    <input type="text" value="" name="password">
+    <br>
+
+    <label>コード</label>
+    <br>
+    <input type="text" value="" name="code0">
+    <br>
+    <input type="text" value="" name="code1">
+    <br>
+    <input type="text" value="" name="code2">
+    <br>
+
+    <!--<input type="submit" value="送信">-->
+
+
+{% if captcha %}
+    <!--<form action="/amazon" method="get">-->
+
+    <label>認証画面</label>
+    <br>
+    <img src={{captcha}}>
+    <br>
+    <input type="text" value="" name="captcha">
+    <br>
+    <!--</form>-->
+{% endif %}
+    <input type="submit" value="送信" onclick="charge_status()">
+    <p id="charge_status"></p>
+</form>
+
+<br><hr><br>
+
+<h1>Lineテスト</h1>
+<form action="/line" method="get">
+    <label>ユーザー名</label>
+    <br>
+    <input type="text" value="" name="user_name">
+    <br>
+
+    <label>パスワード</label>
+    <br>
+    <input type="text" value="" name="password">
+    <br>
+
+    <label>コード</label>
+    <br>
+    <input type="text" value="" name="code">
+    <br>
+
+    <input type="submit" value="送信">
+</form>
+
+<br><hr><br>
+
+<h1>GooglePlayテスト</h1>
+<form action="/google_play" method="get">
+    <label>ユーザー名</label>
+    <br>
+    <input type="text" value="" name="user_name">
+    <br>
+
+    <label>パスワード</label>
+    <br>
+    <input type="text" value="" name="password">
+    <br>
+
+    <label>コード</label>
+    <br>
+    <input type="text" value="" name="code">
+    <br>
+
+    <input type="submit" value="送信">
+</form>
+
+
+</body>
+</html>

@@ -24,7 +24,7 @@ class User(db.Model):
         self.email = email
 
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<lalala %r>' % self.username
 
     def save(self):
         db.session.add(self)

@@ -7,15 +7,15 @@ db.create_all()
 admin = User('admin', 'admin@example.com')
 guest = User('guest', 'guest@example.com')
 
-db.session.add(admin)
-db.session.add(guest)
-db.session.commit()
+# db.session.add(admin)
+# db.session.add(guest)
+# db.session.commit()
 
 users = User.query.all()
-print users
+print len(users)
 
 admin = User.query.filter_by(username = 'admin').first()
-print admin
+print admin.email
 
 
 

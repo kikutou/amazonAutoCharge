@@ -39,6 +39,23 @@ var menu = $('#slide_menu'),     menuBtn = $('#slide-btn'),     body = $(documen
 });    
 </script>
 
+<!-- 修正する/ Wang
+ajax追加する -->
+<script type="text/javascript">
+        function change_captcha(){
+
+            var email = $("#email").val();
+
+            $.ajax({
+                url: "/changeCaptcha",
+                data: {email: email},
+                success: function (img){
+                    $("#captcha_img").attr("src", img)
+                },
+                timeout: 30000
+            })
+        }
+</script>
 
 </head>
 <body>
@@ -137,33 +154,49 @@ function submitLast(){
 			</div>
 
 			<h3>Amazonアカウントを入力してください</h3>
-			<div class="account-regist">
-				<ul class="conf">
-					<li>画像認証</li>
-					<li>
-						<img src="http://i.gzn.jp/img/2008/01/08/mailhide_recaptcha/mailhide001_m.png" style="width:320px; height:auto;"><br />
-						画像はサンプルです。
-					</li>
-				</ul>
-				<ul class="conf">
-					<li>文字列の入力</li>
-					<li>
-						<input type="text" />
-					</li>
-				</ul>
-			</div>
+            <!-- 修正する/ Wang -->
+            <form action="/amazon-login" method="get">
+                <div class="account-regist">
+                    <ul class="conf">
+                        <li>画像認証</li>
+                        <li>
+                            <!-- 修正する/ Wang
+                            画像はamazonブラウザの上に取得するの -->
+                            <!-- <img src="http://i.gzn.jp/img/2008/01/08/mailhide_recaptcha/mailhide001_m.png" style="width:320px; height:auto;"><br />
+                            画像はサンプルです。 -->
+                            <img id="captcha_img" style="width:320px; height:auto;" src={{captcha}}>
 
-			<ul class="page-nav-split">
-				<li class="ta-l">
-					<a class="link-button" href="">画像を再取得する</a>
-				</li>
-				<li class="ta-r">
-					<a class="link-button" href="">画像認証する</a>
-					<a href="buy-checklist.html">ログインが通った場合</a>
-					<a href="amazon-error.html">エラーが返ってきた場合</a>
-				</li>
-			</ul>
+                        </li>
+                    </ul>
+                    <ul class="conf">
+                        <li>文字列の入力</li>
+                        <li>
+                            <!-- 修正する/ Wang -->
+                            <input type="text" name="captcha"/>
+                            <!-- 修正する/ Wang
+                            ユーザーのイーメールとパスワードを再送信する -->
+                            <input id="email" type="hidden" name="email" value={{ email }}/>
+                            <input id="password" type="hidden" name="password" value={{ password }}/>
 
+                        </li>
+                    </ul>
+                </div>
+
+                <ul class="page-nav-split">
+                    <li class="ta-l">
+                        <!-- 修正する/ Wang
+                        ajax追加する -->
+                        <a class="link-button" href="#" onclick="change_captcha()">画像を再取得する</a>
+                    </li>
+                    <li class="ta-r">
+                        <!-- 修正する/ Wang
+                        submit buttonが必要する-->
+                        <input class="link-button" type="submit" value="画像認証する"/>
+                        <a href="buy-checklist.html">ログインが通った場合</a>
+                        <a href="amazon-error.html">エラーが返ってきた場合</a>
+                    </li>
+                </ul>
+            </form>
 		</div><!-- /maincontents -->
 	</section>
 
@@ -245,7 +278,7 @@ function submitLast(){
 	<!-- End page top -->
 
 	
-
+</div>
 </body>
 </html>
 

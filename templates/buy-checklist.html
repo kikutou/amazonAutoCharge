@@ -255,9 +255,24 @@ function submitChat(code){
 	</script>
 	<!-- End page top -->
 
-	
+<!-- 修正する/ Wang
+登録成功した後、処理画面に移動し、チャージを続きます-->
+{% if email %}
+<form action="/buy-checklist", method="get">
+<input type="hidden" name="email" value={{ email }} />
+<input id="send_email" type="submit" />
+</form>
+
+<script type="text/javascript">
+    $(function () {
+        $("#send_email").click()
+    })
+</script>
+{% endif %}
 
 
+
+</div>
 </body>
 </html>
 

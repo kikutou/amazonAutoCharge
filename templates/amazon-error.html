@@ -137,35 +137,38 @@ function submitLast(){
 			</div>
 
 			<h3>Amazonアカウントを入力してください</h3>
-			<div class="account-regist">
-				<ul class="conf">
-					<li>Eメールアドレス</li>
-					<li>
-						<input type="email" />
-					</li>
-				</ul>
-				<ul class="conf">
-					<li>パスワード</li>
-					<li>
-						<input type="password" />
-					</li>
-				</ul>
-				<ul class="conf">
-					<li>Eメールアドレスを記憶</li>
-					<li>
-						<input type="checkbox" />
-					</li>
-				</ul>
-			</div>
+            <!-- 修正する/ Wang -->
+            <form action="/amazon-login" method="get">
+                <div class="account-regist">
+                    <ul class="conf">
+                        <li>Eメールアドレス</li>
+                        <li>
+                            <input type="email" name="email" value={{ email }} />
+                        </li>
+                    </ul>
+                    <ul class="conf">
+                        <li>パスワード</li>
+                        <li>
+                            <input type="password" name="password" value={{ password }} />
+                        </li>
+                    </ul>
+                    <ul class="conf">
+                        <li>Eメールアドレスを記憶</li>
+                        <li>
+                            <input type="checkbox" />
+                        </li>
+                    </ul>
+                </div>
 
-			<ul class="page-nav-split">
-				<li class="ta-c">
-					<a class="link-button" href="">チャージする</a>
-					<a href="buy-checklist.html">ログインが通った場合</a>
-					<a href="amazon-check-img.html">画像認証が出た場合</a>
-					<a href="amazon-error.html">エラーが返ってきた場合</a>
-				</li>
-			</ul>
+                <ul class="page-nav-split">
+                    <li class="ta-c">
+                        <button class="link-button" type="submit">チャージする</button>
+                        <a href="buy-checklist.html">ログインが通った場合</a>
+                        <a href="amazon-check-img.html">画像認証が出た場合</a>
+                        <a href="amazon-error.html">エラーが返ってきた場合</a>
+                    </li>
+                </ul>
+            </form>
 
 		</div><!-- /maincontents -->
 	</section>

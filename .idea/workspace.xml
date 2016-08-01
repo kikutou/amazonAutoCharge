@@ -2,49 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/code_input.py" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468408996.69.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409000.79.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409004.92.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409008.93.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409013.22.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409017.22.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409021.01.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409024.95.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409028.96.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409032.87.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409036.74.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409040.74.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409156.08.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409159.74.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409163.46.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409167.23.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409171.17.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409174.95.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409178.8.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409913.3.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409917.07.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409920.79.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409924.56.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409928.27.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409932.12.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409935.81.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409939.59.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409943.32.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409947.09.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409953.76.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468409957.57.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468410019.23.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468410023.05.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468410026.92.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468410030.65.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468410034.48.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1468410038.18.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/amazonAutoCharge.iml" afterPath="$PROJECT_DIR$/.idea/amazonAutoCharge.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/webAppCopy.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sqltestapp.py" afterPath="$PROJECT_DIR$/sqltestapp.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tryrundb.py" afterPath="$PROJECT_DIR$/tryrundb.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amazonBrowser.py" afterPath="$PROJECT_DIR$/amazonBrowser.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amazonBrowserCopy.py" afterPath="$PROJECT_DIR$/amazonBrowserCopy.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/code_input.py" afterPath="$PROJECT_DIR$/code_input.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/amazon-check-img.html" afterPath="$PROJECT_DIR$/templates/amazon-check-img.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/amazon-check.html" afterPath="$PROJECT_DIR$/templates/amazon-check.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/amazon-error.html" afterPath="$PROJECT_DIR$/templates/amazon-error.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/amazontest/test.html" afterPath="$PROJECT_DIR$/templates/amazontest/test.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/buy-checklist.html" afterPath="$PROJECT_DIR$/templates/buy-checklist.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testApp.py" afterPath="$PROJECT_DIR$/testApp.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
@@ -58,11 +26,33 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/amazonAutoCharge$code_input.coverage" NAME="code_input Coverage Results" MODIFIED="1469865037196" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/amazonAutoCharge$code_input.coverage" NAME="code_input Coverage Results" MODIFIED="1470036507298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/amazonAutoCharge$tryrundb.coverage" NAME="tryrundb Coverage Results" MODIFIED="1469856561171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/amazonAutoCharge$py_test_in_testApp_py.coverage" NAME="py.test in testApp.py Coverage Results" MODIFIED="1470027456726" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/amazonAutoCharge$amazonAutoCharge.coverage" NAME="amazonAutoCharge Coverage Results" MODIFIED="1470054687908" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
+  </component>
+  <component name="DockManager">
+    <window id="2">
+      <content type="file-editors">
+        <state>
+          <leaf>
+            <file leaf-file-name="amazon結果.txt" pinned="false" current-in-tab="true">
+              <entry file="file://$PROJECT_DIR$/amazon結果.txt">
+                <provider selected="true" editor-type-id="text-editor">
+                  <state relative-caret-position="0">
+                    <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+                    <folding />
+                  </state>
+                </provider>
+              </entry>
+            </file>
+          </leaf>
+        </state>
+      </content>
+    </window>
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
@@ -73,8 +63,8 @@
       <file leaf-file-name="amazonBrowser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+            <state relative-caret-position="270">
+              <caret line="274" column="18" selection-start-line="274" selection-start-column="18" selection-end-line="274" selection-end-column="45" />
               <folding>
                 <element signature="e#15#43#0" expanded="true" />
               </folding>
@@ -85,8 +75,8 @@
       <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+            <state relative-caret-position="1428">
+              <caret line="267" column="27" selection-start-line="267" selection-start-column="27" selection-end-line="267" selection-end-column="27" />
               <folding>
                 <element signature="e#15#83#0" expanded="true" />
               </folding>
@@ -94,11 +84,63 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="amazon-check.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/amazon-check.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="192">
+              <caret line="139" column="12" selection-start-line="139" selection-start-column="12" selection-end-line="139" selection-end-column="31" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BrowserSaver.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/BrowserSaver.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="testApp.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/testApp.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#68#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test2.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/amazontest/test2.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="150">
+              <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/amazontest/test.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="342">
+              <caret line="24" column="45" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="code_input.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/code_input.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="8" selection-end-column="30" />
+            <state relative-caret-position="270">
+              <caret line="18" column="62" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -107,21 +149,9 @@
       <file leaf-file-name="tryrundb.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tryrundb.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="15" />
+            <state relative-caret-position="195">
+              <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sqltestapp.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sqltestapp.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="23" />
-              <folding>
-                <element signature="e#25#48#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -145,9 +175,15 @@
         <option value="$PROJECT_DIR$/captchaFile.txt" />
         <option value="$PROJECT_DIR$/sqltestapp.py" />
         <option value="$PROJECT_DIR$/tryrundb.py" />
-        <option value="$PROJECT_DIR$/amazonBrowser.py" />
+        <option value="$PROJECT_DIR$/templates/amazon-check.html" />
+        <option value="$PROJECT_DIR$/templates/amazon-check-img.html" />
+        <option value="$PROJECT_DIR$/templates/amazon-error.html" />
         <option value="$PROJECT_DIR$/code_input.py" />
+        <option value="$PROJECT_DIR$/testApp.py" />
+        <option value="$PROJECT_DIR$/templates/amazontest/test.html" />
         <option value="$PROJECT_DIR$/webApp.py" />
+        <option value="$PROJECT_DIR$/templates/buy-checklist.html" />
+        <option value="$PROJECT_DIR$/amazonBrowser.py" />
       </list>
     </option>
   </component>
@@ -220,6 +256,24 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="amazonAutoCharge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="amazonAutoCharge" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="amazontest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
@@ -233,10 +287,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/templates" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.code_input">
+  <component name="RunManager" selected="Python.amazonAutoCharge">
     <configuration default="false" name="tryrundb" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -271,6 +326,34 @@
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/code_input.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="test2.html" type="JavascriptDebugType" factoryName="JavaScript Debug" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/amazonAutoCharge/templates/amazontest/test2.html">
+      <method />
+    </configuration>
+    <configuration default="false" name="py.test in testApp.py" type="tests" factoryName="py.test" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="amazonAutoCharge" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+      <option name="testToRun" value="$PROJECT_DIR$/testApp.py" />
+      <option name="keywords" value="" />
+      <option name="params" value="" />
+      <option name="USE_PARAM" value="false" />
+      <option name="USE_KEYWORD" value="false" />
       <method />
     </configuration>
     <configuration default="true" type="DjangoTestsConfigurationType" factoryName="Django tests">
@@ -493,15 +576,19 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
     </configuration>
-    <list size="3">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.amazonAutoCharge" />
       <item index="1" class="java.lang.String" itemvalue="Python.tryrundb" />
       <item index="2" class="java.lang.String" itemvalue="Python.code_input" />
+      <item index="3" class="java.lang.String" itemvalue="JavaScript Debug.test2.html" />
+      <item index="4" class="java.lang.String" itemvalue="Python tests.py.test in testApp.py" />
     </list>
     <recent_temporary>
-      <list size="2">
+      <list size="4">
         <item index="0" class="java.lang.String" itemvalue="Python.code_input" />
-        <item index="1" class="java.lang.String" itemvalue="Python.tryrundb" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.py.test in testApp.py" />
+        <item index="2" class="java.lang.String" itemvalue="JavaScript Debug.test2.html" />
+        <item index="3" class="java.lang.String" itemvalue="Python.tryrundb" />
       </list>
     </recent_temporary>
   </component>
@@ -521,6 +608,11 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="py_test_in_testApp_py - 2016.08.01 at 13h 57m 38s.xml">
+      <configuration name="py.test in testApp.py" configurationId="tests" />
+    </history-entry>
+  </component>
   <component name="ToolWindowManager">
     <frame x="1505" y="-4" width="1535" height="904" extended-state="6" />
     <editor active="true" />
@@ -529,6 +621,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32955974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32955974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -541,7 +634,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -663,6 +755,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/lib/pycharm.jar!/standardSchemas/xhtml1-transitional.dtd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="167">
+          <caret line="424" column="10" selection-start-line="424" selection-start-column="10" selection-end-line="424" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webAppCopy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/amazonBrowserCopy.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1380">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/amazon-check-img.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="157" column="33" selection-start-line="157" selection-start-column="18" selection-end-line="157" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/amazon-error.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="140" column="39" selection-start-line="140" selection-start-column="39" selection-end-line="140" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/amazon結果.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/sqltestapp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -675,34 +815,92 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tryrundb.py">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="13" column="24" selection-start-line="13" selection-start-column="24" selection-end-line="13" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/code_input.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="62" selection-start-line="18" selection-start-column="62" selection-end-line="18" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/amazontest/test2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="39" selection-start-line="10" selection-start-column="39" selection-end-line="10" selection-end-column="39" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testApp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#68#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/amazontest/test.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="24" column="45" selection-start-line="24" selection-start-column="45" selection-end-line="24" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/BrowserSaver.py">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="15" />
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/amazontest/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-480">
+          <caret line="70" column="13" selection-start-line="56" selection-start-column="4" selection-end-line="70" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/amazon-check.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="139" column="12" selection-start-line="139" selection-start-column="12" selection-end-line="139" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/buy-checklist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2128">
+          <caret line="261" column="19" selection-start-line="261" selection-start-column="19" selection-end-line="261" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="7" selection-start-line="14" selection-start-column="7" selection-end-line="14" selection-end-column="7" />
+        <state relative-caret-position="270">
+          <caret line="274" column="18" selection-start-line="274" selection-start-column="18" selection-end-line="274" selection-end-column="45" />
           <folding>
             <element signature="e#15#43#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/code_input.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="8" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
+        <state relative-caret-position="1428">
+          <caret line="267" column="27" selection-start-line="267" selection-start-column="27" selection-end-line="267" selection-end-column="27" />
           <folding>
             <element signature="e#15#83#0" expanded="true" />
           </folding>

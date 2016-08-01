@@ -137,18 +137,19 @@ function submitLast(){
 			</div>
 
 			<h3>Amazonアカウントを入力してください</h3>
-            <form action="/amazon" method="get">
+            <!-- 修正する/ Wang -->
+            <form action="/amazon-login" method="get">
                 <div class="account-regist">
                     <ul class="conf">
                         <li>Eメールアドレス</li>
                         <li>
-                            <input type="email" />
+                            <input type="email" name="email"/>
                         </li>
                     </ul>
                     <ul class="conf">
                         <li>パスワード</li>
                         <li>
-                            <input type="password" />
+                            <input type="password" name="password"/>
                         </li>
                     </ul>
                     <ul class="conf">

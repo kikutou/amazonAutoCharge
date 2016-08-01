@@ -26,18 +26,24 @@ db = SQLAlchemy(app)
 
 
 class Trade(db.Model):
+    """
+    取引先のチャージ情報
+
+    :param email:amazonログインイーメール
+    :param start:チャージが始まる時間
+    :param finish:チャージ終了の時間
+    """
+
     __tablename__ = 'trades'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), nullable=False)
-    status = db.Column(db.Unicode(100), nullable=True)
     start = db.Column(db.DateTime, nullable=True)
     finish = db.Column(db.DateTime, nullable=True)
 
     codes = db.relationship('Code', backref='trade')
 
-    def __init__(self, email, status, start=None, finish=None):
+    def __init__(self, email, start=None, finish=None):
         self.email = email
-        self.status = status
         if start is None:
             start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         self.start = start
@@ -52,6 +58,17 @@ class Trade(db.Model):
 
 
 class Code(db.Model):
+    """
+    チャージするコードの情報
+
+    :param code:ギフト券番号
+    :param sum:ギフト券金額
+    :param result:チャージ結果(checking: 確認中, success: チャージ成功, unavailable: こーどは無効, error: エラー発生, sent: ユーザーにメールを送信した)
+    :param message:結果のメセージ
+    :param balance:チャージ前の残高(htmlcode)
+    :param amount:チャージ後の残高(htmlcode)
+    """
+
     __tablename__ = 'codes'
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(10), unique=True, nullable=False)
@@ -67,7 +84,7 @@ class Code(db.Model):
         self.code = code
         self.sum = sum
         if result is None:
-            result = 'unused'
+            result = 'checking'
         self.result = result
         self.message = message
         self.balance = balance
@@ -82,78 +99,145 @@ def index():
     return render_template('amazon-check.html')
 
 
-@app.route('/amazon')
-def amazon():
+@app.route('/amazon-login')
+def amazon_login():
 
-    user_name = request.args.get('user_name')
+    email = request.args.get('email')
     password = request.args.get('password')
-
-    db.create_all()
-
-    trade = Trade(email=user_name, status='preparing')
-
-    code1 = Code(code='code1111', sum=1000, trade=trade)
-    code2 = Code(code='code2222', sum=2000, trade=trade)
-    code3 = Code(code='code3333', sum=3000, trade=trade)
-
-    db.session.add_all([trade, code1, code2, code3])
-
-    db.session.commit()
-
-    # codeをデータベースに取得する
-
-    codes = []
-    code_obj = Code.query.filter_by(trade=trade).all()
-
-    for code_obj in code_obj:
-
-        code_str = code_obj.code
-        codes = codes + [code_str]
-
-    i = 0
-    while True:
-
-
-        # if code_str[i]:
-        #     codes = codes + [code_str[i].code]
-        #     i += 1
-        # else:
-        #     break
-
-    # チャージ開始、ユーザのインフォメーションをダータベースに輸入する
-
-
 
     captcha = request.args.get('captcha')
 
     if captcha:
-        result = amazonBrowser.amazon_main(user_name, password, codes, captcha)
+        result = amazonBrowser.amazon_login_main(email, password, captcha)
     else:
-        result = amazonBrowser.amazon_main(user_name, password, codes, False)
+        result = amazonBrowser.amazon_login_main(email, password, False)
 
     # print result
 
-    if len(result) == 2 and result[1]['code'] == 0:
+    # 登録成功
+    if result[0]['code'] == 7:
+        browser_list = BrowserSaver.Browsers()
+        browser_list.set_browser(email, result[1])
+        print email
+        return render_template('buy-checklist.html', email=email)
+
+    # 認証画面がある場合
+    elif len(result) == 2 and result[1]['code'] == 0:
 
         browser_list = BrowserSaver.Browsers()
-        browser_list.set_browser(user_name, result[1]['browser'])
+        browser_list.set_browser(email, result[1]['browser'])
 
         return render_template(
-            'index.html',
+            'amazon-check-img.html',
             captcha=result[0]['htmlcode'],
-            user_name=user_name,
-            password=password,
-            codes=codes
+            email=email,
+            password=password
+        )
+
+    # 登録失敗の場合
+    elif result[0]['code'] == 2:
+        return render_template(
+            'amazon-error.html',
+            email=email,
+            password=password
         )
 
     else:
-        return render_template('amazon.html', results=result)
+        print 'Error'
+        return render_template('amazon-check.html')
+
+
+@app.route('/buy-checklist', methods=['get'])
+def auto_charge():
+
+    email = request.args.get('email')
+    print email
+
+    db.create_all()
+
+    # チャージ開始、ユーザのインフォメーションをダータベースに輸入する
+
+    trade = Trade(email=email)
+
+    code1 = Code(code='code1111', sum=1000)
+    code2 = Code(code='code2222', sum=2000)
+    code3 = Code(code='code3333', sum=3000)
+
+    trade.codes = [code1, code2, code3]
+
+    try:
+        db.session.add_all([trade, code1, code2, code3])
+
+        # codeをデータベースに取得する
+
+        codes = []
+        print 'charge start run'
+        code_all = db.session.query(Code).filter(Code.trade == trade).all()
+        print "code_all"
+        print code_all
+        # code_all = Code.query.filter_by(trade=trade).all()
+
+        for code_data in code_all:
+            code_str = code_data.code
+            codes = codes + [code_str]
+
+        if email:
+            print 'email exist'
+            browser = BrowserSaver.Browsers().get_browser(email)
+            print 'browser'
+            print browser
+
+            for code in codes:
+                result = amazonBrowser.amazon_charge_main(browser, code)
+
+                if result['code'] == 1:
+
+                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.result: 'success',
+                        Code.message: result['message'],
+                        Code.balance: result['htmlcode'],
+                        Code.amount: result['htmlcode']
+                    })
+
+                elif result['code'] == 3:
+
+                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.result: 'unavailable',
+                        Code.message: result['message'],
+                        Code.balance: result['htmlcode']
+                    })
+
+                else:
+
+                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.result: 'error',
+                        Code.message: result['message'],
+                        Code.balance: result['htmlcode']
+                    })
+
+            trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
+            db.session.commit()
+
+            return render_template('buy-list.html')
+
+        else:
+            return render_template('buy-checklist.html')
+
+    except:
+
+        print 'エラーが発生しました'
+
+        db.session.rollback()
+
+        return render_template('buy-checklist.html')
+
 
 
 @app.route('/checkStatus', methods=['get'])
 def status():
 
-    user_name = request.args.get('user_name')
+    email = request.args.get('email')
     password = request.args.get('password')
 
     fileName = 'charge_status'
@@ -168,9 +252,9 @@ def status():
 
 @app.route('/changeCaptcha', methods=['get'])
 def changeCaptcha():
-    user_name = request.args.get('user_name')
+    email = request.args.get('email')
 
-    return amazonBrowser.change_captcha(user_name)
+    return amazonBrowser.change_captcha(email)
 
 
 # @app.route('/addCode', methods=['get'])
@@ -179,7 +263,7 @@ def changeCaptcha():
 
 @app.route('/answer_ajax')
 def answer_ajax():
-    user_name = request.args.get('user_name')
+    email = request.args.get('email')
     password = request.args.get('password')
     codes = request.args.get('code0')
 
@@ -191,4 +275,4 @@ def answer_ajax():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True, port=4000)
+    app.run(debug=True, threaded=True, port=4080)

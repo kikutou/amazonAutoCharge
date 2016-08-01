@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, session, redirect
 import pickle
-import demjson
+# import demjson
+import time
 import codecs
 import os
 import BrowserSaver
@@ -18,7 +19,7 @@ app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
 
 @app.route('/')
 def index():
-    return render_template('test.html')
+    return render_template('amazontest/test.html')
 
 # @app.route('/one')
 # def one():
@@ -81,6 +82,24 @@ def input_text():
     captcha_file.write(text)
 
     return 'new success'
+
+
+@app.route('/thetest')
+def thetest():
+    render_template('amazontest/index.html')
+    time.sleep(5)
+    return redirect('/thetest2?msg="aaaa"')
+
+
+@app.route('/thetest2')
+def thetest2():
+    msg = request.args.get('msg')
+    if msg:
+        print msg
+
+    else:
+        print 'nononono'
+    return render_template('amazontest/test2.html')
 
 
 if __name__ == '__main__':

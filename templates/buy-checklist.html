@@ -138,40 +138,60 @@ function submitChat(code){
 					<li><p class="data">状態</p></li>
 					<li><p class="data">詳細</p></li>
 				</ul>
-			<!-- ここから1取引 -->
-				<ul class="split item-list sp-buy-items">
+
+            <!-- 修正する/Wang
+            チャージしているコードを表示する -->
+            {% set i = 0 %}
+            {% for code in codes %}
+            {% set i = i + 1 %}
+            {% set id = "charge_status"~i %}
+                <ul class="split item-list sp-buy-items">
 					<li class="sp-ex-block">2016/06/17</li>
 					<!-- li><img src="img/c-01.jpg" width="410" height="260"></li -->
-					<li><span class="yen gakumen">50,000</span></li>
+			        <li><span class="yen gakumen">{{ code.sum }}</span></li>
+					<li><span class="yen hanbai"><strong>48,500</strong></span></li>
+					<li class="sp-ex-block">2017/06/17</li>
+					<li id={{ id }} class="sp-ex-block"><span class="blinking">コード確認中</span></li>
+					<li class="sp-ex-block"><a href="buy-detail.html" class="link-button">詳細</a>
+				</ul>
+            {% endfor %}
+
+
+
+			<!-- ここから1取引 -->
+			<!--	<ul class="split item-list sp-buy-items">
+					<li class="sp-ex-block">2016/06/17</li> -->
+					<!-- li><img src="img/c-01.jpg" width="410" height="260"></li -->
+			<!--		<li><span class="yen gakumen">50,000</span></li>
 					<li><span class="yen hanbai"><strong>48,500</strong></span></li>
 					<li class="sp-ex-block">2017/06/17</li>
 					<li class="sp-ex-block">取引完了</li>
 					<li class="sp-ex-block"><a href="buy-detail.html" class="link-button">詳細</a>
-				</ul>
+				</ul> -->
 			<!-- //ここまで1取引 -->
 
 			<!-- ここから1取引 -->
-				<ul class="split item-list sp-buy-items">
-					<li class="sp-ex-block">2016/06/17</li>
+			<!--	<ul class="split item-list sp-buy-items">
+					<li class="sp-ex-block">2016/06/17</li> -->
 					<!-- li><img src="img/c-01.jpg" width="410" height="260"></li -->
-					<li><span class="yen gakumen">50,000</span></li>
+			<!--		<li><span class="yen gakumen">50,000</span></li>
 					<li><span class="yen hanbai"><strong>48,500</strong></span></li>
 					<li class="sp-ex-block">2017/06/17</li>
 					<li class="sp-ex-block"><span class="blinking">コード確認中</span></li>
 					<li class="sp-ex-block"><a href="buy-detail.html" class="link-button">詳細</a>
-				</ul>
+				</ul> -->
 			<!-- //ここまで1取引 -->
 
 			<!-- ここから1取引 -->
-				<ul class="split item-list sp-buy-items">
-					<li class="sp-ex-block">2016/06/17</li>
+			<!--	<ul class="split item-list sp-buy-items">
+					<li class="sp-ex-block">2016/06/17</li> -->
 					<!-- li><img src="img/c-01.jpg" width="410" height="260"></li -->
-					<li><span class="yen gakumen">50,000</span></li>
+			<!--		<li><span class="yen gakumen">50,000</span></li>
 					<li><span class="yen hanbai"><strong>48,500</strong></span></li>
 					<li class="sp-ex-block">2017/06/17</li>
 					<li class="sp-ex-block"><span class="blinking">コード確認中</span></li>
 					<li class="sp-ex-block"><a href="buy-detail.html" class="link-button">詳細</a>
-				</ul>
+				</ul> -->
 			<!-- //ここまで1取引 -->
 
 
@@ -259,9 +279,21 @@ function submitChat(code){
 登録成功した後、処理画面に移動し、チャージを続きます-->
 {% if email %}
 <form action="/buy-checklist", method="get">
-<input type="hidden" name="email" value={{ email }} />
-<input id="send_email" type="submit" />
+<input id="hide_email" type="hidden" name="email" value={{ email }} />
+<input id="send_email" type="submit" onclick="charge_status()" />
 </form>
+
+
+
+<div id="get_codes" >
+{% set i = 0 %}
+{% for code in codes %}
+    {% set i = i + 1 %}
+    <p>{{ code.code }}</p>
+{% endfor %}
+<span>{{ i }}</span>
+</div>
+
 
 <script type="text/javascript">
     $(function () {
@@ -270,7 +302,47 @@ function submitChat(code){
 </script>
 {% endif %}
 
+<!-- 修正する/ Wang
+Ajaxでチャージの状態を表示する -->
+<script>
+    function charge_status(){
 
+        var email = $("#hide_email").val();
+        var serial = $("#get_codes span").text();
+        var codes = $("#get_codes p");
+
+        var i = 0;
+        codes.each(function (index, obj) {
+
+            var code = $(obj).text();
+
+            function show_status() {
+
+                $.ajax({
+                    url: "/checkStatus",
+                    data: {email: email, code: code},
+                    success: function (result) {
+                        if (result == 'success') {
+                            i = i + 1;
+                            $("#charge_status"+i).text('取引完了');
+                            window.clearInterval(interval);
+                        }else if (result == 'unavailable') {
+                            i = i + 1;
+                            $("#charge_status"+i).text('コード無効');
+                            window.clearInterval(interval);
+                        }else if (result == 'error') {
+                            i = i + 1;
+                            $("#charge_status"+i).text('エラー発生');
+                            window.clearInterval(interval);
+                        }
+                    },
+                    timeout: 60000
+                })
+            }
+            var interval = window.setInterval(show_status, 3000);
+        })
+    }
+</script>
 
 </div>
 </body>

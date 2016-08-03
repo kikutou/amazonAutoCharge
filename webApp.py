@@ -25,6 +25,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:sc07051989@localhost:3306/
 db = SQLAlchemy(app)
 
 
+class User(db.Model):
+    __tablename__ = 'User'
+    id = db.Column(db.Integer, primary_key=True)
+    code = db.Column(db.VARCHAR(10), nullable=False)
+    sum = db.Column(db.Integer, nullable=False)
+
+    def __init__(self, code, sum):
+        self.code = code
+        self.sum = sum
+
+    def __repr__(self):
+        return '<code: %s 金額: %f>' % (self.code, self.sum)
+
+
 class Trade(db.Model):
     """
     取引先のチャージ情報
@@ -63,7 +77,7 @@ class Code(db.Model):
 
     :param code:ギフト券番号
     :param sum:ギフト券金額
-    :param result:チャージ結果(checking: 確認中, success: チャージ成功, unavailable: こーどは無効, error: エラー発生, sent: ユーザーにメールを送信した)
+    :param result:チャージ結果(0: 確認中, 1: チャージ成功, 2: こーどは無効, 3: エラー発生, 4: ユーザーにメールを送信した)
     :param message:結果のメセージ
     :param balance:チャージ前の残高(htmlcode)
     :param amount:チャージ後の残高(htmlcode)
@@ -73,7 +87,7 @@ class Code(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(10), unique=True, nullable=False)
     sum = db.Column(db.Float, nullable=False)
-    result = db.Column(db.Text)
+    result = db.Column(db.Integer)
     message = db.Column(db.Text)
     balance = db.Column(db.Text, nullable=True)
     amount = db.Column(db.Text, nullable=True)
@@ -84,7 +98,7 @@ class Code(db.Model):
         self.code = code
         self.sum = sum
         if result is None:
-            result = 'checking'
+            result = 0
         self.result = result
         self.message = message
         self.balance = balance
@@ -112,14 +126,20 @@ def amazon_login():
     else:
         result = amazonBrowser.amazon_login_main(email, password, False)
 
-    # print result
-
     # 登録成功
     if result[0]['code'] == 7:
         browser_list = BrowserSaver.Browsers()
         browser_list.set_browser(email, result[1])
-        print email
-        return render_template('buy-checklist.html', email=email)
+
+        codes = []
+
+        all_code = User.query.all()
+        for code in all_code:
+            codes = codes + [code]
+
+        return render_template('buy-checklist.html',
+                               email=email,
+                               codes=codes)
 
     # 認証画面がある場合
     elif len(result) == 2 and result[1]['code'] == 0:
@@ -136,6 +156,7 @@ def amazon_login():
 
     # 登録失敗の場合
     elif result[0]['code'] == 2:
+        print '登録失敗'
         return render_template(
             'amazon-error.html',
             email=email,
@@ -151,30 +172,40 @@ def amazon_login():
 def auto_charge():
 
     email = request.args.get('email')
-    print email
 
     db.create_all()
 
     # チャージ開始、ユーザのインフォメーションをダータベースに輸入する
 
+    get_code_from_user = User.query.all()
+    set_code_for_trade = []
+    for user_code_data in get_code_from_user:
+        code_obj = Code(code=user_code_data.code, sum=user_code_data.sum)
+        set_code_for_trade = set_code_for_trade + [code_obj]
+
+    # code1 = Code(code='code1111', sum=1000)
+    # code2 = Code(code='code2222', sum=2000)
+    # code3 = Code(code='code3333', sum=1500)
+    # code4 = Code(code='code4444', sum=2300)
+
     trade = Trade(email=email)
-
-    code1 = Code(code='code1111', sum=1000)
-    code2 = Code(code='code2222', sum=2000)
-    code3 = Code(code='code3333', sum=3000)
-
-    trade.codes = [code1, code2, code3]
+    # trade.codes = [code1, code2, code3, code4]
+    trade.codes = set_code_for_trade
 
     try:
-        db.session.add_all([trade, code1, code2, code3])
+        # db.session.add_all([code1, code2, code3, code4])
+        db.session.add_all(set_code_for_trade)
+
+        db.session.commit()
+
+        db.session.add(trade)
 
         # codeをデータベースに取得する
 
         codes = []
-        print 'charge start run'
+
         code_all = db.session.query(Code).filter(Code.trade == trade).all()
-        print "code_all"
-        print code_all
+
         # code_all = Code.query.filter_by(trade=trade).all()
 
         for code_data in code_all:
@@ -182,46 +213,52 @@ def auto_charge():
             codes = codes + [code_str]
 
         if email:
-            print 'email exist'
+
             browser = BrowserSaver.Browsers().get_browser(email)
-            print 'browser'
-            print browser
+
+            amazonBrowser.view_amazon_charge(browser)
 
             for code in codes:
+
                 result = amazonBrowser.amazon_charge_main(browser, code)
 
                 if result['code'] == 1:
 
                     db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                        Code.result: 'success',
+                        Code.result: 1,
                         Code.message: result['message'],
                         Code.balance: result['htmlcode'],
                         Code.amount: result['htmlcode']
                     })
+                    db.session.commit()
 
                 elif result['code'] == 3:
 
                     db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                        Code.result: 'unavailable',
+                        Code.result: 2,
                         Code.message: result['message'],
                         Code.balance: result['htmlcode']
                     })
+                    db.session.commit()
 
                 else:
 
                     db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                        Code.result: 'error',
+                        Code.result: 3,
                         Code.message: result['message'],
                         Code.balance: result['htmlcode']
                     })
+                    db.session.commit()
 
             trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
             db.session.commit()
+            browser.quit()
 
             return render_template('buy-list.html')
 
         else:
+
             return render_template('buy-checklist.html')
 
     except:
@@ -233,21 +270,26 @@ def auto_charge():
         return render_template('buy-checklist.html')
 
 
-
 @app.route('/checkStatus', methods=['get'])
 def status():
 
+    db.create_all()
+
     email = request.args.get('email')
-    password = request.args.get('password')
+    code = request.args.get('code')
 
-    fileName = 'charge_status'
+    code_info = Code.query.filter_by(code=code).first()
 
-    if os.path.exists(fileName):
-        txt = open(fileName).read()
+    charge_status = code_info.result
+
+    if charge_status == 1:
+        return 'success'
+    elif charge_status == 2:
+        return 'unavailable'
+    elif charge_status == 0:
+        return 'checking'
     else:
-        txt = 'None'
-
-    return txt
+        return 'error'
 
 
 @app.route('/changeCaptcha', methods=['get'])
@@ -261,18 +303,17 @@ def changeCaptcha():
 # def addCode():
 
 
-@app.route('/answer_ajax')
-def answer_ajax():
-    email = request.args.get('email')
-    password = request.args.get('password')
-    codes = request.args.get('code0')
-
-    #search from db
-
-    return 'ok'
-    exit;
-
+# @app.route('/answer_ajax')
+# def answer_ajax():
+#     email = request.args.get('email')
+#     password = request.args.get('password')
+#     codes = request.args.get('code0')
+#
+#     #search from db
+#
+#     return 'ok'
+#     exit;
 
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True, port=4080)
+    app.run(debug=True, threaded=True, port=4000)

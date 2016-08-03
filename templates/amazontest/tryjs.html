@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>tryjs</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var rs = $("#mydiv p");
+            var sp = $("#mydiv span").text();
+            for (var i in rs){
+                alert(rs[i].text)
+            }
+        })
+
+
+    </script>
+
+</head>
+<body>
+<div id="mydiv">
+    <p>11111</p>
+    <p>22222</p>
+    <p>33333</p>
+    <p>44444</p>
+    <p>55555</p>
+    <span>is span</span>
+</div>
+</body>
+</html>

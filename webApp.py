@@ -5,6 +5,7 @@ import time
 import BrowserSaver
 import MySQLdb
 from flask_sqlalchemy import SQLAlchemy
+import demjson
 
 import amazonBrowser
 
@@ -16,8 +17,8 @@ sys.setdefaultencoding('utf-8')
 # app = Flask(__name__)
 app = Flask(__name__, static_url_path='')
 
-# session secret_key
-# app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
+# # session secret_key
+# # app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
 
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:sc07051989@localhost:3306/userData?charset=utf8'
@@ -25,20 +26,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:sc07051989@localhost:3306/
 db = SQLAlchemy(app)
 
 
-class User(db.Model):
-    __tablename__ = 'User'
-    id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.VARCHAR(10), nullable=False)
-    sum = db.Column(db.Integer, nullable=False)
-
-    def __init__(self, code, sum):
-        self.code = code
-        self.sum = sum
-
-    def __repr__(self):
-        return '<code: %s 金額: %f>' % (self.code, self.sum)
-
-
+# class User(db.Model):
+#     __tablename__ = 'User'
+#     id = db.Column(db.Integer, primary_key=True)
+#     code = db.Column(db.VARCHAR(10), nullable=False)
+#     sum = db.Column(db.Integer, nullable=False)
+#
+#     def __init__(self, code, sum):
+#         self.code = code
+#         self.sum = sum
+#
+#     def __repr__(self):
+#         return '<code: %s 金額: %f>' % (self.code, self.sum)
+#
+#
 class Trade(db.Model):
     """
     取引先のチャージ情報
@@ -113,80 +114,88 @@ def index():
     return render_template('amazon-check.html')
 
 
-@app.route('/amazon-login')
+@app.route('/amazon-login', methods=['get'])
 def amazon_login():
 
-    email = request.args.get('email')
-    password = request.args.get('password')
+    email_json = request.args.get('email')
+    password_json = request.args.get('password')
 
     captcha = request.args.get('captcha')
 
+    email = demjson.decode(email_json)
+    password = demjson.decode(password_json)
+
     if captcha:
-        result = amazonBrowser.amazon_login_main(email, password, captcha)
+        data = amazonBrowser.amazon_login_main(email, password, captcha)
     else:
-        result = amazonBrowser.amazon_login_main(email, password, False)
+        data = amazonBrowser.amazon_login_main(email, password, False)
 
     # 登録成功
-    if result[0]['code'] == 7:
+    if data[0]['code'] == 7:
         browser_list = BrowserSaver.Browsers()
-        browser_list.set_browser(email, result[1])
+        browser_list.set_browser(email, data[1])
 
-        codes = []
 
-        all_code = User.query.all()
-        for code in all_code:
-            codes = codes + [code]
 
-        return render_template('buy-checklist.html',
-                               email=email,
-                               codes=codes)
+        # codes = []
+        #
+        # all_code = User.query.all()
+        # for code in all_code:
+        #     codes = codes + [code]
+        #
+        # return render_template('buy-checklist.html',
+        #                        email=email,
+        #                        codes=codes)
 
     # 認証画面がある場合
-    elif len(result) == 2 and result[1]['code'] == 0:
+    # elif len(result) == 2 and result[1]['code'] == 0:
+    #
+    #     browser_list = BrowserSaver.Browsers()
+    #     browser_list.set_browser(email, result[1]['browser'])
 
-        browser_list = BrowserSaver.Browsers()
-        browser_list.set_browser(email, result[1]['browser'])
+        # return render_template(
+        #     'amazon-check-img.html',
+        #     captcha=result[0]['htmlcode'],
+        #     email=email,
+        #     password=password
+        # )
 
-        return render_template(
-            'amazon-check-img.html',
-            captcha=result[0]['htmlcode'],
-            email=email,
-            password=password
-        )
+    # # 登録失敗の場合
+    # elif result[0]['code'] == 2:
+    #     print '登録失敗'
+    #     return render_template(
+    #         'amazon-error.html',
+    #         email=email,
+    #         password=password
+    #     )
+    #
+    # else:
+    #     print 'Error'
+    #     return render_template('amazon-check.html')
 
-    # 登録失敗の場合
-    elif result[0]['code'] == 2:
-        print '登録失敗'
-        return render_template(
-            'amazon-error.html',
-            email=email,
-            password=password
-        )
+    result = demjson.encode([data[0]])
 
-    else:
-        print 'Error'
-        return render_template('amazon-check.html')
+    return result
 
 
 @app.route('/buy-checklist', methods=['get'])
 def auto_charge():
 
-    email = request.args.get('email')
+    email_json = request.args.get('email')
+    codes_json = request.args.get('codes')
+
+    email = demjson.decode(email_json)
+    codes = demjson.decode(codes_json)
 
     db.create_all()
 
     # チャージ開始、ユーザのインフォメーションをダータベースに輸入する
 
-    get_code_from_user = User.query.all()
+    # get_code_from_user = User.query.all()
     set_code_for_trade = []
-    for user_code_data in get_code_from_user:
-        code_obj = Code(code=user_code_data.code, sum=user_code_data.sum)
+    for user_code_data in codes:
+        code_obj = Code(code=user_code_data.code, sum=user_code_data.par_amount)
         set_code_for_trade = set_code_for_trade + [code_obj]
-
-    # code1 = Code(code='code1111', sum=1000)
-    # code2 = Code(code='code2222', sum=2000)
-    # code3 = Code(code='code3333', sum=1500)
-    # code4 = Code(code='code4444', sum=2300)
 
     trade = Trade(email=email)
     # trade.codes = [code1, code2, code3, code4]
@@ -255,11 +264,16 @@ def auto_charge():
             db.session.commit()
             browser.quit()
 
-            return render_template('buy-list.html')
+            # return render_template('buy-list.html')
+        result = {'result': True}
 
-        else:
+        demjson.encode(result)
+        return result
 
-            return render_template('buy-checklist.html')
+        # else:
+
+            # return render_template('buy-checklist.html')
+
 
     except:
 
@@ -267,7 +281,11 @@ def auto_charge():
 
         db.session.rollback()
 
-        return render_template('buy-checklist.html')
+        # return render_template('buy-checklist.html')
+        result = {'result': False}
+
+        demjson.encode(result)
+        return False
 
 
 @app.route('/checkStatus', methods=['get'])
@@ -278,16 +296,20 @@ def status():
     email = request.args.get('email')
     code = request.args.get('code')
 
-    code_info = Code.query.filter_by(code=code).first()
+    charge_status = 0
 
-    charge_status = code_info.result
+    while True:
+        time.sleep(3)
+        code_info = Code.query.filter_by(code=code).first()
+        charge_status = code_info.result
+
+        if charge_status != 0:
+            break
 
     if charge_status == 1:
         return 'success'
     elif charge_status == 2:
         return 'unavailable'
-    elif charge_status == 0:
-        return 'checking'
     else:
         return 'error'
 

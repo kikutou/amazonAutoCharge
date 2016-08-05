@@ -37,6 +37,11 @@ def amazon_login(browser, email, password, login_captcha):
         password_input_field = browser.find_by_id('ap_password')
         submit_button = browser.find_by_id('signInSubmit')
 
+        # htmlcode = browser.html
+        # create_status_text(htmlcode)
+
+
+
         if email_input_field and password_input_field and submit_button:
             email_input_field.fill(email)
             password_input_field.fill(password)
@@ -377,10 +382,10 @@ def amazon_captcha_input(browser, non_auto_captcha, captcha_input_field, code, c
         }
 
 
-# def create_status_text(txt):
-#
-#     captcha_file = codecs.open('charge_status', 'w')
-#     captcha_file.write(txt)
+def create_status_text(txt):
+
+    captcha_file = codecs.open('charge_status', 'w')
+    captcha_file.write(txt)
 
 
 def change_captcha(email):

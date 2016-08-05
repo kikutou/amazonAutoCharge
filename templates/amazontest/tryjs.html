@@ -7,10 +7,18 @@
     <script type="text/javascript">
         $(function () {
             var rs = $("#mydiv p");
-            var sp = $("#mydiv span").text();
-            for (var i in rs){
-                alert(rs[i].text)
-            }
+            //alert(rs);
+            var a = [];
+            rs.each(function (index,obj) {
+                var b = $(obj).text();
+                a.push(b);
+
+            });
+            alert(a[4]);
+
+//            for (var i in rs){
+//                alert(rs[i].text())
+//            }
         })
 
 
@@ -25,6 +33,7 @@
     <p>44444</p>
     <p>55555</p>
     <span>is span</span>
+    <p id="testp"></p>
 </div>
 </body>
 </html>

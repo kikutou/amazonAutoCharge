@@ -22,7 +22,7 @@ app = Flask(__name__, static_url_path='')
 # # app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
 
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:sc07051989@localhost:3306/userData?charset=utf8'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/userData?charset=utf8'
 # 初始化
 db = SQLAlchemy(app)
 
@@ -191,7 +191,7 @@ def auto_charge():
 
     codes = request.form.getlist("codes[]")
 
-    print 'charge_codes' + '---' + email
+    print 'charge_codes' + '---' + codes
 
 
 

@@ -192,6 +192,10 @@ def auto_charge():
     codes = request.form.getlist("codes[]")
 
     #print 'charge_codes' + '---' + codes
+    print len(codes)
+    print type(codes)
+    for code in codes:
+        print code
 
 
 

@@ -187,11 +187,11 @@ def amazon_login():
 @app.route('/buy-checklist', methods=['get'])
 def auto_charge():
 
-    email_json = request.args.get('email')
-    codes_json = request.args.get('codes')
+    email = request.form['email']
+    codes = request.form['codes']
 
-    email = demjson.decode(email_json)
-    codes = demjson.decode(codes_json)
+    # email = demjson.decode(email_json)
+    # codes = demjson.decode(codes_json)
 
     db.create_all()
 
@@ -273,8 +273,8 @@ def auto_charge():
             # return render_template('buy-list.html')
         result = {'result': True}
 
-        demjson.encode(result)
-        return result
+        #demjson.encode(result)
+        return flask.jsonify(result)
 
         # else:
 

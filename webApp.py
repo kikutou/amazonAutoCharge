@@ -189,7 +189,7 @@ def auto_charge():
 
     email = request.form['email']
 
-    print email
+    print 'charge_email'+email
 
     codes = request.form['codes']
 

@@ -179,7 +179,7 @@ def amazon_login():
     #result = demjson.encode([data[0]])
     result = data[0]
 
-    print result
+    print result['code']
 
     return flask.jsonify(result)
 

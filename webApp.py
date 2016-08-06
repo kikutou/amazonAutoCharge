@@ -184,10 +184,13 @@ def amazon_login():
     return flask.jsonify(result)
 
 
-@app.route('/buy-checklist', methods=['get'])
+@app.route('/buy-checklist', methods=['post'])
 def auto_charge():
 
     email = request.form['email']
+
+    print email
+
     codes = request.form['codes']
 
     # email = demjson.decode(email_json)

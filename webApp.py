@@ -187,7 +187,7 @@ def amazon_login():
 @app.route('/buy-checklist', methods=['post'])
 def auto_charge():
 
-    print request.data
+    print request.body.raw
 
     email = request.form['email']
 

@@ -1,4 +1,5 @@
 # coding=utf-8
+import flask
 from flask import Flask, request, render_template, session, redirect
 import os
 import time
@@ -114,16 +115,18 @@ def index():
     return render_template('amazon-check.html')
 
 
-@app.route('/amazon-login', methods=['get'])
+@app.route('/amazon-login', methods=['post'])
 def amazon_login():
 
-    email_json = request.args.get('email')
-    password_json = request.args.get('password')
+    print request.form['email']
+
+    email = request.form['email']
+    password = request.form['password']
 
     captcha = request.args.get('captcha')
 
-    email = demjson.decode(email_json)
-    password = demjson.decode(password_json)
+    #email = demjson.decode(email_json)
+    #password = demjson.decode(password_json)
 
     if captcha:
         data = amazonBrowser.amazon_login_main(email, password, captcha)
@@ -173,9 +176,12 @@ def amazon_login():
     #     print 'Error'
     #     return render_template('amazon-check.html')
 
-    result = demjson.encode([data[0]])
+    #result = demjson.encode([data[0]])
+    result = data[0]
 
-    return result
+    print result
+
+    return flask.jsonify(result)
 
 
 @app.route('/buy-checklist', methods=['get'])
@@ -338,4 +344,4 @@ def changeCaptcha():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, threaded=True, port=4000)
+    app.run(debug=True, threaded=True, port=4000, host='0.0.0.0')

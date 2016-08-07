@@ -275,67 +275,67 @@ def amazon_charge(browser, code):
 
 # Wang 2016/07/05
 def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field, code, code_input_field, confirm_button):
-    try:
+    # try:
 
-        # 画像認証がある場合、その画像のurlを取得する
-        captchaSrc = captcha_image_field['src']
+    # 画像認証がある場合、その画像のurlを取得する
+    captchaSrc = captcha_image_field['src']
 
-        # 画像をローカルにダウンロードする
-        path = str(time.time()) + ".jpg"
-        urllib.urlretrieve(captchaSrc, path)
+    # 画像をローカルにダウンロードする
+    path = str(time.time()) + ".jpg"
+    urllib.urlretrieve(captchaSrc, path)
 
-        # 画像を文字に変更する
-        image = Image.open(path)
-        image.load()
+    # 画像を文字に変更する
+    image = Image.open(path)
+    image.load()
 
-        print 'get image load'
-        captcha = pytesseract.image_to_string(image).replace(" ", "").replace("　", "")
-        print 'get image str'
+    print 'get image load'
+    captcha = pytesseract.image_to_string(image).replace(" ", "").replace("　", "")
+    print 'get image str'
 
-        captcha = re.sub('[^a-zA-Z0-9]', "", captcha)
+    captcha = re.sub('[^a-zA-Z0-9]', "", captcha)
 
-        captcha_get = True
+    captcha_get = True
 
-        print captcha
+    print captcha
 
-        if captcha == "":
-            charge_captcha_change = browser.find_by_id('gc-redemption-form-heading').value
+    if captcha == "":
+        charge_captcha_change = browser.find_by_id('gc-redemption-form-heading').value
 
-            if charge_captcha_change:
-                captcha = 'ERROR'
-            else:
-                print 'captcha is empty'
-
-                captcha_get = False
-
-                return captcha_get
-
-        # ダウンロードされた画像ファイルを削除する
-        os.remove(path)
-
-        # 再ロ入力する
-        if code_input_field and captcha_input_field and confirm_button:
-
-            code_input_field.fill(code)
-            captcha_input_field.fill(captcha)
-            confirm_button.click()
-
+        if charge_captcha_change:
+            captcha = 'ERROR'
         else:
-            raise Exception('ログイン画像認証が失敗しました。')
+            print 'captcha is empty'
 
-        return captcha_get
+            captcha_get = False
 
-    except:
+            return captcha_get
 
-        print 'some problem in captcha'
+    # ダウンロードされた画像ファイルを削除する
+    os.remove(path)
 
-        html_code = browser.html
+    # 再ロ入力する
+    if code_input_field and captcha_input_field and confirm_button:
 
-        return {
-            'code': 4,
-            'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
-            'htmlcode': html_code
-        }
+        code_input_field.fill(code)
+        captcha_input_field.fill(captcha)
+        confirm_button.click()
+
+    else:
+        raise Exception('ログイン画像認証が失敗しました。')
+
+    return captcha_get
+
+    # except:
+    #
+    #     print 'some problem in captcha'
+    #
+    #     html_code = browser.html
+    #
+    #     return {
+    #         'code': 4,
+    #         'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
+    #         'htmlcode': html_code
+    #     }
 
 
 def amazon_captcha_input(browser, non_auto_captcha, captcha_input_field, code, code_input_field, confirm_button):

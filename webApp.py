@@ -193,6 +193,8 @@ def auto_charge():
 
     codes = request.form.getlist("codes[]")
 
+    codes = demjson.decode(codes)
+
 
 
     #print 'charge_codes' + '---' + codes

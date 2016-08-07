@@ -9,6 +9,7 @@ from flask_sqlalchemy import SQLAlchemy
 import demjson
 import urllib2, urllib
 import requests
+import json
 
 import amazonBrowser
 
@@ -303,12 +304,12 @@ def auto_charge():
 
             report = {
                 'code': code,
-                'result': 1,
+                'result': '1',
                 'message': result['message']
             }
 
             print 'send report'
-            req = requests.post("https://153.121.38.177:9080/vnc_connect/db", data=report)
+            req = requests.post("https://153.121.38.177:9080/vnc_connect/db", data=json.dumps(report))
 
             print 'res'
             print req

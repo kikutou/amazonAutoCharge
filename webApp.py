@@ -10,6 +10,7 @@ import demjson
 import urllib2, urllib
 import requests
 import json
+from splinter import Browser
 
 import amazonBrowser
 
@@ -263,34 +264,42 @@ def auto_charge():
     for code in codes:
 
         result = amazonBrowser.amazon_charge_main(browser, code)
+        send_result = ""
 
         if result['code'] == 1:
 
-            db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                Code.result: 1,
-                Code.message: result['message'],
-                Code.balance: result['htmlcode'],
-                Code.amount: result['htmlcode']
-            })
-            db.session.commit()
+            send_result = '1'
+
+            # db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+            #     Code.result: send_result,
+            #     Code.message: result['message'],
+            #     Code.balance: result['htmlcode'],
+            #     Code.amount: result['htmlcode']
+            # })
+            # db.session.commit()
 
         elif result['code'] == 3:
 
-            db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                Code.result: 2,
-                Code.message: result['message'],
-                Code.balance: result['htmlcode']
-            })
-            db.session.commit()
+            send_result = '2'
+
+            # db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+            #     Code.result: 2,
+            #     Code.message: result['message'],
+            #     Code.balance: result['htmlcode']
+            # })
+            # db.session.commit()
 
         else:
 
-            db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                Code.result: 3,
-                Code.message: result['message'],
-                Code.balance: result['htmlcode']
-            })
-            db.session.commit()
+            send_result = '3'
+
+        db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+            Code.result: send_result,
+            Code.message: result['message'],
+            Code.balance: result['htmlcode'],
+            Code.amount: result['htmlcode']
+        })
+        db.session.commit()
 
         # Send report to PHP
         # report = [('code', code), ('result', '1'), ('message', result['message'])]
@@ -304,18 +313,27 @@ def auto_charge():
 
         report = {
             'code': code,
-            'result': '1',
+            'result': send_result,
             'message': result['message']
         }
 
         print 'send report'
-        req = requests.post("https://dev01.lifestrage.com/vnc_connect/db", data=json.dumps(report))
+        req = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report)
 
         print req.status_code
 
         print 'req'
         print req.text
         print req
+
+        # report = "code="+code+"&result="+send_result+"&message="+result['message']
+        #
+        # send_msg_browser = Browser('firefox')
+        # send_msg_url = 'https://dev01.lifestrage.com/vnc_connect/db?'+report
+        #
+        # send_msg_browser.visit(send_msg_url)
+
+
 
 
 

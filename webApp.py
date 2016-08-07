@@ -195,6 +195,7 @@ def auto_charge():
     print request.form
 
     email = request.form['email']
+    email = email.encode("utf-8")
     codes = []
 
     i = 1
@@ -223,6 +224,8 @@ def auto_charge():
     # get_code_from_user = User.query.all()
     set_code_for_trade = []
     for code in codes:
+
+        code = code.encode("utf-8") 
 
         print code
         print type(code)

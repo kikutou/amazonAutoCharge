@@ -189,19 +189,28 @@ def auto_charge():
 
     # print request.body.raw
 
+    # email = request.form['email']
+    #
+    # codes = request.form.getlist("codes[]")
+
+    print request.form
+
     email = request.form['email']
+    codes = []
 
-    codes = request.form.getlist("codes")
+    i = 1
+    while('code'+str(i) in request.form):
+        codes = codes + request.form['code'+str(i)]
+        i = i +1
 
-    # codes = demjson.decode(codes)
-
+    print codes
 
 
     #print 'charge_codes' + '---' + codes
-    print len(codes)
-    print type(codes)
-    for code in codes:
-        print code
+    # print len(codes)
+    # print type(codes)
+    # for code in codes:
+    #     print code
 
 
 

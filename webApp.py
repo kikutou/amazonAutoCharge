@@ -301,10 +301,10 @@ def auto_charge():
             print page
 
 
-            trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
-            db.session.commit()
-            browser.quit()
+        db.session.commit()
+        browser.quit()
 
         result = {'result': True}
 

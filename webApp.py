@@ -318,23 +318,14 @@ def auto_charge():
         }
 
         print 'send report'
-        req = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
+        response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
 
-        print req.status_code
+        print response.status_code
 
         print 'req'
-        print req.text
-        print req
-
-        # report = "code="+code+"&result="+send_result+"&message="+result['message']
-        #
-        # send_msg_browser = Browser('firefox')
-        # send_msg_url = 'https://dev01.lifestrage.com/vnc_connect/db?'+report
-        #
-        # response = send_msg_browser.visit(send_msg_url)
-        #
-        # print response
-
+        print response.text
+        print response
+        print response.content
 
 
 

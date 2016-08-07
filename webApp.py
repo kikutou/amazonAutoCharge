@@ -309,7 +309,7 @@ def auto_charge():
         }
 
         print 'send report'
-        req = requests.post("https://153.121.38.177:9080/vnc_connect/db", data=json.dumps(report))
+        req = requests.post("https://dev01.lifestrage.com/vnc_connect/db", data=json.dumps(report))
 
         print 'res'
         print req

@@ -7,6 +7,7 @@ import BrowserSaver
 import MySQLdb
 from flask_sqlalchemy import SQLAlchemy
 import demjson
+import urllib2, urllib
 
 import amazonBrowser
 
@@ -226,28 +227,18 @@ def auto_charge():
 
         code = code.encode("utf-8")
 
-        print code
-        print type(code)
-
         code_obj = Code(code=code)
         set_code_for_trade = set_code_for_trade + [code_obj]
 
     trade = Trade(email=email)
-    # trade.codes = [code1, code2, code3, code4]
+
     trade.codes = set_code_for_trade
 
     try:
-        # db.session.add_all([code1, code2, code3, code4])
+
         db.session.add_all(set_code_for_trade)
 
-        print 'sessiong add ok'
-
-        # print set_code_for_trade
-        # print type(set_code_for_trade)
-
         db.session.commit()
-
-        print 'sessiong commit ok'
 
         db.session.add(trade)
 
@@ -263,52 +254,58 @@ def auto_charge():
         #     code_str = code_data.code
         #     codes = codes + [code_str]
 
-        if email:
+        browser = BrowserSaver.Browsers().get_browser(email)
 
-            print 'email has'
+        amazonBrowser.view_amazon_charge(browser)
 
-            browser = BrowserSaver.Browsers().get_browser(email)
+        for code in codes:
 
-            amazonBrowser.view_amazon_charge(browser)
+            result = amazonBrowser.amazon_charge_main(browser, code)
 
-            for code in codes:
+            if result['code'] == 1:
 
-                result = amazonBrowser.amazon_charge_main(browser, code)
+                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                    Code.result: 1,
+                    Code.message: result['message'],
+                    Code.balance: result['htmlcode'],
+                    Code.amount: result['htmlcode']
+                })
+                db.session.commit()
 
-                if result['code'] == 1:
+            elif result['code'] == 3:
 
-                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                        Code.result: 1,
-                        Code.message: result['message'],
-                        Code.balance: result['htmlcode'],
-                        Code.amount: result['htmlcode']
-                    })
-                    db.session.commit()
+                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                    Code.result: 2,
+                    Code.message: result['message'],
+                    Code.balance: result['htmlcode']
+                })
+                db.session.commit()
 
-                elif result['code'] == 3:
+            else:
 
-                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                        Code.result: 2,
-                        Code.message: result['message'],
-                        Code.balance: result['htmlcode']
-                    })
-                    db.session.commit()
+                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                    Code.result: 3,
+                    Code.message: result['message'],
+                    Code.balance: result['htmlcode']
+                })
+                db.session.commit()
 
-                else:
+            # Send report to PHP
+            report = [('code', code), ('result', '1'), ('message', result['message'])]
+            report = urllib.urlencode(report)
+            path = 'https://153.121.38.177:9080/vnc_connect/db'
+            req = urllib2.Request(path, report)
+            req.add_header("Content-type", "application/x-www-form-urlencoded")
+            page = urllib2.urlopen(req).read()
+            print 'this is report page'
+            print page
 
-                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                        Code.result: 3,
-                        Code.message: result['message'],
-                        Code.balance: result['htmlcode']
-                    })
-                    db.session.commit()
 
             trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
             db.session.commit()
             browser.quit()
 
-            # return render_template('buy-list.html')
         result = {'result': True}
 
         #demjson.encode(result)

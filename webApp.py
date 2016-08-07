@@ -8,6 +8,7 @@ import MySQLdb
 from flask_sqlalchemy import SQLAlchemy
 import demjson
 import urllib2, urllib
+import requests
 
 import amazonBrowser
 
@@ -291,14 +292,26 @@ def auto_charge():
                 db.session.commit()
 
             # Send report to PHP
-            report = [('code', code), ('result', '1'), ('message', result['message'])]
-            report = urllib.urlencode(report)
-            path = 'https://153.121.38.177:9080/vnc_connect/db'
-            req = urllib2.Request(path, report)
-            req.add_header("Content-type", "application/x-www-form-urlencoded")
-            page = urllib2.urlopen(req).read()
+            # report = [('code', code), ('result', '1'), ('message', result['message'])]
+            # report = urllib.urlencode(report)
+            # path = 'https://153.121.38.177:9080/vnc_connect/db'
+            # req = urllib2.Request(path, report)
+            # req.add_header("Content-type", "application/x-www-form-urlencoded")
+            # page = urllib2.urlopen(req).read()
             # print 'this is report page'
             # print page
+
+            report = {
+                'code': code,
+                'result': 1,
+                'message': result['message']
+            }
+
+            req = requests.post("https://153.121.38.177:9080/vnc_connect/db", data=report)
+
+            print req
+
+            
 
 
         trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())

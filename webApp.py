@@ -237,105 +237,105 @@ def auto_charge():
     # trade.codes = [code1, code2, code3, code4]
     trade.codes = set_code_for_trade
 
-    try:
-        # db.session.add_all([code1, code2, code3, code4])
-        db.session.add_all(set_code_for_trade)
+    # try:
+    # db.session.add_all([code1, code2, code3, code4])
+    db.session.add_all(set_code_for_trade)
 
-        print 'sessiong add ok'
+    print 'sessiong add ok'
 
-        # print set_code_for_trade
-        # print type(set_code_for_trade)
+    # print set_code_for_trade
+    # print type(set_code_for_trade)
 
-        db.session.commit()
+    db.session.commit()
 
-        print 'sessiong commit ok'
+    print 'sessiong commit ok'
 
-        db.session.add(trade)
+    db.session.add(trade)
 
-        # codeをデータベースに取得する
+    # codeをデータベースに取得する
 
-        # codes = []
-        #
-        # code_all = db.session.query(Code).filter(Code.trade == trade).all()
+    # codes = []
+    #
+    # code_all = db.session.query(Code).filter(Code.trade == trade).all()
 
-        # code_all = Code.query.filter_by(trade=trade).all()
+    # code_all = Code.query.filter_by(trade=trade).all()
 
-        # for code_data in code_all:
-        #     code_str = code_data.code
-        #     codes = codes + [code_str]
+    # for code_data in code_all:
+    #     code_str = code_data.code
+    #     codes = codes + [code_str]
 
-        if email:
+    if email:
 
-            print 'email has'
-
-            browser = BrowserSaver.Browsers().get_browser(email)
-
-            amazonBrowser.view_amazon_charge(browser)
-
-            for code in codes:
-
-                result = amazonBrowser.amazon_charge_main(browser, code)
-
-                if result['code'] == 1:
-
-                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                        Code.result: 1,
-                        Code.message: result['message'],
-                        Code.balance: result['htmlcode'],
-                        Code.amount: result['htmlcode']
-                    })
-                    db.session.commit()
-
-                elif result['code'] == 3:
-
-                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                        Code.result: 2,
-                        Code.message: result['message'],
-                        Code.balance: result['htmlcode']
-                    })
-                    db.session.commit()
-
-                else:
-
-                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                        Code.result: 3,
-                        Code.message: result['message'],
-                        Code.balance: result['htmlcode']
-                    })
-                    db.session.commit()
-
-            trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-
-            db.session.commit()
-            browser.quit()
-
-            # return render_template('buy-list.html')
-        result = {'result': True}
-
-        #demjson.encode(result)
-        return flask.jsonify(result)
-
-        # else:
-
-            # return render_template('buy-checklist.html')
-
-
-    except:
-
-        # print 'エラーが発生しました'
-        print 'error occur'
-
-        db.session.rollback()
+        print 'email has'
 
         browser = BrowserSaver.Browsers().get_browser(email)
 
+        amazonBrowser.view_amazon_charge(browser)
+
+        for code in codes:
+
+            result = amazonBrowser.amazon_charge_main(browser, code)
+
+            if result['code'] == 1:
+
+                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                    Code.result: 1,
+                    Code.message: result['message'],
+                    Code.balance: result['htmlcode'],
+                    Code.amount: result['htmlcode']
+                })
+                db.session.commit()
+
+            elif result['code'] == 3:
+
+                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                    Code.result: 2,
+                    Code.message: result['message'],
+                    Code.balance: result['htmlcode']
+                })
+                db.session.commit()
+
+            else:
+
+                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                    Code.result: 3,
+                    Code.message: result['message'],
+                    Code.balance: result['htmlcode']
+                })
+                db.session.commit()
+
+        trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
+        db.session.commit()
         browser.quit()
 
-        # return render_template('buy-checklist.html')
-        result = {'result': False}
+        # return render_template('buy-list.html')
+    result = {'result': True}
 
-        #demjson.encode(result)
-        return flask.jsonify(result)
+    #demjson.encode(result)
+    return flask.jsonify(result)
+
+    # else:
+
+        # return render_template('buy-checklist.html')
+
+
+    # except:
+    #
+    #     # print 'エラーが発生しました'
+    #     print 'error occur'
+    #
+    #     db.session.rollback()
+    #
+    #     browser = BrowserSaver.Browsers().get_browser(email)
+    #
+    #     browser.quit()
+    #
+    #     # return render_template('buy-checklist.html')
+    #     result = {'result': False}
+    #
+    #     #demjson.encode(result)
+    #     return flask.jsonify(result)
 
 
 @app.route('/checkStatus', methods=['get'])

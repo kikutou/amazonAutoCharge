@@ -309,9 +309,10 @@ def auto_charge():
 
             req = requests.post("https://153.121.38.177:9080/vnc_connect/db", data=report)
 
+            print 'res'
             print req
 
-            
+
 
 
         trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())

@@ -225,7 +225,7 @@ def auto_charge():
     set_code_for_trade = []
     for code in codes:
 
-        code = code.encode("utf-8") 
+        code = code.encode("utf-8")
 
         print code
         print type(code)
@@ -322,7 +322,7 @@ def auto_charge():
 
     except:
 
-        print 'エラーが発生しました'
+        # print 'エラーが発生しました'
         print 'error occur'
 
         db.session.rollback()

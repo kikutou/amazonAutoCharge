@@ -243,8 +243,8 @@ def auto_charge():
 
         print 'sessiong add ok'
 
-        print set_code_for_trade
-        print type(set_code_for_trade)
+        # print set_code_for_trade
+        # print type(set_code_for_trade)
 
         db.session.commit()
 

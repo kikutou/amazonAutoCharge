@@ -311,7 +311,10 @@ def auto_charge():
         print 'send report'
         req = requests.post("https://dev01.lifestrage.com/vnc_connect/db", data=json.dumps(report))
 
-        print 'res'
+        print req.status_code
+
+        print 'req'
+        print req.text
         print req
 
 

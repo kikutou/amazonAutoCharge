@@ -223,6 +223,10 @@ def auto_charge():
     # get_code_from_user = User.query.all()
     set_code_for_trade = []
     for code in codes:
+
+        print code
+        print type(code)
+
         code_obj = Code(code=code)
         set_code_for_trade = set_code_for_trade + [code_obj]
 
@@ -235,6 +239,9 @@ def auto_charge():
         db.session.add_all(set_code_for_trade)
 
         print 'sessiong add ok'
+
+        print set_code_for_trade
+        print type(set_code_for_trade)
 
         db.session.commit()
 
@@ -316,6 +323,10 @@ def auto_charge():
         print 'error occur'
 
         db.session.rollback()
+
+        browser = BrowserSaver.Browsers().get_browser(email)
+
+        browser.quit()
 
         # return render_template('buy-checklist.html')
         result = {'result': False}

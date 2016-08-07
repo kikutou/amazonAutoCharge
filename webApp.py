@@ -297,8 +297,8 @@ def auto_charge():
             req = urllib2.Request(path, report)
             req.add_header("Content-type", "application/x-www-form-urlencoded")
             page = urllib2.urlopen(req).read()
-            print 'this is report page'
-            print page
+            # print 'this is report page'
+            # print page
 
 
         trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())

@@ -236,118 +236,118 @@ def auto_charge():
 
     trade.codes = set_code_for_trade
 
-    try:
+    # try:
 
-        db.session.add_all(set_code_for_trade)
+    db.session.add_all(set_code_for_trade)
 
-        db.session.commit()
+    db.session.commit()
 
-        db.session.add(trade)
+    db.session.add(trade)
 
-        # codeをデータベースに取得する
+    # codeをデータベースに取得する
 
-        # codes = []
-        #
-        # code_all = db.session.query(Code).filter(Code.trade == trade).all()
+    # codes = []
+    #
+    # code_all = db.session.query(Code).filter(Code.trade == trade).all()
 
-        # code_all = Code.query.filter_by(trade=trade).all()
+    # code_all = Code.query.filter_by(trade=trade).all()
 
-        # for code_data in code_all:
-        #     code_str = code_data.code
-        #     codes = codes + [code_str]
+    # for code_data in code_all:
+    #     code_str = code_data.code
+    #     codes = codes + [code_str]
 
-        browser = BrowserSaver.Browsers().get_browser(email)
+    browser = BrowserSaver.Browsers().get_browser(email)
 
-        amazonBrowser.view_amazon_charge(browser)
+    amazonBrowser.view_amazon_charge(browser)
 
-        for code in codes:
+    for code in codes:
 
-            result = amazonBrowser.amazon_charge_main(browser, code)
+        result = amazonBrowser.amazon_charge_main(browser, code)
 
-            if result['code'] == 1:
+        if result['code'] == 1:
 
-                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                    Code.result: 1,
-                    Code.message: result['message'],
-                    Code.balance: result['htmlcode'],
-                    Code.amount: result['htmlcode']
-                })
-                db.session.commit()
+            db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                Code.result: 1,
+                Code.message: result['message'],
+                Code.balance: result['htmlcode'],
+                Code.amount: result['htmlcode']
+            })
+            db.session.commit()
 
-            elif result['code'] == 3:
+        elif result['code'] == 3:
 
-                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                    Code.result: 2,
-                    Code.message: result['message'],
-                    Code.balance: result['htmlcode']
-                })
-                db.session.commit()
+            db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                Code.result: 2,
+                Code.message: result['message'],
+                Code.balance: result['htmlcode']
+            })
+            db.session.commit()
 
-            else:
+        else:
 
-                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                    Code.result: 3,
-                    Code.message: result['message'],
-                    Code.balance: result['htmlcode']
-                })
-                db.session.commit()
+            db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                Code.result: 3,
+                Code.message: result['message'],
+                Code.balance: result['htmlcode']
+            })
+            db.session.commit()
 
-            # Send report to PHP
-            # report = [('code', code), ('result', '1'), ('message', result['message'])]
-            # report = urllib.urlencode(report)
-            # path = 'https://153.121.38.177:9080/vnc_connect/db'
-            # req = urllib2.Request(path, report)
-            # req.add_header("Content-type", "application/x-www-form-urlencoded")
-            # page = urllib2.urlopen(req).read()
-            # print 'this is report page'
-            # print page
+        # Send report to PHP
+        # report = [('code', code), ('result', '1'), ('message', result['message'])]
+        # report = urllib.urlencode(report)
+        # path = 'https://153.121.38.177:9080/vnc_connect/db'
+        # req = urllib2.Request(path, report)
+        # req.add_header("Content-type", "application/x-www-form-urlencoded")
+        # page = urllib2.urlopen(req).read()
+        # print 'this is report page'
+        # print page
 
-            report = {
-                'code': code,
-                'result': '1',
-                'message': result['message']
-            }
+        report = {
+            'code': code,
+            'result': '1',
+            'message': result['message']
+        }
 
-            print 'send report'
-            req = requests.post("https://153.121.38.177:9080/vnc_connect/db", data=json.dumps(report))
+        print 'send report'
+        req = requests.post("https://153.121.38.177:9080/vnc_connect/db", data=json.dumps(report))
 
-            print 'res'
-            print req
-
-
+        print 'res'
+        print req
 
 
-        trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-
-        db.session.commit()
-        browser.quit()
-
-        result = {'result': True}
-
-        #demjson.encode(result)
-        return flask.jsonify(result)
-
-        # else:
-
-            # return render_template('buy-checklist.html')
 
 
-    except:
+    trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
-        # print 'エラーが発生しました'
-        print 'error occur'
+    db.session.commit()
+    browser.quit()
 
-        db.session.rollback()
+    result = {'result': True}
 
-        browser = BrowserSaver.Browsers().get_browser(email)
+    #demjson.encode(result)
+    return flask.jsonify(result)
 
-        browser.quit()
+    # else:
 
         # return render_template('buy-checklist.html')
-        result = {'result': False}
 
-        #demjson.encode(result)
-        return flask.jsonify(result)
+
+    # except:
+    #
+    #     # print 'エラーが発生しました'
+    #     print 'error occur'
+    #
+    #     db.session.rollback()
+    #
+    #     browser = BrowserSaver.Browsers().get_browser(email)
+    #
+    #     browser.quit()
+    #
+    #     # return render_template('buy-checklist.html')
+    #     result = {'result': False}
+    #
+    #     #demjson.encode(result)
+    #     return flask.jsonify(result)
 
 
 @app.route('/checkStatus', methods=['get'])

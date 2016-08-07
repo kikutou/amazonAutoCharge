@@ -200,7 +200,7 @@ def auto_charge():
 
     i = 1
     while('code'+str(i) in request.form):
-        codes = codes + request.form['code'+str(i)]
+        codes = codes + [request.form['code'+str(i)]]
         i = i +1
 
     print codes

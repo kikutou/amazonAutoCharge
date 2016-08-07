@@ -309,7 +309,7 @@ def auto_charge():
             browser.quit()
 
             # return render_template('buy-list.html')
-        result = {'result': 'true'}
+        result = {'result': True}
 
         #demjson.encode(result)
         return flask.jsonify(result)
@@ -331,7 +331,7 @@ def auto_charge():
         browser.quit()
 
         # return render_template('buy-checklist.html')
-        result = {'result': 'false'}
+        result = {'result': False}
 
         #demjson.encode(result)
         return flask.jsonify(result)

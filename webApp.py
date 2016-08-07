@@ -234,23 +234,29 @@ def auto_charge():
         # db.session.add_all([code1, code2, code3, code4])
         db.session.add_all(set_code_for_trade)
 
+        print 'sessiong add ok'
+
         db.session.commit()
+
+        print 'sessiong commit ok'
 
         db.session.add(trade)
 
         # codeをデータベースに取得する
 
-        codes = []
-
-        code_all = db.session.query(Code).filter(Code.trade == trade).all()
+        # codes = []
+        #
+        # code_all = db.session.query(Code).filter(Code.trade == trade).all()
 
         # code_all = Code.query.filter_by(trade=trade).all()
 
-        for code_data in code_all:
-            code_str = code_data.code
-            codes = codes + [code_str]
+        # for code_data in code_all:
+        #     code_str = code_data.code
+        #     codes = codes + [code_str]
 
         if email:
+
+            print 'email has'
 
             browser = BrowserSaver.Browsers().get_browser(email)
 

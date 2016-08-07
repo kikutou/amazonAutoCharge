@@ -191,9 +191,9 @@ def auto_charge():
 
     email = request.form['email']
 
-    codes = request.form.getlist("codes[]")
+    codes = request.form.getlist("codes")
 
-    codes = demjson.decode(codes)
+    # codes = demjson.decode(codes)
 
 
 

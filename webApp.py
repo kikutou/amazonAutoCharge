@@ -96,9 +96,8 @@ class Code(db.Model):
 
     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
 
-    def __init__(self, code, sum, result=None, message=None, balance=None, amount=None):
+    def __init__(self, code, result=None, message=None, balance=None, amount=None):
         self.code = code
-        self.sum = sum
         if result is None:
             result = 0
         self.result = result
@@ -223,8 +222,8 @@ def auto_charge():
 
     # get_code_from_user = User.query.all()
     set_code_for_trade = []
-    for user_code_data in codes:
-        code_obj = Code(code=user_code_data.code, sum=user_code_data.par_amount)
+    for code in codes:
+        code_obj = Code(code=code)
         set_code_for_trade = set_code_for_trade + [code_obj]
 
     trade = Trade(email=email)

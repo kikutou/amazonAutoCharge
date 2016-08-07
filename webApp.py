@@ -187,11 +187,13 @@ def amazon_login():
 @app.route('/buy-checklist', methods=['post'])
 def auto_charge():
 
-    print request.body.raw
+    # print request.body.raw
 
     email = request.form['email']
 
     codes = request.form.getlist("codes[]")
+
+
 
     #print 'charge_codes' + '---' + codes
     print len(codes)

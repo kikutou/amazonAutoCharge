@@ -324,8 +324,10 @@ def auto_charge():
 
             print 'req'
             print response.text
+            print response.text['result']
             print response
             print response.content
+            print response.content['result']
 
 
 

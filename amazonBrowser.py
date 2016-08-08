@@ -61,7 +61,18 @@ def amazon_login(browser, email, password, login_captcha):
 
         browser.driver.save_screenshot('./your_screenshot.png')
 
-    return amazon_captcha_check(browser, password, login_captcha)
+        gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+
+        if gift_link:
+            html_code = browser.html
+            return {
+                'code': 7,
+                'message': "ユーザー登録成功しました",
+                'htmlcode': html_code
+            }
+        else:
+
+            return amazon_captcha_check(browser, password, login_captcha)
 
 
 def amazon_captcha_check(browser, password, login_captcha):

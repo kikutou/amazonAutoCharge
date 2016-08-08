@@ -324,7 +324,10 @@ def auto_charge():
 
             print 'req'
             print response.text
-            # print response.text['result']
+
+            jsondata = json.dumps(response.text)
+
+            print jsondata['result']
             print response
             print response.content
             # print response.content['result']

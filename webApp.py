@@ -343,6 +343,9 @@ def auto_charge():
         db.session.commit()
         browser.quit()
 
+        # データベースの削除
+        db.drop_all()
+
         result = {'result': True}
 
         #demjson.encode(result)

@@ -200,13 +200,16 @@ def auto_charge():
     email = request.form['email']
     email = email.encode("utf-8")
     codes = []
+    trade_codes = []
 
     i = 1
     while('code'+str(i) in request.form):
         codes = codes + [request.form['code'+str(i)]]
+        trade_codes = trade_codes + [request.form['trade_code'+str(i)]]
         i = i +1
 
     print codes
+    print trade_codes
 
 
     #print 'charge_codes' + '---' + codes
@@ -261,10 +264,12 @@ def auto_charge():
 
         amazonBrowser.view_amazon_charge(browser)
 
+        j = 0
         for code in codes:
 
             result = amazonBrowser.amazon_charge_main(browser, code)
             send_result = ""
+            trade_code = trade_codes[j]
 
             if result['code'] == 1:
 
@@ -314,8 +319,11 @@ def auto_charge():
             report = {
                 'code': code,
                 'result': send_result,
-                'message': result['message']
+                'message': result['message'],
+                'trade_code': trade_code
             }
+
+            j = j + 1
 
             print 'send report'
             response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
@@ -334,10 +342,6 @@ def auto_charge():
             print response.content
             # print response.content['result']
 
-
-
-
-
         trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
         db.session.commit()
@@ -348,13 +352,12 @@ def auto_charge():
 
         result = {'result': True}
 
-        #demjson.encode(result)
+        # demjson.encode(result)
         return flask.jsonify(result)
 
         # else:
 
             # return render_template('buy-checklist.html')
-
 
     except:
 
@@ -405,22 +408,6 @@ def changeCaptcha():
     email = request.args.get('email')
 
     return amazonBrowser.change_captcha(email)
-
-
-# @app.route('/addCode', methods=['get'])
-# def addCode():
-
-
-# @app.route('/answer_ajax')
-# def answer_ajax():
-#     email = request.args.get('email')
-#     password = request.args.get('password')
-#     codes = request.args.get('code0')
-#
-#     #search from db
-#
-#     return 'ok'
-#     exit;
 
 
 if __name__ == '__main__':

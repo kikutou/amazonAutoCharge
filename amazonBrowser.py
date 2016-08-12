@@ -40,8 +40,6 @@ def amazon_login(browser, email, password, login_captcha):
         # htmlcode = browser.html
         # create_status_text(htmlcode)
 
-
-
         if email_input_field and password_input_field and submit_button:
             email_input_field.fill(email)
             password_input_field.fill(password)

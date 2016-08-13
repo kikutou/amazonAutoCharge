@@ -57,6 +57,10 @@ def amazon_login(browser, email, password, login_captcha):
 
         if gift_link:
 
+            # テスト用
+            browser_list = BrowserSaver.Browsers()
+            browser_list.set_browser(email, browser)
+
             return {
                 'code': 7,
                 'message': "ユーザー登録成功しました",
@@ -109,7 +113,14 @@ def amazon_login_fail_check(browser, password, login_captcha):
 
         print result
 
-        if login_email_missing_alert\
+        if result.find(unicode('お客様のアカウントを強力に保護するため、パスワードを再入力してから、下の画像に表示されている文字を入力してください。', 'utf8')) != -1\
+                or result.find(unicode('画像に表示されている文字を半角で入力してください。', 'utf8')) != -1:
+
+            return {
+                'code': 6,
+                'message': '画像認証が失敗しました。',
+            }
+        elif login_email_missing_alert\
                 or login_password_missing_alert\
                 or result.find(unicode('メールアドレスまたはパスワードが正しくありません。', 'utf8')) != -1\
                 or result.find(unicode('パスワードの入力', 'utf8')) != -1\
@@ -120,13 +131,6 @@ def amazon_login_fail_check(browser, password, login_captcha):
             return {
                 'code': 2,
                 'message': 'アカウントまたはパスワードが間違いました。',
-            }
-        elif result.find(unicode('お客様のアカウントを強力に保護するため、パスワードを再入力してから、下の画像に表示されている文字を入力してください。', 'utf8')) != -1\
-                or result.find(unicode('画像に表示されている文字を半角で入力してください。', 'utf8')) != -1:
-
-            return {
-                'code': 6,
-                'message': '画像認証が失敗しました。',
             }
 
     print 'go to charge page'
@@ -450,7 +454,7 @@ def amazon_login_main(email, password, login_captcha):
         return result
 
     else:
-        time.sleep(1)
+
         browser.quit()
         # vdisplay.stop()
         return result
@@ -487,6 +491,11 @@ if __name__ == '__main__':
             'email': 'nightblizzard@sina.com',
             'password': 'sc07051989',
             'codes': ['code0', 'code1', 'code2', 'code3']
+            #'email': 'juteng2005@gmail.com',
+            #'password': 'Juteng378084190',
+            #'codes': ['AQHPZDE8PRZDCMD', 'AQHZJSJQQGW7EYZ']
+            #'codes': ['AQHPZDE8PRZDCMD', 'AQHZJSJQQGW7EGP']
+
         },
         # {
         #     'email': '512317052@qq.com',
@@ -500,11 +509,27 @@ if __name__ == '__main__':
         # },
     ]
 
+    result = []
+
     for record in data:
-        result_array = amazon_login_main(record['email'], record['password'], record['codes'], False)
-        result_count = len(result_array)
-        for result_key in range(0, result_count):
-            print result_array[result_key]['code']
+        login_result = amazon_login_main(record['email'], record['password'], False)
+        if login_result[0]['code'] == 7:
+            browser = BrowserSaver.Browsers().get_browser(record['email'])
+
+            view_amazon_charge(browser)
+
+            for code in record['codes']:
+
+                charge_result = amazon_charge_main(browser, code)
+
+                result = result + [charge_result]
+
+                if charge_result['code'] == 1:
+                    break
+
+    result_count = len(result)
+    for result_key in range(0, result_count):
+        print result[result_key]['code']
 
     """
     data = {

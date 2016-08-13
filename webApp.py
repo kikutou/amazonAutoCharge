@@ -204,13 +204,6 @@ def auto_charge():
                     # Code.amount: result['html_code_after_charge']
                 })
 
-                # Code.query.filter_by(code=code, trade=trade).update({
-                #     Code.result: send_result,
-                #     Code.message: result['message'],
-                #     Code.balance: result['html_code_before_charge'],
-                #     Code.amount: result['html_code_after_charge']
-                # })
-
                 db.session.commit()
 
                 # Send report to PHP

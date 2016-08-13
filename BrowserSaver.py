@@ -9,17 +9,15 @@ class Browsers(object):
         return cls.__instance
 
     def set_browser(self, id, browser):
+
+        for __id, __browser in self.__browsers.items():
+            if __browser is None:
+                self.__browsers.pop(__id)
+
         self.__browsers[id] = browser
 
     def get_browser(self, id):
-
-        __browser = self.__browsers[id]
-
-        self.__browsers.pop(id)
-
-        return __browser
-
-        # return self.__browsers[id]
+        return self.__browsers[id]
 
 
 # class Xvfb(object):

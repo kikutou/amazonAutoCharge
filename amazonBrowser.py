@@ -228,8 +228,43 @@ def amazon_charge(browser, code):
 
     print 'wait for charge result'
 
+    success_result_field = browser.find_by_id('alertRedemptionSuccess')
+    success_account_field = browser.find_by_id('gc-redemption-success-summary')
+
+    gift_charged_message = browser.find_by_id('gc-redemption-info-message')
+
     result_field = browser.find_by_css('h4.a-alert-heading')
-    if result_field:
+
+    if success_result_field:
+
+        html_code_after_charge = browser.html
+
+        # チャージられた金額
+        result = result_field.value.replace(unicode("がお客様のギフト券アカウントに追加されました。"), "")
+
+        account = browser.find_by_id('gc-current-balance').value
+
+        return {
+            'code': 1,
+            'message': result,
+            'html_code_before_charge': html_code_before_charge,
+            'html_code after_charge': html_code_after_charge
+        }
+
+    elif gift_charged_message:
+
+        html_code_after_charge = browser.html
+
+        result = browser.find_by_css('div.a-alert-content').value
+
+        return {
+            'code': 3,
+            'message': result,
+            'html_code_before_charge': html_code_before_charge,
+            'html_code after_charge': html_code_after_charge
+        }
+
+    elif result_field:
         result = result_field.value
 
         if result.find(unicode('ギフト券番号は無効です','utf8')) != -1:
@@ -259,7 +294,7 @@ def amazon_charge(browser, code):
             html_code_after_charge = browser.html
 
             return {
-                'code': 1,
+                'code': 4,
                 'message': result,
                 'html_code_before_charge': html_code_before_charge,
                 'html_code after_charge': html_code_after_charge
@@ -537,6 +572,7 @@ if __name__ == '__main__':
     result_count = len(result)
     for result_key in range(0, result_count):
         print result[result_key]['code']
+        print result[result_key]['message']
 
     """
     data = {

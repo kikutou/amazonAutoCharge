@@ -281,9 +281,7 @@ def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field,
         image = Image.open(path)
         image.load()
 
-        print 'get image load'
         captcha = pytesseract.image_to_string(image).replace(" ", "").replace("　", "")
-        print 'get image str'
 
         captcha = re.sub('[^a-zA-Z0-9]', "", captcha)
 

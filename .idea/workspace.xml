@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/BrowserSaver.py" afterPath="$PROJECT_DIR$/BrowserSaver.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amazonBrowser.py" afterPath="$PROJECT_DIR$/amazonBrowser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/write.py" afterPath="$PROJECT_DIR$/write.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -36,11 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="amazonBrowser.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="amazonBrowser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="262" column="52" selection-start-line="262" selection-start-column="52" selection-end-line="262" selection-end-column="52" />
+            <state relative-caret-position="140">
+              <caret line="344" column="0" selection-start-line="344" selection-start-column="0" selection-end-line="344" selection-end-column="0" />
               <folding>
                 <element signature="e#15#26#0" expanded="true" />
               </folding>
@@ -51,8 +48,8 @@
       <file leaf-file-name="webApp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="67">
-              <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+            <state relative-caret-position="-128">
+              <caret line="157" column="14" selection-start-line="157" selection-start-column="14" selection-end-line="157" selection-end-column="14" />
               <folding>
                 <element signature="e#15#26#0" expanded="true" />
               </folding>
@@ -60,7 +57,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BrowserSaver.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BrowserSaver.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/BrowserSaver.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="165">
@@ -119,10 +116,10 @@
         <option value="$PROJECT_DIR$/templates/amazon-error.html" />
         <option value="$PROJECT_DIR$/templates/buy-checklist.html" />
         <option value="$PROJECT_DIR$/templates/amazon-check.html" />
-        <option value="$PROJECT_DIR$/amazonBrowser.py" />
         <option value="$PROJECT_DIR$/webApp.py" />
         <option value="$PROJECT_DIR$/write.py" />
         <option value="$PROJECT_DIR$/BrowserSaver.py" />
+        <option value="$PROJECT_DIR$/amazonBrowser.py" />
       </list>
     </option>
   </component>
@@ -528,7 +525,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32955974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32955974" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -904,31 +901,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="262" column="52" selection-start-line="262" selection-start-column="52" selection-end-line="262" selection-end-column="52" />
-          <folding>
-            <element signature="e#15#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/webApp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="67">
-          <caret line="248" column="0" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
-          <folding>
-            <element signature="e#15#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/BrowserSaver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webApp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-128">
+          <caret line="157" column="14" selection-start-line="157" selection-start-column="14" selection-end-line="157" selection-end-column="14" />
+          <folding>
+            <element signature="e#15#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="344" column="0" selection-start-line="344" selection-start-column="0" selection-end-line="344" selection-end-column="0" />
+          <folding>
+            <element signature="e#15#26#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

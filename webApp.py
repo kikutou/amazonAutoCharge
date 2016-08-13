@@ -245,11 +245,15 @@ def auto_charge():
                     db.session.add(trade)
                     db.session.commit()
 
+                    print "response text error"
+
                     result = {'result': False}
 
                     return flask.jsonify(result)
 
             except:
+
+                print "db update fail"
 
                 trade.status = 3
                 db.session.add(trade)

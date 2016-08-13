@@ -535,8 +535,8 @@ if __name__ == '__main__':
             # 'codes': ['code0', 'code1', 'code2', 'code3']
             'email': 'juteng2005@gmail.com',
             'password': 'Juteng378084190',
-            #'codes': ['AQHPZDE8PRZDCMD', 'AQHZJSJQQGW7EYZ']
-            'codes': ['AQHPZDE8PRZDCMD', 'AQHZJSJQQGW7EGP']
+            'codes': ['AQHPZDE8PRZDCMD', 'AQHZJSJQQGW7EYZ']
+            #'codes': ['AQHPZDE8PRZDCMD', 'AQHZJSJQQGW7EGP']
 
         },
         # {

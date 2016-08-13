@@ -1,17 +1,11 @@
 # coding=utf-8
-import flask
-from flask import Flask, request, render_template, session, redirect
-import os
 import time
-import BrowserSaver
-import MySQLdb
-from flask_sqlalchemy import SQLAlchemy
 import demjson
-import urllib2, urllib
 import requests
-import json
-from splinter import Browser
-
+import flask
+from flask import Flask, request, render_template
+from flask_sqlalchemy import SQLAlchemy
+import BrowserSaver
 import amazonBrowser
 
 import sys
@@ -19,11 +13,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-# app = Flask(__name__)
 app = Flask(__name__, static_url_path='')
-
-# # session secret_key
-# # app.secret_key = 'F12Zr47j\3yX R~X@H!jmM]Lwf/,?KT'
 
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/userData?charset=utf8'
@@ -31,20 +21,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/user
 db = SQLAlchemy(app)
 
 
-# class User(db.Model):
-#     __tablename__ = 'User'
-#     id = db.Column(db.Integer, primary_key=True)
-#     code = db.Column(db.VARCHAR(10), nullable=False)
-#     sum = db.Column(db.Integer, nullable=False)
-#
-#     def __init__(self, code, sum):
-#         self.code = code
-#         self.sum = sum
-#
-#     def __repr__(self):
-#         return '<code: %s 金額: %f>' % (self.code, self.sum)
-#
-#
 class Trade(db.Model):
     """
     取引先のチャージ情報
@@ -52,6 +28,7 @@ class Trade(db.Model):
     :param email:amazonログインイーメール
     :param start:チャージが始まる時間
     :param finish:チャージ終了の時間
+    :param status:取引処理状態(0:未処理, 1:処理中, 2:処理完了, 3:エラー発生)
     """
 
     __tablename__ = 'trades'
@@ -59,22 +36,20 @@ class Trade(db.Model):
     email = db.Column(db.String(120), nullable=False)
     start = db.Column(db.DateTime, nullable=True)
     finish = db.Column(db.DateTime, nullable=True)
+    status = db.Column(db.Integer, nullable=True)
 
     codes = db.relationship('Code', backref='trade')
 
-    def __init__(self, email, start=None, finish=None):
+    def __init__(self, email, start=None, finish=None, status=0):
         self.email = email
         if start is None:
             start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         self.start = start
         self.finish = finish
+        self.status = status
 
     def __repr__(self):
         return '<user %r traded at %s>' % (self.email, self.start)
-
-    # def save(self):
-    #     db.session.add(self)
-    #     db.session.commit()
 
 
 class Code(db.Model):
@@ -85,8 +60,8 @@ class Code(db.Model):
     :param sum:ギフト券金額
     :param result:チャージ結果(0: 確認中, 1: チャージ成功, 2: こーどは無効, 3: エラー発生, 4: ユーザーにメールを送信した)
     :param message:結果のメセージ
-    :param balance:チャージ前の残高(htmlcode)
-    :param amount:チャージ後の残高(htmlcode)
+    :param balance:チャージ前の残高(html_code)
+    :param amount:チャージ後の残高(html_code)
     """
 
     __tablename__ = 'codes'
@@ -114,22 +89,28 @@ class Code(db.Model):
 
 @app.route('/')
 def index():
+    """
+    テスト用
+    :return テスト画面を表示する。:
+    """
     return render_template('amazon-check.html')
 
 
 @app.route('/amazon-login', methods=['post'])
 def amazon_login():
-
-    print request.form['email']
+    """
+    amazonにログインする。
+    状況として、
+    ①ログインのメールアドレスとパスワードだけ
+    ②ログインのメールアドレス、パスワードと画像認証
+    :return　ログインの結果を返す:
+    """
+    print request.form['email'] + "のログインを開始する。"
 
     email = request.form['email']
     password = request.form['password']
 
     captcha = request.args.get('captcha')
-
-    #email = demjson.decode(email_json)
-    #password = demjson.decode(password_json)
-
     if captcha:
         data = amazonBrowser.amazon_login_main(email, password, captcha)
     else:
@@ -137,51 +118,11 @@ def amazon_login():
 
     # 登録成功
     if data[0]['code'] == 7:
+        # 登録成功の場合、このブラウザオブジェクトをゴロバルリストに保存する。
         browser_list = BrowserSaver.Browsers()
         browser_list.set_browser(email, data[1])
 
-
-
-        # codes = []
-        #
-        # all_code = User.query.all()
-        # for code in all_code:
-        #     codes = codes + [code]
-        #
-        # return render_template('buy-checklist.html',
-        #                        email=email,
-        #                        codes=codes)
-
-    # 認証画面がある場合
-    # elif len(result) == 2 and result[1]['code'] == 0:
-    #
-    #     browser_list = BrowserSaver.Browsers()
-    #     browser_list.set_browser(email, result[1]['browser'])
-
-        # return render_template(
-        #     'amazon-check-img.html',
-        #     captcha=result[0]['htmlcode'],
-        #     email=email,
-        #     password=password
-        # )
-
-    # # 登録失敗の場合
-    # elif result[0]['code'] == 2:
-    #     print '登録失敗'
-    #     return render_template(
-    #         'amazon-error.html',
-    #         email=email,
-    #         password=password
-    #     )
-    #
-    # else:
-    #     print 'Error'
-    #     return render_template('amazon-check.html')
-
-    #result = demjson.encode([data[0]])
     result = data[0]
-
-    print result['code']
 
     return flask.jsonify(result)
 
@@ -189,160 +130,136 @@ def amazon_login():
 @app.route('/buy-checklist', methods=['post'])
 def auto_charge():
 
-    # print request.body.raw
-
-    # email = request.form['email']
-    #
-    # codes = request.form.getlist("codes[]")
-
-    print request.form
-
     email = request.form['email']
     email = email.encode("utf-8")
     codes = []
     trade_codes = []
 
     i = 1
+
     while('code'+str(i) in request.form):
         codes = codes + [request.form['code'+str(i)]]
         trade_codes = trade_codes + [request.form['trade_code'+str(i)]]
-        i = i +1
+        i += 1
 
+    print "取得されたコードは："
     print codes
-    print trade_codes
-
-
-    #print 'charge_codes' + '---' + codes
-    # print len(codes)
-    # print type(codes)
-    # for code in codes:
-    #     print code
-
-
-
-    # email = demjson.decode(email_json)
-    # codes = demjson.decode(codes_json)
 
     db.create_all()
 
     # チャージ開始、ユーザのインフォメーションをダータベースに輸入する
-
-    # get_code_from_user = User.query.all()
     set_code_for_trade = []
     for code in codes:
-
         code = code.encode("utf-8")
-
         code_obj = Code(code=code)
         set_code_for_trade = set_code_for_trade + [code_obj]
 
     trade = Trade(email=email)
-
     trade.codes = set_code_for_trade
 
     try:
 
         db.session.add_all(set_code_for_trade)
 
-        db.session.commit()
-
         db.session.add(trade)
 
-        # codeをデータベースに取得する
-
-        # codes = []
-        #
-        # code_all = db.session.query(Code).filter(Code.trade == trade).all()
-
-        # code_all = Code.query.filter_by(trade=trade).all()
-
-        # for code_data in code_all:
-        #     code_str = code_data.code
-        #     codes = codes + [code_str]
+        db.session.commit()
 
         browser = BrowserSaver.Browsers().get_browser(email)
 
         amazonBrowser.view_amazon_charge(browser)
 
+        # 取引状態を処理にします
+        trade.status = 1
+        db.session.add(trade)
+        db.session.commit()
+
         j = 0
         for code in codes:
 
-            result = amazonBrowser.amazon_charge_main(browser, code)
-            send_result = ""
-            trade_code = trade_codes[j]
+            try:
 
-            if result['code'] == 1:
+                result = amazonBrowser.amazon_charge_main(browser, code)
+                send_result = ""
+                trade_code = trade_codes[j]
 
-                send_result = '1'
+                if result['code'] == 1:
+                    # チャージ成功
+                    send_result = '16'
 
-                # db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                #     Code.result: send_result,
-                #     Code.message: result['message'],
-                #     Code.balance: result['htmlcode'],
-                #     Code.amount: result['htmlcode']
-                # })
-                # db.session.commit()
+                elif result['code'] == 3:
+                    # コードは無効
+                    send_result = '23'
 
-            elif result['code'] == 3:
+                else:
+                    # 画像認証失敗まだはページエラー
+                    send_result = '22'
 
-                send_result = '2'
+                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                    Code.result: send_result,
+                    Code.message: result['message'],
+                    Code.balance: result['html_code_before_charge'],
+                    Code.amount: result['html_code_after_charge']
+                })
+                db.session.commit()
 
-                # db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                #     Code.result: 2,
-                #     Code.message: result['message'],
-                #     Code.balance: result['htmlcode']
-                # })
-                # db.session.commit()
+                # Send report to PHP
+                # report = [('code', code), ('result', '1'), ('message', result['message'])]
+                # report = urllib.urlencode(report)
+                # path = 'https://153.121.38.177:9080/vnc_connect/db'
+                # req = urllib2.Request(path, report)
+                # req.add_header("Content-type", "application/x-www-form-urlencoded")
+                # page = urllib2.urlopen(req).read()
+                # print page
 
-            else:
+                report = {
+                    'code': code,
+                    'result': send_result,
+                    'message': result['message'],
+                    'trade_code': trade_code
+                }
 
-                send_result = '3'
+                j += 1
 
-            db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                Code.result: send_result,
-                Code.message: result['message'],
-                Code.balance: result['htmlcode'],
-                Code.amount: result['htmlcode']
-            })
-            db.session.commit()
+                print 'send report'
+                response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
 
-            # Send report to PHP
-            # report = [('code', code), ('result', '1'), ('message', result['message'])]
-            # report = urllib.urlencode(report)
-            # path = 'https://153.121.38.177:9080/vnc_connect/db'
-            # req = urllib2.Request(path, report)
-            # req.add_header("Content-type", "application/x-www-form-urlencoded")
-            # page = urllib2.urlopen(req).read()
-            # print 'this is report page'
-            # print page
+                print response.status_code
 
-            report = {
-                'code': code,
-                'result': send_result,
-                'message': result['message'],
-                'trade_code': trade_code
-            }
+                print 'req'
+                print response.text
 
-            j = j + 1
+                response_text = demjson.decode(response.text)
 
-            print 'send report'
-            response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
+                print type(response_text)
 
-            print response.status_code
+                print response_text['result']
+                print response
+                print response.content
+                # print response.content['result']
 
-            print 'req'
-            print response.text
+                if response_text['result'] == 'ERROR':
+                    trade.status = 3
+                    db.session.add(trade)
+                    db.session.commit()
 
-            jsondata = demjson.decode(response.text)
+                    result = {'result': False}
 
-            print type(jsondata)
+                    return flask.jsonify(result)
 
-            print jsondata['result']
-            print response
-            print response.content
-            # print response.content['result']
+            except:
 
+                trade.status = 3
+                db.session.add(trade)
+                db.session.commit()
+
+                result = {'result': False}
+
+                return flask.jsonify(result)
+
+        trade.status = 2
         trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        db.session.add(trade)
 
         db.session.commit()
         browser.quit()
@@ -352,7 +269,6 @@ def auto_charge():
 
         result = {'result': True}
 
-        # demjson.encode(result)
         return flask.jsonify(result)
 
         # else:
@@ -375,7 +291,6 @@ def auto_charge():
         # return render_template('buy-checklist.html')
         result = {'result': False}
 
-        #demjson.encode(result)
         return flask.jsonify(result)
 
 

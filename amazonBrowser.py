@@ -1,14 +1,13 @@
 # coding=utf-8
-from splinter import Browser
 import time
-from PIL import Image
-import pytesseract
 import urllib
-import codecs
 import os
 import re
-import BrowserSaver
+from splinter import Browser
+from PIL import Image
+import pytesseract
 from xvfbwrapper import Xvfb
+import BrowserSaver
 
 
 def amazon_login(browser, email, password, login_captcha):
@@ -37,9 +36,6 @@ def amazon_login(browser, email, password, login_captcha):
         password_input_field = browser.find_by_id('ap_password')
         submit_button = browser.find_by_id('signInSubmit')
 
-        # htmlcode = browser.html
-        # create_status_text(htmlcode)
-
         if email_input_field and password_input_field and submit_button:
             email_input_field.fill(email)
             password_input_field.fill(password)
@@ -47,33 +43,31 @@ def amazon_login(browser, email, password, login_captcha):
 
         else:
 
-            html_code = browser.html
+            browser.quit()
 
             return {
                 'code': 4,
                 'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
-                'htmlcode': html_code
             }
 
         print 'login ok'
-
-        browser.driver.save_screenshot('./your_screenshot.png')
+        #browser.driver.save_screenshot('./your_screenshot.png')
 
         gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
 
         if gift_link:
-            html_code = browser.html
+
             return {
                 'code': 7,
                 'message': "ユーザー登録成功しました",
-                'htmlcode': html_code
             }
         else:
+            return amazon_login_fail_check(browser, password, login_captcha)
+    else:
+        return amazon_login_fail_check(browser, password, login_captcha)
 
-            return amazon_captcha_check(browser, password, login_captcha)
 
-
-def amazon_captcha_check(browser, password, login_captcha):
+def amazon_login_fail_check(browser, password, login_captcha):
 
     # ログイン画像認識があるかどうかチェックする
     captcha_image_field = browser.find_by_id('auth-captcha-image')
@@ -95,7 +89,7 @@ def amazon_captcha_check(browser, password, login_captcha):
             return {
                 'code': 8,
                 'message': '画像が認証できない。',
-                'htmlcode': captcha_image_field['src']
+                'captcha_src': captcha_image_field['src']
             }
 
     # ログイン状態をチェクする
@@ -117,40 +111,29 @@ def amazon_captcha_check(browser, password, login_captcha):
 
         if login_email_missing_alert\
                 or login_password_missing_alert\
-                or result.find(unicode('メールアドレスまたはパスワードが正しくありません。','utf8')) != -1\
-                or result.find(unicode('パスワードの入力','utf8')) != -1\
-                or result.find(unicode('Eメールアドレスまたは携帯電話番号を入力','utf8')) != -1\
-                or result.find(unicode('パスワードが正しくありません','utf8')) != -1\
-                or result.find(unicode('このEメールアドレスを持つアカウントが見つかりません','utf8')) != -1:
-
-            html_code = browser.html
+                or result.find(unicode('メールアドレスまたはパスワードが正しくありません。', 'utf8')) != -1\
+                or result.find(unicode('パスワードの入力', 'utf8')) != -1\
+                or result.find(unicode('Eメールアドレスまたは携帯電話番号を入力', 'utf8')) != -1\
+                or result.find(unicode('パスワードが正しくありません', 'utf8')) != -1\
+                or result.find(unicode('このEメールアドレスを持つアカウントが見つかりません', 'utf8')) != -1:
 
             return {
                 'code': 2,
                 'message': 'アカウントまたはパスワードが間違いました。',
-                'htmlcode': html_code
             }
-        elif result.find(unicode('お客様のアカウントを強力に保護するため、パスワードを再入力してから、下の画像に表示されている文字を入力してください。','utf8')) != -1\
-                or result.find(unicode('画像に表示されている文字を半角で入力してください。','utf8')) != -1:
-
-            html_code = browser.html
+        elif result.find(unicode('お客様のアカウントを強力に保護するため、パスワードを再入力してから、下の画像に表示されている文字を入力してください。', 'utf8')) != -1\
+                or result.find(unicode('画像に表示されている文字を半角で入力してください。', 'utf8')) != -1:
 
             return {
                 'code': 6,
                 'message': '画像認証が失敗しました。',
-                'htmlcode': html_code
             }
 
-    print 'no captcha in login'
-
     print 'go to charge page'
-
-    html_code = browser.html
 
     return {
         'code': 7,
         'message': "ユーザー登録成功しました",
-        'htmlcode': html_code
     }
 
 
@@ -161,29 +144,23 @@ def view_amazon_charge(browser):
     # url1 = 'https://www.amazon.co.jp/'
     # browser.visit(url1)
     gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
-
     if gift_link:
         gift_link.click()
     else:
-        html_code = browser.html
 
         return {
             'code': 4,
             'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
-            'htmlcode': html_code
         }
 
     charge_link = browser.find_link_by_text(unicode('アカウントに登録','utf8'))
-    # charge_link = browser.find_link_by_href('/gp/css/gc/payment/ref=gc_lpt3_ttl_redm')
     if charge_link:
         charge_link.click()
     else:
-        html_code = browser.html
 
         return {
             'code': 4,
             'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
-            'htmlcode': html_code
         }
 
     print 'visit charge page ok'
@@ -192,6 +169,9 @@ def view_amazon_charge(browser):
 def amazon_charge(browser, code):
 
     captcha_image_field = browser.find_by_css('img.gc-captcha-image')
+
+    html_code_before_charge = browser.html
+
     # チャージ画像認識があるかどうかチェックする
     if captcha_image_field:
 
@@ -206,8 +186,6 @@ def amazon_charge(browser, code):
     else:
 
         print 'no captcha in charge page'
-
-        # time.sleep(1)
 
         code_input_field = browser.find_by_id('gc-redemption-input')
         charge_button = browser.find_by_name('applytoaccount')
@@ -229,12 +207,9 @@ def amazon_charge(browser, code):
             print code_input_field
             print charge_button
 
-            html_code = browser.html
-
             return {
                 'code': 4,
                 'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
-                'htmlcode': html_code
             }
 
     # チャージが完了するまで待ち
@@ -246,39 +221,48 @@ def amazon_charge(browser, code):
     if result_field:
         result = result_field.value
 
-        html_code = browser.html
-
         if result.find(unicode('ギフト券番号は無効です','utf8')) != -1:
+
+            html_code_after_charge = browser.html
 
             return {
                 'code': 3,
                 'message': result,
-                'htmlcode': html_code
+                'html_code_before_charge': html_code_before_charge,
+                'html_code after_charge': html_code_after_charge
             }
 
         elif result.find(unicode('セキュリティ検証が無効です', 'utf8')) != -1:
 
+            html_code_after_charge = browser.html
+
             return {
                 'code': 6,
                 'message': "画像認証が失敗しました。",
-                'htmlcode': html_code
+                'html_code_before_charge': html_code_before_charge,
+                'html_code after_charge': html_code_after_charge
             }
 
         else:
 
+            html_code_after_charge = browser.html
+
             return {
                 'code': 1,
                 'message': result,
-                'htmlcode': html_code
+                'html_code_before_charge': html_code_before_charge,
+                'html_code after_charge': html_code_after_charge
             }
 
     else:
-        html_code = browser.html
+
+        html_code_after_charge = browser.html
 
         return {
             'code': 4,
             'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
-            'htmlcode': html_code
+            'html_code_before_charge': html_code_before_charge,
+            'html_code after_charge': html_code_after_charge
         }
 
 
@@ -338,12 +322,9 @@ def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field,
 
         print 'some problem in captcha'
 
-        html_code = browser.html
-
         return {
             'code': 4,
             'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
-            'htmlcode': html_code
         }
 
 
@@ -384,19 +365,10 @@ def amazon_captcha_input(browser, non_auto_captcha, captcha_input_field, code, c
 
         print 'some problem in captcha'
 
-        html_code = browser.html
-
         return {
             'code': 4,
             'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
-            'htmlcode': html_code
         }
-
-
-def create_status_text(txt):
-
-    captcha_file = codecs.open('charge_status', 'w')
-    captcha_file.write(txt)
 
 
 def change_captcha(email):
@@ -438,7 +410,7 @@ def amazon_login_main(email, password, login_captcha):
             # 画像認証が失敗した場合は、もう二度と認証してみる
             if result[0]['code'] == 6:
                 for y in range(0,2):
-                    result = [amazon_captcha_check(browser, password, False)]
+                    result = [amazon_login_fail_check(browser, password, False)]
                     if result[0]['code'] != 6:
                         break
 
@@ -460,7 +432,7 @@ def amazon_login_main(email, password, login_captcha):
         result[0] = {
             "code": 8,
             "message": "画像が認証できない",
-            "htmlcode": captcha_image_field['src']
+            "html_code": captcha_image_field['src']
         }
 
         login_captcha_data = [

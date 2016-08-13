@@ -195,6 +195,8 @@ def auto_charge():
                     # 画像認証失敗まだはページエラー
                     send_result = '22'
 
+                print send_result
+
                 db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
                     Code.result: send_result,
                     Code.message: result['message'],
@@ -265,7 +267,7 @@ def auto_charge():
         browser.quit()
 
         # データベースの削除
-        db.drop_all()
+        #db.drop_all()
 
         result = {'result': True}
 
@@ -286,7 +288,7 @@ def auto_charge():
 
         browser.quit()
 
-        db.drop_all()
+        #db.drop_all()
 
         # return render_template('buy-checklist.html')
         result = {'result': False}

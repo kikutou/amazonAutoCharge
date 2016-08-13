@@ -66,12 +66,15 @@ def amazon_login(browser, email, password, login_captcha):
                 'message': "ユーザー登録成功しました",
             }
         else:
-            return amazon_login_fail_check(browser, password, login_captcha)
+            #return amazon_login_fail_check(browser, password, login_captcha)
+            return amazon_login_fail_check(browser, password, login_captcha, email)
     else:
-        return amazon_login_fail_check(browser, password, login_captcha)
+        #return amazon_login_fail_check(browser, password, login_captcha)
+        return amazon_login_fail_check(browser, password, login_captcha, email)
 
 
-def amazon_login_fail_check(browser, password, login_captcha):
+#def amazon_login_fail_check(browser, password, login_captcha):
+def amazon_login_fail_check(browser, password, login_captcha, email):
 
     # ログイン画像認識があるかどうかチェックする
     captcha_image_field = browser.find_by_id('auth-captcha-image')
@@ -134,6 +137,10 @@ def amazon_login_fail_check(browser, password, login_captcha):
             }
 
     print 'go to charge page'
+
+    # テスト用
+    browser_list = BrowserSaver.Browsers()
+    browser_list.set_browser(email, browser)
 
     return {
         'code': 7,

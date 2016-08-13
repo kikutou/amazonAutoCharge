@@ -110,14 +110,14 @@ def amazon_login():
     email = request.form['email']
     password = request.form['password']
 
-    captcha = request.args.get('captcha')
+    captcha = request.form['captcha']
     if captcha:
         data = amazonBrowser.amazon_login_main(email, password, captcha)
     else:
         data = amazonBrowser.amazon_login_main(email, password, False)
 
-    # 登録成功
-    if data[0]['code'] == 7:
+    # 登録成功 or 認証画面
+    if data[0]['code'] == 7 or data[0]['code'] == 8:
         # 登録成功の場合、このブラウザオブジェクトをゴロバルリストに保存する。
         browser_list = BrowserSaver.Browsers()
         browser_list.set_browser(email, data[1])
@@ -329,11 +329,16 @@ def status():
         return 'error'
 
 
-@app.route('/changeCaptcha', methods=['get'])
+@app.route('/changeCaptcha', methods=['post'])
 def changeCaptcha():
-    email = request.args.get('email')
+    email = request.form['email']
+    email = email.encode("utf-8")
 
-    return amazonBrowser.change_captcha(email)
+    src = amazonBrowser.change_captcha(email)
+
+    result = {'src': src}
+
+    return flask.jsonify(result)
 
 
 if __name__ == '__main__':

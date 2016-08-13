@@ -1,3 +1,4 @@
+import time
 
 class Browsers(object):
     __instance = None
@@ -11,13 +12,16 @@ class Browsers(object):
     def set_browser(self, id, browser):
 
         for __id, __browser in self.__browsers.items():
-            if __browser is None:
+            if __browser['browser'] is None:
+                self.__browsers.pop(__id)
+            elif time.time() - __browser['time'] > 900:
+                __browser['browser'].quit()
                 self.__browsers.pop(__id)
 
-        self.__browsers[id] = browser
+        self.__browsers[id] = {'browser': browser, 'time': time.time()}
 
     def get_browser(self, id):
-        return self.__browsers[id]
+        return self.__browsers[id]['browser']
 
 
 # class Xvfb(object):

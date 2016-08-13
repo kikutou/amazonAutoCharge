@@ -58,23 +58,23 @@ def amazon_login(browser, email, password, login_captcha):
         if gift_link:
 
             # テスト用
-            browser_list = BrowserSaver.Browsers()
-            browser_list.set_browser(email, browser)
+            # browser_list = BrowserSaver.Browsers()
+            # browser_list.set_browser(email, browser)
 
             return {
                 'code': 7,
                 'message': "ユーザー登録成功しました",
             }
         else:
-            #return amazon_login_fail_check(browser, password, login_captcha)
-            return amazon_login_fail_check(browser, password, login_captcha, email)
+            return amazon_login_fail_check(browser, password, login_captcha)
+            # return amazon_login_fail_check(browser, password, login_captcha, email)
     else:
-        #return amazon_login_fail_check(browser, password, login_captcha)
-        return amazon_login_fail_check(browser, password, login_captcha, email)
+        return amazon_login_fail_check(browser, password, login_captcha)
+        # return amazon_login_fail_check(browser, password, login_captcha, email)
 
 
-#def amazon_login_fail_check(browser, password, login_captcha):
-def amazon_login_fail_check(browser, password, login_captcha, email):
+def amazon_login_fail_check(browser, password, login_captcha):
+# def amazon_login_fail_check(browser, password, login_captcha, email):
 
     # ログイン画像認識があるかどうかチェックする
     captcha_image_field = browser.find_by_id('auth-captcha-image')
@@ -139,8 +139,8 @@ def amazon_login_fail_check(browser, password, login_captcha, email):
     print 'go to charge page'
 
     # テスト用
-    browser_list = BrowserSaver.Browsers()
-    browser_list.set_browser(email, browser)
+    # browser_list = BrowserSaver.Browsers()
+    # browser_list.set_browser(email, browser)
 
     return {
         'code': 7,
@@ -476,17 +476,10 @@ def amazon_login_main(email, password, login_captcha):
         result[0] = {
             "code": 8,
             "message": "画像が認証できない",
-            "html_code": captcha_image_field['src']
+            "captcha_src": captcha_image_field['src']
         }
 
-        login_captcha_data = [
-            {
-                'browser': browser,
-                'message': '認証画面が得意先に送信する',
-                'code': 0
-            }
-        ]
-        result = result + login_captcha_data
+        result = result + [browser]
 
         return result
 

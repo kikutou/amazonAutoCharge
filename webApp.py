@@ -200,6 +200,10 @@ def auto_charge():
             try:
 
                 result = amazonBrowser.amazon_charge_main(browser, code)
+
+                print 'before in app'
+                print result['html_code_before_charge']
+
                 send_result = ""
                 trade_code = trade_codes[j]
 

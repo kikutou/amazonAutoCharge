@@ -106,20 +106,17 @@ def amazon_login():
     :return　ログインの結果を返す:
     """
     print request.form['email'] + "のログインを開始する。"
-    print type(request.form)
 
     email = request.form['email']
     password = request.form['password']
 
     if 'captcha' in request.form.keys():
 
-        print 'captcha nooo'
-
         captcha = request.form['captcha']
-        print 'captcha form'
+
         data = amazonBrowser.amazon_login_main(email, password, captcha)
     else:
-        print 'no captcha form'
+
         data = amazonBrowser.amazon_login_main(email, password, False)
 
     # 登録成功 or 認証画面

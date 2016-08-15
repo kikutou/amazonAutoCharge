@@ -177,166 +177,166 @@ def auto_charge():
     if not os.path.exists("./trade/"+str(serial)):
         os.mkdir("./trade/"+str(serial))
 
-    try:
+    #try:
 
-        db.session.add_all(set_code_for_trade)
+    db.session.add_all(set_code_for_trade)
 
-        db.session.add(trade)
+    db.session.add(trade)
+
+    db.session.commit()
+
+    browser = BrowserSaver.Browsers().get_browser(email)
+
+    amazonBrowser.view_amazon_charge(browser)
+
+    # 取引状態を処理にします
+    trade.status = 1
+    db.session.add(trade)
+    db.session.commit()
+
+    j = 0
+    for code in codes:
+
+        # try:
+
+        result = amazonBrowser.amazon_charge_main(browser, code)
+
+        send_result = ""
+        trade_code = trade_codes[j]
+
+        if result['code'] == 1:
+            # チャージ成功
+            send_result = '16'
+
+        elif result['code'] == 3:
+            # コードは無効
+            send_result = '23'
+
+        else:
+            # 画像認証失敗まだはページエラー
+            send_result = '22'
+
+        print send_result
+
+        if not os.path.exists("./trade/"+str(serial)+"/"+code):
+            os.mkdir("./trade/"+str(serial)+"/"+code)
+
+        print 'strat write'
+
+        file_before_charge = open("./trade/"+str(serial)+"/"+code+"/before.html", "w")
+        file_before_charge.write(str(result['html_code_before_charge']))
+        file_before_charge.close()
+
+        file_after_charge = open("./trade/"+str(serial)+"/"+code+"/after.html", "w")
+        file_after_charge.write(str(result['html_code_after_charge']))
+        file_after_charge.close()
+
+        print 'finish write'
+
+        db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+            Code.result: send_result,
+            Code.message: result['message'],
+            Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
+            Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html"
+        })
 
         db.session.commit()
 
-        browser = BrowserSaver.Browsers().get_browser(email)
+        # Send report to PHP
+        # report = [('code', code), ('result', '1'), ('message', result['message'])]
+        # report = urllib.urlencode(report)
+        # path = 'https://153.121.38.177:9080/vnc_connect/db'
+        # req = urllib2.Request(path, report)
+        # req.add_header("Content-type", "application/x-www-form-urlencoded")
+        # page = urllib2.urlopen(req).read()
+        # print page
 
-        amazonBrowser.view_amazon_charge(browser)
+        report = {
+            'code': code,
+            'result': send_result,
+            'message': result['message'],
+            'trade_code': trade_code
+        }
 
-        # 取引状態を処理にします
-        trade.status = 1
-        db.session.add(trade)
-        db.session.commit()
+        j += 1
 
-        j = 0
-        for code in codes:
+        print 'send report'
+        response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
 
-            # try:
+        print response.status_code
 
-            result = amazonBrowser.amazon_charge_main(browser, code)
+        print 'req'
+        print response.text
 
-            send_result = ""
-            trade_code = trade_codes[j]
+        response_text = demjson.decode(response.text)
 
-            if result['code'] == 1:
-                # チャージ成功
-                send_result = '16'
+        print type(response_text)
 
-            elif result['code'] == 3:
-                # コードは無効
-                send_result = '23'
+        print response_text['result']
+        print response
+        print response.content
+        # print response.content['result']
 
-            else:
-                # 画像認証失敗まだはページエラー
-                send_result = '22'
-
-            print send_result
-
-            if not os.path.exists("./trade/"+str(serial)+"/"+code):
-                os.mkdir("./trade/"+str(serial)+"/"+code)
-
-            print 'strat write'
-
-            file_before_charge = open("./trade/"+str(serial)+"/"+code+"/before.html", "w")
-            file_before_charge.write(str(result['html_code_before_charge']))
-            file_before_charge.close()
-
-            file_after_charge = open("./trade/"+str(serial)+"/"+code+"/after.html", "w")
-            file_after_charge.write(str(result['html_code_after_charge']))
-            file_after_charge.close()
-
-            print 'finish write'
-
-            db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                Code.result: send_result,
-                Code.message: result['message'],
-                Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
-                Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html"
-            })
-
+        if response_text['result'] == 'ERROR':
+            trade.status = 3
+            db.session.add(trade)
             db.session.commit()
 
-            # Send report to PHP
-            # report = [('code', code), ('result', '1'), ('message', result['message'])]
-            # report = urllib.urlencode(report)
-            # path = 'https://153.121.38.177:9080/vnc_connect/db'
-            # req = urllib2.Request(path, report)
-            # req.add_header("Content-type", "application/x-www-form-urlencoded")
-            # page = urllib2.urlopen(req).read()
-            # print page
+            print "response text error"
 
-            report = {
-                'code': code,
-                'result': send_result,
-                'message': result['message'],
-                'trade_code': trade_code
-            }
+            result = {'result': False}
 
-            j += 1
+            return flask.jsonify(result)
 
-            print 'send report'
-            response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
+        # except:
+        #
+        #     print "db update fail"
+        #
+        #     trade.status = 3
+        #     db.session.add(trade)
+        #     db.session.commit()
+        #
+        #     result = {'result': False}
+        #
+        #     browser.quit()
+        #
+        #     return flask.jsonify(result)
 
-            print response.status_code
+    trade.status = 2
+    trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    db.session.add(trade)
 
-            print 'req'
-            print response.text
+    db.session.commit()
+    browser.quit()
 
-            response_text = demjson.decode(response.text)
+    # データベースの削除
+    #db.drop_all()
 
-            print type(response_text)
+    result = {'result': True}
 
-            print response_text['result']
-            print response
-            print response.content
-            # print response.content['result']
+    return flask.jsonify(result)
 
-            if response_text['result'] == 'ERROR':
-                trade.status = 3
-                db.session.add(trade)
-                db.session.commit()
-
-                print "response text error"
-
-                result = {'result': False}
-
-                return flask.jsonify(result)
-
-            # except:
-            #
-            #     print "db update fail"
-            #
-            #     trade.status = 3
-            #     db.session.add(trade)
-            #     db.session.commit()
-            #
-            #     result = {'result': False}
-            #
-            #     browser.quit()
-            #
-            #     return flask.jsonify(result)
-
-        trade.status = 2
-        trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        db.session.add(trade)
-
-        db.session.commit()
-        browser.quit()
-
-        # データベースの削除
-        #db.drop_all()
-
-        result = {'result': True}
-
-        return flask.jsonify(result)
-
-        # else:
-
-            # return render_template('buy-checklist.html')
-
-    except:
-
-        # print 'エラーが発生しました'
-        print 'error occur'
-
-        db.session.rollback()
-
-        browser = BrowserSaver.Browsers().get_browser(email)
-
-        browser.quit()
-
-        #db.drop_all()
+    # else:
 
         # return render_template('buy-checklist.html')
-        result = {'result': False}
 
-        return flask.jsonify(result)
+    # except:
+    #
+    #     # print 'エラーが発生しました'
+    #     print 'error occur'
+    #
+    #     db.session.rollback()
+    #
+    #     browser = BrowserSaver.Browsers().get_browser(email)
+    #
+    #     browser.quit()
+    #
+    #     #db.drop_all()
+    #
+    #     # return render_template('buy-checklist.html')
+    #     result = {'result': False}
+    #
+    #     return flask.jsonify(result)
 
 
 @app.route('/checkStatus', methods=['get'])

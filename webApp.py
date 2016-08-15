@@ -110,6 +110,8 @@ def amazon_login():
     email = request.form['email']
     password = request.form['password']
 
+    print password
+
     captcha = request.form['captcha']
     print 'captcha nooo'
     if captcha:

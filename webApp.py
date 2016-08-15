@@ -200,6 +200,9 @@ def auto_charge():
 
                 print send_result
 
+                print 'html_code'
+                print type(result['html_code_before_charge'])
+
                 db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
                     Code.result: send_result,
                     Code.message: result['message'],

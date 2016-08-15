@@ -111,16 +111,16 @@ def amazon_login():
     email = request.form['email']
     password = request.form['password']
 
-    # if request.form['captcha']:
-    #
-    #     print 'captcha nooo'
-    #
-    #     captcha = request.form['captcha']
-    #     print 'captcha form'
-    #     data = amazonBrowser.amazon_login_main(email, password, captcha)
-    # else:
-    print 'no captcha form'
-    data = amazonBrowser.amazon_login_main(email, password, False)
+    if 'captcha' in request.form['captcha'].keys():
+
+        print 'captcha nooo'
+
+        captcha = request.form['captcha']
+        print 'captcha form'
+        data = amazonBrowser.amazon_login_main(email, password, captcha)
+    else:
+        print 'no captcha form'
+        data = amazonBrowser.amazon_login_main(email, password, False)
 
     # 登録成功 or 認証画面
     if data[0]['code'] == 7 or data[0]['code'] == 8:

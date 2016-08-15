@@ -201,9 +201,6 @@ def auto_charge():
 
                 result = amazonBrowser.amazon_charge_main(browser, code)
 
-                print 'before in app'
-                print result['html_code_before_charge']
-
                 send_result = ""
                 trade_code = trade_codes[j]
 
@@ -224,13 +221,17 @@ def auto_charge():
                 if not os.path.exists("./trade/"+str(serial)+"/"+code):
                     os.mkdir("./trade/"+str(serial)+"/"+code)
 
+                print 'strat write'
+
                 file_before_charge = open("./trade/"+str(serial)+"/"+code+"/before.html", "w")
-                file_before_charge.write(result['html_code_before_charge'])
+                file_before_charge.write(str(result['html_code_before_charge']))
                 file_before_charge.close()
 
                 file_after_charge = open("./trade/"+str(serial)+"/"+code+"/after.html", "w")
-                file_after_charge.write(result['html_code_after_charge'])
+                file_after_charge.write(str(result['html_code_after_charge']))
                 file_after_charge.close()
+
+                print 'finish write'
 
                 db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
                     Code.result: send_result,

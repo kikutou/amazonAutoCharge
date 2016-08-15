@@ -182,8 +182,6 @@ def amazon_charge(browser, code):
     captcha_image_field = browser.find_by_css('img.gc-captcha-image')
 
     html_code_before_charge = browser.html
-    print 'before'
-    print html_code_before_charge
 
     # チャージ画像認識があるかどうかチェックする
     if captcha_image_field:

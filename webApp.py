@@ -161,12 +161,15 @@ def auto_charge():
         code_obj = Code(code=code)
         set_code_for_trade = set_code_for_trade + [code_obj]
 
-    serial = random.randint(0000000000000000, 9999999999999999)
+    serial_time = time.strftime("%Y%m%d%H%M%S")
+    serial_no = random.randint(0000, 9999)
+    serial = serial_time + str(serial_no)
     while True:
         search_serial = Trade.query.filter_by(serial=serial).all()
         if len(search_serial) == 0:
             break
-        serial = random.randint(0000000000000000, 9999999999999999)
+        serial_no = random.randint(0000, 9999)
+        serial = serial_time + str(serial_no)
 
     trade = Trade(email=email, serial=serial)
     trade.codes = set_code_for_trade
@@ -221,8 +224,6 @@ def auto_charge():
                 if not os.path.exists("./trade/"+str(serial)+"/"+code):
                     os.mkdir("./trade/"+str(serial)+"/"+code)
 
-                print 'strat write'
-
                 file_before_charge = open("./trade/"+str(serial)+"/"+code+"/before.html", "w")
                 file_before_charge.write(str(result['html_code_before_charge']))
                 file_before_charge.close()
@@ -231,13 +232,15 @@ def auto_charge():
                 file_after_charge.write(str(result['html_code_after_charge']))
                 file_after_charge.close()
 
-                print 'finish write'
+                file_history = open("./trade/"+str(serial)+"/"+code+"/history.html", "w")
+                file_history.write(str(result['html_code_history']))
+                file_history.close()
 
                 db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
                     Code.result: send_result,
                     Code.message: result['message'],
                     Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
-                    Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html"
+                    Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html",
                 })
 
                 db.session.commit()

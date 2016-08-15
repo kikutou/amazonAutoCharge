@@ -240,7 +240,7 @@ def amazon_charge(browser, code):
         html_code_after_charge = browser.html
 
         # チャージられた金額
-        result = result_field.value.replace(unicode("がお客様のギフト券アカウントに追加されました。"), "")
+        result = result_field.value
 
         account = browser.find_by_id('gc-current-balance').value
 
@@ -310,6 +310,39 @@ def amazon_charge(browser, code):
             'html_code_before_charge': html_code_before_charge,
             'html_code_after_charge': html_code_after_charge
         }
+
+
+def save_history(browser):
+    gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+    if gift_link:
+        gift_link.click()
+
+        history_link = browser.find_link_by_text(unicode('残高・利用履歴', 'utf8'))
+        if history_link:
+            history_link.click()
+
+            history = browser.html
+
+            for i in range(0, 3):
+                if gift_link:
+                    gift_link.click()
+                    break
+                else:
+                    browser.reload()
+
+            charge_link = browser.find_link_by_text(unicode('アカウントに登録', 'utf8'))
+            for j in range(0, 3):
+                if charge_link:
+                    charge_link.click()
+                    break
+                else:
+                    browser.reload()
+
+            return history
+        else:
+            return None
+    else:
+        return None
 
 
 # Wang 2016/07/05
@@ -511,10 +544,13 @@ def amazon_charge_main(browser, code):
         print result['code']
 
         if result['code'] != 4 and result['code'] != 6:
+
             break
 
-    print code
+    history = save_history(browser)
+    result['html_code_history'] = history
 
+    print code
     # vdisplay.stop()
     return result
 

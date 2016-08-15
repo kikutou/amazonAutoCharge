@@ -2,6 +2,8 @@
 import time
 import demjson
 import requests
+import os
+import random
 import flask
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
@@ -37,11 +39,13 @@ class Trade(db.Model):
     start = db.Column(db.DateTime, nullable=True)
     finish = db.Column(db.DateTime, nullable=True)
     status = db.Column(db.Integer, nullable=True)
+    serial = db.Column(db.CHAR(10), nullable=False, unique=True)
 
     codes = db.relationship('Code', backref='trade')
 
-    def __init__(self, email, start=None, finish=None, status=0):
+    def __init__(self, email, serial, start=None, finish=None, status=0):
         self.email = email
+        self.serial = serial
         if start is None:
             start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         self.start = start
@@ -157,8 +161,21 @@ def auto_charge():
         code_obj = Code(code=code)
         set_code_for_trade = set_code_for_trade + [code_obj]
 
-    trade = Trade(email=email)
+    serial = random.randint(0000000000000000, 9999999999999999)
+    while True:
+        search_serial = Trade.query.filter_by(serial=serial).all()
+        if len(search_serial) == 0:
+            break
+        serial = random.randint(0000000000000000, 9999999999999999)
+
+    trade = Trade(email=email, serial=serial)
     trade.codes = set_code_for_trade
+
+    if not os.path.exists("./trade"):
+        os.mkdir("./trade")
+
+    if not os.path.exists("./trade/"+str(serial)):
+        os.mkdir("./trade/"+str(serial))
 
     try:
 
@@ -200,14 +217,22 @@ def auto_charge():
 
                 print send_result
 
-                print 'html_code'
-                print type(result['html_code_before_charge'])
+                if not os.path.exists("./trade/"+str(serial)+"/"+code):
+                    os.mkdir("./trade/"+str(serial)+"/"+code)
+
+                file_before_charge = open("./trade/"+str(serial)+"/"+code+"/before.html", "w")
+                file_before_charge.write(result['html_code_before_charge'])
+                file_before_charge.close()
+
+                file_after_charge = open("./trade/"+str(serial)+"/"+code+"/after.html", "w")
+                file_after_charge.write(result['html_code_after_charge'])
+                file_after_charge.close()
 
                 db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
                     Code.result: send_result,
                     Code.message: result['message'],
-                    Code.balance: result['html_code_before_charge'],
-                    Code.amount: result['html_code_after_charge']
+                    Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
+                    Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html"
                 })
 
                 db.session.commit()

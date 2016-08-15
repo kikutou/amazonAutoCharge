@@ -114,6 +114,7 @@ def amazon_login():
     if captcha:
         data = amazonBrowser.amazon_login_main(email, password, captcha)
     else:
+        print 'no captcha form'
         data = amazonBrowser.amazon_login_main(email, password, False)
 
     # 登録成功 or 認証画面

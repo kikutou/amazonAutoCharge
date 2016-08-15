@@ -197,110 +197,110 @@ def auto_charge():
         j = 0
         for code in codes:
 
-            try:
+            # try:
 
-                result = amazonBrowser.amazon_charge_main(browser, code)
+            result = amazonBrowser.amazon_charge_main(browser, code)
 
-                send_result = ""
-                trade_code = trade_codes[j]
+            send_result = ""
+            trade_code = trade_codes[j]
 
-                if result['code'] == 1:
-                    # チャージ成功
-                    send_result = '16'
+            if result['code'] == 1:
+                # チャージ成功
+                send_result = '16'
 
-                elif result['code'] == 3:
-                    # コードは無効
-                    send_result = '23'
+            elif result['code'] == 3:
+                # コードは無効
+                send_result = '23'
 
-                else:
-                    # 画像認証失敗まだはページエラー
-                    send_result = '22'
+            else:
+                # 画像認証失敗まだはページエラー
+                send_result = '22'
 
-                print send_result
+            print send_result
 
-                if not os.path.exists("./trade/"+str(serial)+"/"+code):
-                    os.mkdir("./trade/"+str(serial)+"/"+code)
+            if not os.path.exists("./trade/"+str(serial)+"/"+code):
+                os.mkdir("./trade/"+str(serial)+"/"+code)
 
-                print 'strat write'
+            print 'strat write'
 
-                file_before_charge = open("./trade/"+str(serial)+"/"+code+"/before.html", "w")
-                file_before_charge.write(str(result['html_code_before_charge']))
-                file_before_charge.close()
+            file_before_charge = open("./trade/"+str(serial)+"/"+code+"/before.html", "w")
+            file_before_charge.write(str(result['html_code_before_charge']))
+            file_before_charge.close()
 
-                file_after_charge = open("./trade/"+str(serial)+"/"+code+"/after.html", "w")
-                file_after_charge.write(str(result['html_code_after_charge']))
-                file_after_charge.close()
+            file_after_charge = open("./trade/"+str(serial)+"/"+code+"/after.html", "w")
+            file_after_charge.write(str(result['html_code_after_charge']))
+            file_after_charge.close()
 
-                print 'finish write'
+            print 'finish write'
 
-                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                    Code.result: send_result,
-                    Code.message: result['message'],
-                    Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
-                    Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html"
-                })
+            db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                Code.result: send_result,
+                Code.message: result['message'],
+                Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
+                Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html"
+            })
 
-                db.session.commit()
+            db.session.commit()
 
-                # Send report to PHP
-                # report = [('code', code), ('result', '1'), ('message', result['message'])]
-                # report = urllib.urlencode(report)
-                # path = 'https://153.121.38.177:9080/vnc_connect/db'
-                # req = urllib2.Request(path, report)
-                # req.add_header("Content-type", "application/x-www-form-urlencoded")
-                # page = urllib2.urlopen(req).read()
-                # print page
+            # Send report to PHP
+            # report = [('code', code), ('result', '1'), ('message', result['message'])]
+            # report = urllib.urlencode(report)
+            # path = 'https://153.121.38.177:9080/vnc_connect/db'
+            # req = urllib2.Request(path, report)
+            # req.add_header("Content-type", "application/x-www-form-urlencoded")
+            # page = urllib2.urlopen(req).read()
+            # print page
 
-                report = {
-                    'code': code,
-                    'result': send_result,
-                    'message': result['message'],
-                    'trade_code': trade_code
-                }
+            report = {
+                'code': code,
+                'result': send_result,
+                'message': result['message'],
+                'trade_code': trade_code
+            }
 
-                j += 1
+            j += 1
 
-                print 'send report'
-                response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
+            print 'send report'
+            response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
 
-                print response.status_code
+            print response.status_code
 
-                print 'req'
-                print response.text
+            print 'req'
+            print response.text
 
-                response_text = demjson.decode(response.text)
+            response_text = demjson.decode(response.text)
 
-                print type(response_text)
+            print type(response_text)
 
-                print response_text['result']
-                print response
-                print response.content
-                # print response.content['result']
+            print response_text['result']
+            print response
+            print response.content
+            # print response.content['result']
 
-                if response_text['result'] == 'ERROR':
-                    trade.status = 3
-                    db.session.add(trade)
-                    db.session.commit()
-
-                    print "response text error"
-
-                    result = {'result': False}
-
-                    return flask.jsonify(result)
-
-            except:
-
-                print "db update fail"
-
+            if response_text['result'] == 'ERROR':
                 trade.status = 3
                 db.session.add(trade)
                 db.session.commit()
 
+                print "response text error"
+
                 result = {'result': False}
 
-                browser.quit()
-
                 return flask.jsonify(result)
+
+            # except:
+            #
+            #     print "db update fail"
+            #
+            #     trade.status = 3
+            #     db.session.add(trade)
+            #     db.session.commit()
+            #
+            #     result = {'result': False}
+            #
+            #     browser.quit()
+            #
+            #     return flask.jsonify(result)
 
         trade.status = 2
         trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())

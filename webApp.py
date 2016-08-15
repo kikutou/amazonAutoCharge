@@ -106,11 +106,10 @@ def amazon_login():
     :return　ログインの結果を返す:
     """
     print request.form['email'] + "のログインを開始する。"
+    print type(request.form)
 
     email = request.form['email']
     password = request.form['password']
-
-    print password
 
     captcha = request.form['captcha']
     print 'captcha nooo'

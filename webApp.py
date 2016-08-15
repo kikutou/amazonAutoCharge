@@ -111,9 +111,11 @@ def amazon_login():
     email = request.form['email']
     password = request.form['password']
 
-    captcha = request.form['captcha']
-    print 'captcha nooo'
-    if captcha:
+    if request.form['captcha']:
+        
+        print 'captcha nooo'
+
+        captcha = request.form['captcha']
         print 'captcha form'
         data = amazonBrowser.amazon_login_main(email, password, captcha)
     else:

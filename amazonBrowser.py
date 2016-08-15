@@ -248,7 +248,7 @@ def amazon_charge(browser, code):
             'code': 1,
             'message': result,
             'html_code_before_charge': html_code_before_charge,
-            'html_code after_charge': html_code_after_charge
+            'html_code_after_charge': html_code_after_charge
         }
 
     elif gift_charged_message:
@@ -261,7 +261,7 @@ def amazon_charge(browser, code):
             'code': 3,
             'message': result,
             'html_code_before_charge': html_code_before_charge,
-            'html_code after_charge': html_code_after_charge
+            'html_code_after_charge': html_code_after_charge
         }
 
     elif result_field:
@@ -275,7 +275,7 @@ def amazon_charge(browser, code):
                 'code': 3,
                 'message': result,
                 'html_code_before_charge': html_code_before_charge,
-                'html_code after_charge': html_code_after_charge
+                'html_code_after_charge': html_code_after_charge
             }
 
         elif result.find(unicode('セキュリティ検証が無効です', 'utf8')) != -1:
@@ -286,7 +286,7 @@ def amazon_charge(browser, code):
                 'code': 6,
                 'message': "画像認証が失敗しました。",
                 'html_code_before_charge': html_code_before_charge,
-                'html_code after_charge': html_code_after_charge
+                'html_code_after_charge': html_code_after_charge
             }
 
         else:
@@ -297,7 +297,7 @@ def amazon_charge(browser, code):
                 'code': 4,
                 'message': result,
                 'html_code_before_charge': html_code_before_charge,
-                'html_code after_charge': html_code_after_charge
+                'html_code_after_charge': html_code_after_charge
             }
 
     else:
@@ -308,7 +308,7 @@ def amazon_charge(browser, code):
             'code': 4,
             'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
             'html_code_before_charge': html_code_before_charge,
-            'html_code after_charge': html_code_after_charge
+            'html_code_after_charge': html_code_after_charge
         }
 
 

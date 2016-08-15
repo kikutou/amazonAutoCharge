@@ -69,8 +69,8 @@ class Code(db.Model):
     code = db.Column(db.String(30), unique=True, nullable=False)
     result = db.Column(db.Integer)
     message = db.Column(db.Text)
-    balance = db.Column(db.UnicodeText, nullable=True)
-    amount = db.Column(db.UnicodeText, nullable=True)
+    balance = db.Column(db.LargeBinary, nullable=True)
+    amount = db.Column(db.LargeBinary, nullable=True)
 
     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
 

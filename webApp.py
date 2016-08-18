@@ -198,10 +198,12 @@ def auto_charge():
         db.session.add(trade)
         db.session.commit()
 
+        print codes
         j = 0
         for code in codes:
 
             try:
+                print "1"
 
                 result = amazonBrowser.amazon_charge_main(browser, code)
 

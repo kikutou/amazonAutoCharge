@@ -203,7 +203,7 @@ def auto_charge():
         for code in codes:
 
             try:
-                print "1"
+                print code
 
                 result = amazonBrowser.amazon_charge_main(browser, code)
 
@@ -308,23 +308,23 @@ def auto_charge():
 
                 return flask.jsonify(result)
 
-            trade.status = 2
-            trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            db.session.add(trade)
+        trade.status = 2
+        trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        db.session.add(trade)
 
-            db.session.commit()
-            browser.quit()
+        db.session.commit()
+        browser.quit()
 
-            # データベースの削除
-            #db.drop_all()
+        # データベースの削除
+        #db.drop_all()
 
-            result = {'result': True}
+        result = {'result': True}
 
-            return flask.jsonify(result)
+        return flask.jsonify(result)
 
-            # else:
+        # else:
 
-                # return render_template('buy-checklist.html')
+            # return render_template('buy-checklist.html')
 
     except:
 

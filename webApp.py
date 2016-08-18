@@ -316,7 +316,7 @@ def auto_charge():
         browser.quit()
 
         # データベースの削除
-        #db.drop_all()
+        db.drop_all()
 
         result = {'result': True}
 

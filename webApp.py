@@ -292,19 +292,19 @@ def auto_charge():
 
                     return flask.jsonify(result)
 
-                # except:
-                #
-                #     print "db update fail"
-                #
-                #     trade.status = 3
-                #     db.session.add(trade)
-                #     db.session.commit()
-                #
-                #     result = {'result': False}
-                #
-                #     browser.quit()
-                #
-                #     return flask.jsonify(result)
+            except:
+
+                print "db update fail"
+
+                trade.status = 3
+                db.session.add(trade)
+                db.session.commit()
+
+                result = {'result': False}
+
+                browser.quit()
+
+                return flask.jsonify(result)
 
             trade.status = 2
             trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())

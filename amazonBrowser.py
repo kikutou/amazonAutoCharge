@@ -320,7 +320,7 @@ def save_history(browser):
         history_link = browser.find_link_by_text(unicode('残高・利用履歴', 'utf8'))
 
         if history_link:
-            print "save history"
+
             history_link.click()
 
             history = browser.html

@@ -39,7 +39,7 @@ class Trade(db.Model):
     start = db.Column(db.DateTime, nullable=True)
     finish = db.Column(db.DateTime, nullable=True)
     status = db.Column(db.Integer, nullable=True)
-    serial = db.Column(db.CHAR(10), nullable=False, unique=True)
+    serial = db.Column(db.CHAR(50), nullable=False, unique=True)
 
     codes = db.relationship('Code', backref='trade')
 
@@ -170,6 +170,7 @@ def auto_charge():
             break
         serial_no = random.randint(0000, 9999)
         serial = serial_time + str(serial_no)
+    print serial
 
     trade = Trade(email=email, serial=serial)
     trade.codes = set_code_for_trade

@@ -326,6 +326,7 @@ def save_history(browser):
             history = browser.html
 
             for i in range(0, 3):
+                gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
                 if gift_link:
                     gift_link.click()
                     break

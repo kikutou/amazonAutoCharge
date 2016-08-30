@@ -117,7 +117,7 @@ class Trade_s(db.Model):
     status = db.Column(db.Integer, nullable=True)
     serial = db.Column(db.CHAR(50), nullable=False, unique=True)
 
-    codes = db.relationship('Code', backref='trade')
+    codes = db.relationship('Code_s', backref='trade_s')
 
     def __init__(self, email, serial, start=None, finish=None, status=0):
         self.email = email

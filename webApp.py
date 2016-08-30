@@ -98,74 +98,74 @@ class Code(db.Model):
         return '<code: %s 金額: %f>' % (self.code, self.sum)
 
 
-class Trade_s(db.Model):
-    """
-    取引先のチャージ情報
-
-    :param email:amazonログインイーメール
-    :param start:チャージが始まる時間
-    :param finish:チャージ終了の時間
-    :param status:取引処理状態(0:未処理, 1:処理中, 2:処理完了, 3:エラー発生)
-    """
-
-    __tablename__ = 'trades_s'
-    __bind_key__ = 'slave'
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), nullable=False)
-    start = db.Column(db.DateTime, nullable=True)
-    finish = db.Column(db.DateTime, nullable=True)
-    status = db.Column(db.Integer, nullable=True)
-    serial = db.Column(db.CHAR(50), nullable=False, unique=True)
-
-    codes = db.relationship('Code_s', backref='trade_s')
-
-    def __init__(self, email, serial, start=None, finish=None, status=0):
-        self.email = email
-        self.serial = serial
-        if start is None:
-            start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        self.start = start
-        self.finish = finish
-        self.status = status
-
-    def __repr__(self):
-        return '<user %r traded at %s>' % (self.email, self.start)
-
-
-class Code_s(db.Model):
-    """
-    チャージするコードの情報
-
-    :param code:ギフト券番号
-    :param sum:ギフト券金額
-    :param result:チャージ結果(0: 確認中, 1: チャージ成功, 2: こーどは無効, 3: エラー発生, 4: ユーザーにメールを送信した)
-    :param message:結果のメセージ
-    :param balance:チャージ前の残高(html_code)
-    :param amount:チャージ後の残高(html_code)
-    """
-
-    __tablename__ = 'codes_s'
-    __bind_key__ = 'slave'
-    id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(30), unique=True, nullable=False)
-    result = db.Column(db.Integer)
-    message = db.Column(db.Text)
-    balance = db.Column(db.Text, nullable=True)
-    amount = db.Column(db.Text, nullable=True)
-
-    trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
-
-    def __init__(self, code, result=None, message=None, balance=None, amount=None):
-        self.code = code
-        if result is None:
-            result = 0
-        self.result = result
-        self.message = message
-        self.balance = balance
-        self.amount = amount
-
-    def __repr__(self):
-        return '<code: %s 金額: %f>' % (self.code, self.sum)
+# class Trade(db.Model):
+#     """
+#     取引先のチャージ情報
+#
+#     :param email:amazonログインイーメール
+#     :param start:チャージが始まる時間
+#     :param finish:チャージ終了の時間
+#     :param status:取引処理状態(0:未処理, 1:処理中, 2:処理完了, 3:エラー発生)
+#     """
+#
+#     __tablename__ = 'trades_s'
+#     __bind_key__ = 'slave'
+#     id = db.Column(db.Integer, primary_key=True)
+#     email = db.Column(db.String(120), nullable=False)
+#     start = db.Column(db.DateTime, nullable=True)
+#     finish = db.Column(db.DateTime, nullable=True)
+#     status = db.Column(db.Integer, nullable=True)
+#     serial = db.Column(db.CHAR(50), nullable=False, unique=True)
+#
+#     codes = db.relationship('Code_s', backref='trade_s')
+#
+#     def __init__(self, email, serial, start=None, finish=None, status=0):
+#         self.email = email
+#         self.serial = serial
+#         if start is None:
+#             start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+#         self.start = start
+#         self.finish = finish
+#         self.status = status
+#
+#     def __repr__(self):
+#         return '<user %r traded at %s>' % (self.email, self.start)
+#
+#
+# class Code(db.Model):
+#     """
+#     チャージするコードの情報
+#
+#     :param code:ギフト券番号
+#     :param sum:ギフト券金額
+#     :param result:チャージ結果(0: 確認中, 1: チャージ成功, 2: こーどは無効, 3: エラー発生, 4: ユーザーにメールを送信した)
+#     :param message:結果のメセージ
+#     :param balance:チャージ前の残高(html_code)
+#     :param amount:チャージ後の残高(html_code)
+#     """
+#
+#     __tablename__ = 'codes_s'
+#     __bind_key__ = 'slave'
+#     id = db.Column(db.Integer, primary_key=True)
+#     code = db.Column(db.String(30), unique=True, nullable=False)
+#     result = db.Column(db.Integer)
+#     message = db.Column(db.Text)
+#     balance = db.Column(db.Text, nullable=True)
+#     amount = db.Column(db.Text, nullable=True)
+#
+#     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
+#
+#     def __init__(self, code, result=None, message=None, balance=None, amount=None):
+#         self.code = code
+#         if result is None:
+#             result = 0
+#         self.result = result
+#         self.message = message
+#         self.balance = balance
+#         self.amount = amount
+#
+#     def __repr__(self):
+#         return '<code: %s 金額: %f>' % (self.code, self.sum)
 
 
 @app.route('/')

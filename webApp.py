@@ -108,7 +108,7 @@ class Trade_s(db.Model):
     :param status:取引処理状態(0:未処理, 1:処理中, 2:処理完了, 3:エラー発生)
     """
 
-    __tablename__ = 'trades'
+    __tablename__ = 'trades_s'
     __bind_key__ = 'slave'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), nullable=False)
@@ -144,7 +144,7 @@ class Code_s(db.Model):
     :param amount:チャージ後の残高(html_code)
     """
 
-    __tablename__ = 'codes'
+    __tablename__ = 'codes_s'
     __bind_key__ = 'slave'
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(30), unique=True, nullable=False)

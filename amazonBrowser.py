@@ -47,7 +47,8 @@ def amazon_login(browser, email, password, login_captcha):
 
             return {
                 'code': 4,
-                'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
+                'title': 'Amazon接続エラー',
+                'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
             }
 
         print 'login ok'
@@ -121,7 +122,10 @@ def amazon_login_fail_check(browser, password, login_captcha):
 
             return {
                 'code': 6,
-                'message': '画像認証が失敗しました。',
+                'title': 'Amazonにログインできない',
+                'message': 'Amazonへログインができないようです。'
+                           'お客様が入力したアカウント・パスワードに問題があるか、'
+                           'Amazonのログインに問題が発生している可能性があります。',
             }
         elif login_email_missing_alert\
                 or login_password_missing_alert\
@@ -133,7 +137,10 @@ def amazon_login_fail_check(browser, password, login_captcha):
 
             return {
                 'code': 2,
-                'message': 'アカウントまたはパスワードが間違いました。',
+                'title': 'Amazonにログインできない',
+                'message': 'Amazonへログインができないようです。'
+                           'お客様が入力したアカウント・パスワードに問題があるか、'
+                           'Amazonのログインに問題が発生している可能性があります。',
             }
 
     print 'go to charge page'
@@ -161,7 +168,8 @@ def view_amazon_charge(browser):
 
         return {
             'code': 4,
-            'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
+            'title': 'Amazon接続エラー',
+            'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
         }
 
     charge_link = browser.find_link_by_text(unicode('アカウントに登録','utf8'))
@@ -171,7 +179,8 @@ def view_amazon_charge(browser):
 
         return {
             'code': 4,
-            'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
+            'title': 'Amazon接続エラー',
+            'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
         }
 
     print 'visit charge page ok'
@@ -215,12 +224,10 @@ def amazon_charge(browser, code):
 
             print 'fail to get charge field'
 
-            print code_input_field
-            print charge_button
-
             return {
                 'code': 4,
-                'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
+                'title': 'チャージ時エラー',
+                'message': "Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。",
             }
 
     # チャージが完了するまで待ち
@@ -273,7 +280,8 @@ def amazon_charge(browser, code):
 
             return {
                 'code': 3,
-                'message': result,
+                'title': '番号違いエラー',
+                'message': '番号違いでエラーが発生しました。',
                 'html_code_before_charge': html_code_before_charge,
                 'html_code_after_charge': html_code_after_charge
             }
@@ -284,7 +292,7 @@ def amazon_charge(browser, code):
 
             return {
                 'code': 6,
-                'message': "画像認証が失敗しました。",
+                'message': "チャージするとき画像認証が失敗しました。",
                 'html_code_before_charge': html_code_before_charge,
                 'html_code_after_charge': html_code_after_charge
             }
@@ -295,7 +303,8 @@ def amazon_charge(browser, code):
 
             return {
                 'code': 4,
-                'message': result,
+                'title': 'チャージ時エラー',
+                'message': 'Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。',
                 'html_code_before_charge': html_code_before_charge,
                 'html_code_after_charge': html_code_after_charge
             }
@@ -306,7 +315,8 @@ def amazon_charge(browser, code):
 
         return {
             'code': 4,
-            'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
+            'title': 'チャージ時エラー',
+            'message': "Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。",
             'html_code_before_charge': html_code_before_charge,
             'html_code_after_charge': html_code_after_charge
         }
@@ -394,7 +404,11 @@ def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field,
             confirm_button.click()
 
         else:
-            raise Exception('ログイン画像認証が失敗しました。')
+            return {
+                'code': 4,
+                'title': 'Amazon接続エラー',
+                'message': 'Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。',
+            }
 
         return captcha_get
 
@@ -404,7 +418,8 @@ def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field,
 
         return {
             'code': 4,
-            'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
+            'title': 'Amazon接続エラー',
+            'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
         }
 
 
@@ -437,7 +452,11 @@ def amazon_captcha_input(browser, non_auto_captcha, captcha_input_field, code, c
             confirm_button.click()
 
         else:
-            raise Exception('ログイン画像認証が失敗しました。')
+            return {
+                'code': 4,
+                'title': 'Amazon接続エラー',
+                'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
+            }
 
         return captcha_get
 
@@ -447,7 +466,8 @@ def amazon_captcha_input(browser, non_auto_captcha, captcha_input_field, code, c
 
         return {
             'code': 4,
-            'message': "サイト上に問題が発生しました。（サイトがアクセスできない、またはネットが遅すぎる可能性があります。）",
+            'title': 'Amazon接続エラー',
+            'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
         }
 
 

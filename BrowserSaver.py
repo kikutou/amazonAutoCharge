@@ -1,5 +1,6 @@
 import time
 
+
 class Browsers(object):
     __instance = None
     __browsers = {}

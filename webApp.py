@@ -19,7 +19,7 @@ sys.setdefaultencoding('utf-8')
 app = Flask(__name__, static_url_path='')
 
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/userData?charset=utf8'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/userData?charset=utf8'
 app.config['SQLALCHEMY_BINDS'] = {
     'master': 'mysql://root:123456@localhost:3306/userData?charset=utf8',
     'slave': 'mysql://root:123456@localhost:3306/userData?charset=utf8'

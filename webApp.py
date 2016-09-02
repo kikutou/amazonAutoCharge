@@ -94,7 +94,7 @@ class Code(db.Model):
         self.amount = amount
 
     def __repr__(self):
-        return '<code: %s 金額: %f>' % (self.code, self.sum)
+        return '<code: %s>' % (self.code)
 
 
 # class Trade(db.Model):

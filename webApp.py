@@ -319,6 +319,8 @@ def auto_charge():
                 check_code = Code.query.filter_by(code=code).all()
                 if len(check_code) != 0:
 
+                    print "code exist"
+
                     db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
                         Code.result: '23',
                         Code.message: 'このコードはもう使われました',

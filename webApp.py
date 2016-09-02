@@ -16,8 +16,7 @@ reload(sys)
 sys.setdefaultencoding('utf-8')
 
 
-app = Flask(__name__, static_url_path='')
-
+app = Flask(__name__)
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/userData?charset=utf8'
 app.config['SQLALCHEMY_BINDS'] = {
@@ -174,7 +173,39 @@ def index():
     テスト用
     :return テスト画面を表示する。:
     """
-    return render_template('amazon-check.html')
+    return render_template('admin-index.html')
+
+
+@app.route('/admin')
+def admin():
+
+    id = ""
+    vns_login_time = ""
+    charge_start_time = ""
+    gift_code = ""
+    code_status = ""
+    user_email = ""
+    trade_no = ""
+
+    list = []
+
+    gifcodes_info = Code.query.all()
+    for gifcode_info in gifcodes_info:
+
+
+
+        info = {
+            'id': gifcode_info.id,
+            'vns_login_time': "",
+            'charge_start_time': "",
+            'gift_code': "",
+            'code_status': "",
+            'user_email': "",
+            'trade_no': "",
+        }
+
+
+    return render_template('admin-list.html')
 
 
 @app.route('/amazon-login', methods=['post'])
@@ -284,52 +315,74 @@ def auto_charge():
         for code in codes:
 
             try:
-                print code
 
-                result = amazonBrowser.amazon_charge_main(browser, code)
+                check_code = Code.query.filter_by(code=code).all()
+                if len(check_code) != 0:
 
-                send_result = ""
-                trade_code = trade_codes[j]
+                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.result: '23',
+                        Code.message: 'このコードはもう使われました',
+                        Code.balance: "",
+                        Code.amount: "",
+                    })
 
-                if result['code'] == 1:
-                    # チャージ成功
-                    send_result = '16'
+                    db.session.commit()
 
-                elif result['code'] == 3:
-                    # コードは無効
-                    send_result = '23'
-                    # sendMail.sendGmail('wangrunbo921@gmail.com', result['title'], result['message'])
-
+                    report = {
+                        'code': code,
+                        'result': '23',
+                        'title': "",
+                        'message': 'このコードはもう使われました',
+                        'trade_code': trade_codes[j]
+                    }
                 else:
-                    # 画像認証失敗まだはページエラー
-                    send_result = '22'
-                    # sendMail.sendGmail('wangrunbo921@gmail.com', result['title'], result['message'])
 
-                print send_result
+                    print code
 
-                if not os.path.exists("./trade/"+str(serial)+"/"+code):
-                    os.mkdir("./trade/"+str(serial)+"/"+code)
+                    result = amazonBrowser.amazon_charge_main(browser, code)
 
-                file_before_charge = open("./trade/"+str(serial)+"/"+code+"/before.html", "w")
-                file_before_charge.write(str(result['html_code_before_charge']))
-                file_before_charge.close()
+                    send_result = ""
+                    trade_code = trade_codes[j]
 
-                file_after_charge = open("./trade/"+str(serial)+"/"+code+"/after.html", "w")
-                file_after_charge.write(str(result['html_code_after_charge']))
-                file_after_charge.close()
+                    if result['code'] == 1:
+                        # チャージ成功
+                        send_result = '16'
 
-                file_history = open("./trade/"+str(serial)+"/"+code+"/history.html", "w")
-                file_history.write(str(result['html_code_history']))
-                file_history.close()
+                    elif result['code'] == 3:
+                        # コードは無効
+                        send_result = '23'
+                        # sendMail.sendGmail('wangrunbo921@gmail.com', result['title'], result['message'])
 
-                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
-                    Code.result: send_result,
-                    Code.message: result['message'],
-                    Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
-                    Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html",
-                })
+                    else:
+                        # 画像認証失敗まだはページエラー
+                        send_result = '22'
+                        # sendMail.sendGmail('wangrunbo921@gmail.com', result['title'], result['message'])
 
-                db.session.commit()
+                    print send_result
+
+                    if not os.path.exists("./trade/"+str(serial)+"/"+code):
+                        os.mkdir("./trade/"+str(serial)+"/"+code)
+
+                    file_before_charge = open("./trade/"+str(serial)+"/"+code+"/before.html", "w")
+                    file_before_charge.write(str(result['html_code_before_charge']))
+                    file_before_charge.close()
+
+                    file_after_charge = open("./trade/"+str(serial)+"/"+code+"/after.html", "w")
+                    file_after_charge.write(str(result['html_code_after_charge']))
+                    file_after_charge.close()
+
+                    file_history = open("./trade/"+str(serial)+"/"+code+"/history.html", "w")
+                    file_history.write(str(result['html_code_history']))
+                    file_history.close()
+
+                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.result: send_result,
+                        Code.message: result['message'],
+                        Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
+                        Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html",
+                    })
+
+                    db.session.commit()
 
                 # Send report to PHP
                 # report = [('code', code), ('result', '1'), ('message', result['message'])]
@@ -340,16 +393,16 @@ def auto_charge():
                 # page = urllib2.urlopen(req).read()
                 # print page
 
-                report = {
-                    'code': code,
-                    'result': send_result,
-                    'title': "",
-                    'message': result['message'],
-                    'trade_code': trade_code
-                }
+                    report = {
+                        'code': code,
+                        'result': send_result,
+                        'title': "",
+                        'message': result['message'],
+                        'trade_code': trade_code
+                    }
 
-                if 'title' in result:
-                    report['title'] = result['title']
+                    if 'title' in result:
+                        report['title'] = result['title']
 
                 j += 1
 

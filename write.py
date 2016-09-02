@@ -12,16 +12,16 @@ sys.setdefaultencoding('utf-8')
 app = Flask(__name__, static_url_path='')
 
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:sc07051989@localhost:3306/userData?charset=utf8'
+#app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:sc07051989@localhost:3306/userData?charset=utf8'
 app.config['SQLALCHEMY_BINDS'] = {
-    'master': 'mysql://root:sc07051989@localhost:3306/master?charset=utf8',
+    'master': 'mysql://root:sc07051989@localhost:3306/userData?charset=utf8',
     'slave': 'mysql://root:sc07051989@localhost:3306/slave?charset=utf8'
 }
 # 初始化
 db = SQLAlchemy(app)
 
 
-class Trade_s(db.Model):
+class Trade(db.Model):
     """
     取引先のチャージ情報
 
@@ -32,7 +32,7 @@ class Trade_s(db.Model):
     """
 
     __tablename__ = 'trades'
-    __bind_key__ = 'slave'
+    __bind_key__ = 'master'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), nullable=False)
     start = db.Column(db.DateTime, nullable=True)
@@ -55,7 +55,7 @@ class Trade_s(db.Model):
         return '<user %r traded at %s>' % (self.email, self.start)
 
 
-class Code_s(db.Model):
+class Code(db.Model):
     """
     チャージするコードの情報
 
@@ -68,7 +68,7 @@ class Code_s(db.Model):
     """
 
     __tablename__ = 'codes'
-    __bind_key__ = 'slave'
+    __bind_key__ = 'master'
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(30), unique=True, nullable=False)
     result = db.Column(db.Integer)
@@ -88,15 +88,16 @@ class Code_s(db.Model):
         self.amount = amount
 
     def __repr__(self):
-        return '<code: %s 金額: %f>' % (self.code, self.sum)
-
-
-@app.route('/')
-def index():
-    db.create_all()
-    return 'hello'
+        return '<code: %s>' % (self.code)
 
 
 if __name__ == '__main__':
+    db.create_all()
+
+    code = Code.query.all()
+    print code[0].id
+
+    trade = Trade.query.filter(Trade.codes=code)
+
     app.run(debug=True, threaded=True, port=4000, host='0.0.0.0')
 

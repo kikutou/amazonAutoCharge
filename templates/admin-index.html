@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="/favicon.ico" type="image/x-icon" rel="icon"/>
+	<link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/modal.js"></script>
+	<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+	<meta name="robots" content="NOINDEX,NOFOLLOW">
+	
+</head>
+<body>
+<div class="mock-frame fullheight"><!-- mockframe -->
+	<div class="contents-frame">
+<!----------*contents*---------->
+	<div id="container">
+	<header><!-- header -->
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+<link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width" />
+	<title>VNS管理</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	<link rel="stylesheet" href="../static/css/admin-style.css" />
+		<section>
+			<ul class="split header-split">
+				<li class="logo">VNS管理画面</li>
+			</ul>
+		</section>
+	</header><!-- /header -->
+	<section class="base-contents">	
+				
+	<div class="padder"><!-- padder -->
+					<div class="errorbox" style="display:none"><!-- error -->
+				<ul class="errorboxinner">
+							
+				</ul>
+			</div><!-- /error -->
+			
+			<ul class="split login">
+				<li>
+					<div class="loginbox">
+						<h2>ログイン</h2>
+						<form action="/login/." name="login" id="Form" method="post" accept-charset="utf-8">
+							<div style="display:none;">
+								<input type="hidden" name="_method" value="POST"/>
+							</div>
+							<input name="data[email]" type="email" placeholder="メールアドレス" id="email"/>
+							<input name="data[password]" type="password" placeholder="パスワード" id="password"/>
+							<input type="submit" value="ログイン" id="submit" name="buttonLogin" onclick="return admin()"/>
+                            <script>
+                                function admin() {
+                                    window.location.href='/admin';
+                                    return false
+                                }
+                            </script>
+						</form>
+					</div>
+				</li>
+			</ul>
+	</div><!-- /padder -->
+	</section>		
+	<footer><!-- footer -->
+				<section class="footer-box">
+
+		</section>
+	</footer><!-- /footer -->
+	</div>
+	</body>
+</html>
+

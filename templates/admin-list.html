@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<link href="/favicon.ico" type="image/x-icon" rel="icon"/>
+	<link href="/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/js/modal.js"></script>
+	<meta name="robots" content="NOINDEX,NOFOLLOW">
+
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+		<link type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/ui-lightness/jquery-ui.css" rel="stylesheet" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+</head>
+<body>
+<div class="mock-frame fullheight"><!-- mockframe -->
+	<div class="contents-frame">
+<!----------*contents*---------->
+	<div id="container">
+	<header><!-- header -->
+
+		
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width" />
+	<title>ギフル管理ページ</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11" />
+	<link rel="stylesheet" href="../static/css/admin-style.css" />
+		<section>
+			<ul class="split header-split">
+				<li class="logo">ギフル管理画面</li>
+			</ul>
+		</section>
+	</header><!-- /header -->
+	<section class="base-contents">	
+					<div class="sidebar"><!-- sidebar -->
+						<a href="/logout/" class="nav">ログアウト</a>
+					</div><!-- /sidebar -->
+		
+	<div class="padder"><!-- padder -->
+						<ul class="pankuzu">
+					<li>HOME</li>
+					<li>取引管理</li>
+				</ul>
+
+			<div class="errorbox" style="display:none"><!-- error -->
+				<ul class="errorboxinner">
+								</ul>
+			</div><!-- /error -->
+				
+				<h3>VNS進行状況</h3>
+			<form action="/trades/." id="Form" method="get" accept-charset="utf-8">				<ul class="search-form">
+					<li>検索対象</li>
+					<li>
+					<!--
+						<input type="radio" name="search" value="0" id="users00" checked ><label for="users00">指定なし</label>
+					-->
+						<input type="radio" name="search" value="login_code" id="users01" ><label for="users01">ユーザーID</label>
+						<input type="radio" name="search" value="mail_address" id="users02"checked><label for="users02">メールアドレス</label>
+						<input type="radio" name="search" value="order_code" id="users04"><label for="users04">出品ID</label>
+						<input type="radio" name="search" value="trade_code" id="users05"><label for="users05">取引ID</label>
+						<input type="radio" name="search" value="gift_no" id="users06"><label for="users06">ギフト券番号</label>
+						<input type="text" name="word"  placeholder="文字列を入力" />
+					</li>
+				</ul>
+
+				<ul class="search-form">
+					<li>VNS登録日時</li>
+					<li>
+					<div style="padding:0px 0px 8px 8px; float:left;">						
+					<input type="text" name="ex_s_year" class="year" style="width:80px" >
+					年
+					<input type="text" name="ex_s_month" class="month" style="width:80px" >
+					月
+					<input type="text" name="ex_s_day" class="date" style="width:80px" >
+					日						
+						<input type="text" value="" class="datepicker" style="display:none;" />
+					　から　
+					</div>
+				<script type="text/javascript">
+					$('.datepicker').datepicker({
+						dateFormat : "yy/mm/dd"
+						,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
+						,showOn: "button"
+						,buttonText: "開始日"
+						,buttonImageOnly : false
+						,beforeShow : function(input,inst){
+					//開く前に日付を上書き
+						var year = $(this).parent().find(".year").val();
+						var month = $(this).parent().find(".month").val();
+						var date = $(this).parent().find(".date").val();
+						$(this).datepicker( "setDate" , year + "/" + month + "/" + date)
+						},
+						onSelect: function(dateText, inst){
+					//カレンダー確定時にフォームに反映
+						var dates = dateText.split('/');
+						$(this).parent().find(".year").val(dates[0]);
+						$(this).parent().find(".month").val(dates[1]);
+						$(this).parent().find(".date").val(dates[2]);
+						}
+					});
+				</script>
+					<div style="padding:0px 0px 8px 8px;  float:left;">
+					<input type="text" name="ex_e_year" class="year" style="width:80px" >
+					年
+					<input type="text" name="ex_e_month" class="month" style="width:80px" >
+					月
+					<input type="text" name="ex_e_day" class="date" style="width:80px" >
+					日				
+						<input type="text" value="" class="datepicker2" style="display:none;" />
+					</div>						
+				<script type="text/javascript">
+					$('.datepicker2').datepicker({
+						dateFormat : "yy/mm/dd"
+						,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
+						,showOn: "button"
+						,buttonText: "終了日"
+						,buttonImageOnly : false
+						,beforeShow : function(input,inst){
+					//開く前に日付を上書き
+						var year = $(this).parent().find(".year").val();
+						var month = $(this).parent().find(".month").val();
+						var date = $(this).parent().find(".date").val();
+						$(this).datepicker( "setDate" , year + "/" + month + "/" + date)
+						},
+						onSelect: function(dateText, inst){
+					//カレンダー確定時にフォームに反映
+						var dates = dateText.split('/');
+						$(this).parent().find(".year").val(dates[0]);
+						$(this).parent().find(".month").val(dates[1]);
+						$(this).parent().find(".date").val(dates[2]);
+						}
+					});
+				</script>
+					</li>
+				</ul>
+
+				<ul class="search-form">
+					<li>チェック完了日時</li>
+					<li>
+					<div style="padding:0px 0px 8px 8px; float:left;">						
+					<input type="text" name="ph_s_year" class="year" style="width:80px" >
+					年
+					<input type="text" name="ph_s_month" class="month" style="width:80px" >
+					月
+					<input type="text" name="ph_s_day" class="date" style="width:80px" >
+					日						
+						<input type="text" value="" class="datepicker" style="display:none;" />
+					　から　
+					</div>						
+				<script type="text/javascript">						
+					$('.datepicker').datepicker({
+						dateFormat : "yy/mm/dd"
+						,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
+						,showOn: "button"
+						,buttonText: "開始日"
+						,buttonImageOnly : false
+						,beforeShow : function(input,inst){
+					//開く前に日付を上書き
+						var year = $(this).parent().find(".year").val();
+						var month = $(this).parent().find(".month").val();
+						var date = $(this).parent().find(".date").val();
+						$(this).datepicker( "setDate" , year + "/" + month + "/" + date)
+						},
+						onSelect: function(dateText, inst){
+					//カレンダー確定時にフォームに反映
+						var dates = dateText.split('/');
+						$(this).parent().find(".year").val(dates[0]);
+						$(this).parent().find(".month").val(dates[1]);
+						$(this).parent().find(".date").val(dates[2]);
+						}
+					});						
+				</script>
+					<div style="padding:0px 0px 8px 8px;  float:left;">
+					<input type="text" name="ph_e_year" class="year" style="width:80px" >
+					年
+					<input type="text" name="ph_e_month" class="month" style="width:80px" >
+					月
+					<input type="text" name="ph_e_day" class="date" style="width:80px" >
+					日				
+						<input type="text" value="" class="datepicker2" style="display:none;" />
+					</div>						
+				<script type="text/javascript">						
+					$('.datepicker2').datepicker({
+						dateFormat : "yy/mm/dd"
+						,dayNamesMin: ['日', '月', '火', '水', '木', '金', '土']
+						,showOn: "button"
+						,buttonText: "終了日"
+						,buttonImageOnly : false
+						,beforeShow : function(input,inst){
+					//開く前に日付を上書き
+						var year = $(this).parent().find(".year").val();
+						var month = $(this).parent().find(".month").val();
+						var date = $(this).parent().find(".date").val();
+						$(this).datepicker( "setDate" , year + "/" + month + "/" + date)
+						},
+						onSelect: function(dateText, inst){
+					//カレンダー確定時にフォームに反映
+						var dates = dateText.split('/');
+						$(this).parent().find(".year").val(dates[0]);
+						$(this).parent().find(".month").val(dates[1]);
+						$(this).parent().find(".date").val(dates[2]);
+						}
+					});
+				</script>
+					</li>
+				</ul>
+
+					<ul class="search-form">
+						<li>額面</li>
+						<li>
+							<input type="number" name="s_par"  placeholder="金額を入力" />
+							～
+							<input type="number" name="e_par"  placeholder="金額を入力" />
+						</li>
+						<li>販売金額</li>
+						<li>
+							<input type="number" name="s_sales_amount"  placeholder="金額を入力" />
+							～
+							<input type="number" name="e_sales_amount"  placeholder="金額を入力" />
+						</li>
+					</ul>
+					<ul class="search-form">
+						<li>チェック状況</li>
+						<li>
+							
+
+							<input type="checkbox" name="trade_status[]" value="1" id="status01"><label for="status01">コード確認中</label>
+							<input type="checkbox" name="trade_status[]" value="2" id="status02"><label for="status02">確定</label>
+							<input type="checkbox" name="trade_status[]" value="3" id="status03"checked><label for="status03">キャンセル</label>
+
+							<!-- input type="checkbox" name="trade_status[]" value="4" id="status04"checked><label for="status04">運営完了</label -->
+							<!-- input type="checkbox" name="trade_status[]" value="5" id="status05"checked><label for="status05">VNS接続エラー</label -->
+							<input type="checkbox" name="trade_status[]" value="7" id="status06"checked><label for="status06">amazon接続エラー</label>
+							<input type="checkbox" name="trade_status[]" value="9" id="status07"checked><label for="status07">チャージ時エラー</label>
+
+							<input type="checkbox" name="trade_status[]" value="13" id="status08"checked><label for="status08">番号違いエラー</label>
+							<input type="checkbox" name="trade_status[]" value="6" id="status09"checked><label for="status09">額面違いエラー</label>
+							<input type="checkbox" name="trade_status[]" value="8" id="status10"checked><label for="status10">ギフル接続エラー</label>
+
+						</li>
+					</ul>
+
+				<ul class="search-form">
+					<li>ソート順</li>
+					<li>
+						<select name="order">
+							<option value="1"selected>VNS登録日時・降順</option>
+							<option value="2">VNS登録日時・昇順</option>
+							<option value="3">チェック完了日時・降順</option>
+							<option value="4">チェック完了日時・昇順</option>
+						</select>
+					</li>
+				</ul>
+
+				<ul class="search-form">
+					<li>表示件数</li>
+					<li>
+						<select name="limit">
+							<option value="10">10件</option>
+							<option value="20">20件</option>
+							<option value="50"selected>50件</option>
+							<option value="100">100件</option>
+							<option value="1000">1000件</option>
+						</select>
+					</li>						
+				</ul>
+				<div class="submitbox">
+					<input type="submit" value="検索" />
+																<a class="link-button" href="/trades/?trade_status%5B%5D=3&trade_status%5B%5D=4&trade_status%5B%5D=5&trade_status%5B%5D=7&trade_status%5B%5D=9&trade_status%5B%5D=13&trade_status%5B%5D=6&trade_status%5B%5D=8&trade_status%5B%5D=10&trade_status%5B%5D=11&trade_status%5B%5D=12&csv=1">csvダウンロード</a>
+										<input type="reset" value="クリア" />
+				</div>
+				</ul>
+			</form>			<ol class="split">
+				<li><h3>取引リスト/6043件</h3></li>
+
+			</ol>
+				<table class="listtable">
+					<tr>
+						<th>VNS登録日時</th>
+						<th>チェック日時</th>
+						<th>出品ID</th>
+						<th>取引ID</th>
+						<th>ギフト券番号</th>
+						<th>有効期限</th>
+						<th>額面</th>
+						<th>販売額</th>
+						<th>割引</th>
+						<th>出品者</th>
+						<th>購入者</th>
+						<th>取引状態</th>
+						<th>SS/DL</th>
+
+					</tr>
+
+					<tr class="nolink">
+						<td><p class="data">2016-04-06<br />22:41:07</p></td>
+						<td><p class="data">2016-08-31<br />23:06:27</p></td>
+						<td>
+							<a href="/exhibits/?search=order_code&word=570511f3c824b"><p class="data">570511f3c824b</p></a>
+						</td>
+						<td><p class="data">570511f3c8ba2</p></td>
+						<td><p class="data">XDXZ8CZ3YPZ9XMK3</p></td>
+						<td><p class="data">
+						-						</p></td>
+						<td><p class="yen">3,000</p></td>
+						<td><p class="yen">2,550</p></td>
+						<td><p class="per">85.0</p>
+							<p class="yen">450</p></td>
+
+						<td>
+							<p>ECM4684</p>
+						</td>
+						<td>
+							<p>CSC7919</p>
+						</td>
+						<td>
+							<p>コード確認中</p>
+						</td>
+						<td>
+							<a href="">
+								<i class="fa fa-download" aria-hidden="true"></i>
+								<!-- チャージ前後のスクリーンショットorHTMLファイルをzipでダウンロード -->
+							</a>
+						</td>
+					</tr>
+
+				</table>
+
+
+			<ul class="paging"><!-- paging -->
+								<!-- ページ数表示 -->
+									<p><li>【1/121】</li></p>
+								<!-- 先頭ページ以外で表示 -->
+									<li><i></i></li>
+								<!-- ページ数表示 -->
+
+			<li><a href=""><span>1</span><i class="current"></i></a></li>
+			<li><a href="">2<i class="next"></i></a></li>
+			<li><a href="">3<i class="next"></i></a></li>
+			<li><a href="">4<i class="next"></i></a></li>
+			<li><a href="">5<i class="next"></i></a></li>
+			<li><a href="">6<i class="next"></i></a></li>
+			<li><a href="">7<i class="next"></i></a></li>
+			<li><a href="">8<i class="next"></i></a></li>
+			<li><a href="">9<i class="next"></i></a></li>
+			<li><a href="">10<i class="next"></i></a></li>
+			<li><a href="">次へ<i class="fa fa-arrow-right"></i></a></li>
+
+
+					</ul><!-- /paging -->
+	</div><!-- /padder -->
+	</section>		
+	<footer><!-- footer -->
+				<section class="footer-box">
+
+		</section>
+	</footer><!-- /footer -->
+	</div>
+	</body>
+</html>
+

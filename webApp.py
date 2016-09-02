@@ -76,7 +76,7 @@ class Code(db.Model):
     __tablename__ = 'codes'
     __bind_key__ = 'master'
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(30), unique=True, nullable=False)
+    code = db.Column(db.String(30), nullable=False)
     result = db.Column(db.Integer)
     message = db.Column(db.Text)
     balance = db.Column(db.Text, nullable=True)
@@ -318,7 +318,7 @@ def auto_charge():
 
                 check_code = Code.query.filter_by(code=code).all()
                 print check_code
-                if len(check_code) != 0:
+                if len(check_code) > 1:
 
                     print "code exist"
 

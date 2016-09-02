@@ -20,7 +20,7 @@ app = Flask(__name__)
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/userData?charset=utf8'
 app.config['SQLALCHEMY_BINDS'] = {
-    'master': 'mysql://root:123456@localhost:3306/userData?charset=utf8',
+    'master': 'mysql://root:sc07051989@localhost:3306/userData?charset=utf8',
     'slave': 'mysql://root:123456@localhost:3306/userData?charset=utf8'
 }
 # 初始化
@@ -77,6 +77,7 @@ class Code(db.Model):
     __bind_key__ = 'master'
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(30), nullable=False)
+    time = db.Column(db.String(20), nullable=True)
     result = db.Column(db.Integer)
     message = db.Column(db.Text)
     balance = db.Column(db.Text, nullable=True)
@@ -84,8 +85,9 @@ class Code(db.Model):
 
     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
 
-    def __init__(self, code, result=None, message=None, balance=None, amount=None):
+    def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
         self.code = code
+        self.time = time
         if result is None:
             result = 0
         self.result = result
@@ -146,25 +148,29 @@ class Code(db.Model):
 #     __tablename__ = 'codes_s'
 #     __bind_key__ = 'slave'
 #     id = db.Column(db.Integer, primary_key=True)
-#     code = db.Column(db.String(30), unique=True, nullable=False)
+#     code = db.Column(db.String(30), nullable=False)
+#     time = db.Column(db.String(20), nullable=True)
 #     result = db.Column(db.Integer)
 #     message = db.Column(db.Text)
 #     balance = db.Column(db.Text, nullable=True)
 #     amount = db.Column(db.Text, nullable=True)
 #
 #     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
-#
-#     def __init__(self, code, result=None, message=None, balance=None, amount=None):
-#         self.code = code
-#         if result is None:
-#             result = 0
-#         self.result = result
-#         self.message = message
-#         self.balance = balance
-#         self.amount = amount
-#
-#     def __repr__(self):
-#         return '<code: %s 金額: %f>' % (self.code, self.sum)
+
+
+def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
+    self.code = code
+    self.time = time
+    if result is None:
+        result = 0
+    self.result = result
+    self.message = message
+    self.balance = balance
+    self.amount = amount
+
+
+def __repr__(self):
+    return '<code: %s>' % (self.code)
 
 
 @app.route('/')
@@ -191,21 +197,24 @@ def admin():
 
     gifcodes_info = Code.query.all()
     for gifcode_info in gifcodes_info:
-
-
+        trade_info = gifcode_info.trade
 
         info = {
             'id': gifcode_info.id,
-            'vns_login_time': "",
-            'charge_start_time': "",
-            'gift_code': "",
-            'code_status': "",
-            'user_email': "",
-            'trade_no': "",
+            'vns_login_date': str(trade_info.start)[0:10],
+            'vns_login_time': str(trade_info.start)[11::],
+            'charge_start_date': str(gifcode_info.time)[0:10],
+            'charge_start_time': str(gifcode_info.time)[11::],
+            'gift_code': gifcode_info.code,
+            'code_status': gifcode_info.result,
+            'user_email': trade_info.email,
+            'trade_no': trade_info.serial,
         }
+        print info
 
+        list.append(info)
 
-    return render_template('admin-list.html')
+    return render_template('admin-list.html', list= list)
 
 
 @app.route('/amazon-login', methods=['post'])
@@ -315,6 +324,7 @@ def auto_charge():
         for code in codes:
 
             try:
+                charge_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
                 check_code = Code.query.filter_by(code=code).all()
                 print check_code
@@ -323,6 +333,7 @@ def auto_charge():
                     print "code exist"
 
                     db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.time: charge_time,
                         Code.result: '23',
                         Code.message: 'このコードはもう使われました',
                         Code.balance: "",
@@ -379,6 +390,7 @@ def auto_charge():
                     file_history.close()
 
                     db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.time: charge_time,
                         Code.result: send_result,
                         Code.message: result['message'],
                         Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
@@ -387,14 +399,14 @@ def auto_charge():
 
                     db.session.commit()
 
-                # Send report to PHP
-                # report = [('code', code), ('result', '1'), ('message', result['message'])]
-                # report = urllib.urlencode(report)
-                # path = 'https://153.121.38.177:9080/vnc_connect/db'
-                # req = urllib2.Request(path, report)
-                # req.add_header("Content-type", "application/x-www-form-urlencoded")
-                # page = urllib2.urlopen(req).read()
-                # print page
+                    # Send report to PHP
+                    # report = [('code', code), ('result', '1'), ('message', result['message'])]
+                    # report = urllib.urlencode(report)
+                    # path = 'https://153.121.38.177:9080/vnc_connect/db'
+                    # req = urllib2.Request(path, report)
+                    # req.add_header("Content-type", "application/x-www-form-urlencoded")
+                    # page = urllib2.urlopen(req).read()
+                    # print page
 
                     report = {
                         'code': code,

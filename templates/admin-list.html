@@ -282,42 +282,43 @@
 						<th>VNS登録日時</th>
 						<th>チェック日時</th>
 						<th>出品ID</th>
-						<th>取引ID</th>
+						<th>取引番号</th>
 						<th>ギフト券番号</th>
 						<th>有効期限</th>
 						<th>額面</th>
 						<th>販売額</th>
 						<th>割引</th>
 						<th>出品者</th>
-						<th>購入者</th>
+						<th>イーメール</th>
 						<th>取引状態</th>
 						<th>SS/DL</th>
 
 					</tr>
-
-					<tr class="nolink">
-						<td><p class="data">2016-04-06<br />22:41:07</p></td>
-						<td><p class="data">2016-08-31<br />23:06:27</p></td>
+                    {% if list %}
+                    {% for info in list %}
+                    <tr class="nolink">
+						<td><p class="data">{{ info.vns_login_date }}<br />{{ info.vns_login_time }}</p></td>
+						<td><p class="data">{{ info.charge_start_date }}<br />{{ info.charge_start_time }}</p></td>
 						<td>
-							<a href="/exhibits/?search=order_code&word=570511f3c824b"><p class="data">570511f3c824b</p></a>
+							<a href="/exhibits/?search=order_code&word=570511f3c824b"><p class="data"></p></a>
 						</td>
-						<td><p class="data">570511f3c8ba2</p></td>
-						<td><p class="data">XDXZ8CZ3YPZ9XMK3</p></td>
+						<td><p class="data">{{ info.trade_no }}</p></td>
+						<td><p class="data">{{ info.gift_code }}</p></td>
 						<td><p class="data">
 						-						</p></td>
-						<td><p class="yen">3,000</p></td>
-						<td><p class="yen">2,550</p></td>
-						<td><p class="per">85.0</p>
-							<p class="yen">450</p></td>
+						<td><p class="yen"></p></td>
+						<td><p class="yen"></p></td>
+						<td><p class="per"></p>
+							<p class="yen"></p></td>
 
 						<td>
-							<p>ECM4684</p>
+							<p></p>
 						</td>
 						<td>
-							<p>CSC7919</p>
+							<p>{{ info.user_email }}</p>
 						</td>
 						<td>
-							<p>コード確認中</p>
+							<p>{{ info.code_status }}</p>
 						</td>
 						<td>
 							<a href="">
@@ -326,6 +327,8 @@
 							</a>
 						</td>
 					</tr>
+                    {% endfor %}
+                    {% endif %}
 
 				</table>
 

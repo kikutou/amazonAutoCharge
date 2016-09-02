@@ -70,7 +70,8 @@ class Code(db.Model):
     __tablename__ = 'codes'
     __bind_key__ = 'master'
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(30), unique=True, nullable=False)
+    code = db.Column(db.String(30), nullable=False)
+    time = db.Column(db.String(20), nullable=True)
     result = db.Column(db.Integer)
     message = db.Column(db.Text)
     balance = db.Column(db.Text, nullable=True)
@@ -78,8 +79,9 @@ class Code(db.Model):
 
     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
 
-    def __init__(self, code, result=None, message=None, balance=None, amount=None):
+    def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
         self.code = code
+        self.time = time
         if result is None:
             result = 0
         self.result = result
@@ -92,12 +94,17 @@ class Code(db.Model):
 
 
 if __name__ == '__main__':
-    db.create_all()
-
+    # print time.time()
+    #
+    # db.create_all()
+    #
     code = Code.query.all()
-    print code[0].id
-
-    trade = Trade.query.filter(Trade.codes=code)
+    # print code[0].id
+    #
+    # trade = code[0].trade
+    # print trade.email
+    print code[0].time[0:10]
+    print code[0].time[10::]
 
     app.run(debug=True, threaded=True, port=4000, host='0.0.0.0')
 

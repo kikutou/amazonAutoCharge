@@ -317,6 +317,7 @@ def auto_charge():
             try:
 
                 check_code = Code.query.filter_by(code=code).all()
+                print check_code
                 if len(check_code) != 0:
 
                     print "code exist"

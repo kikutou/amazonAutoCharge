@@ -51,15 +51,15 @@
 			</div><!-- /error -->
 				
 				<h3>VNS進行状況</h3>
-			<form action="/trades/." id="Form" method="get" accept-charset="utf-8">				<ul class="search-form">
+			<form id="Form" method="get" accept-charset="utf-8">				<ul class="search-form">
 					<li>検索対象</li>
 					<li>
 					<!--
 						<input type="radio" name="search" value="0" id="users00" checked ><label for="users00">指定なし</label>
 					-->
-						<input type="radio" name="search" value="login_code" id="users01" ><label for="users01">ユーザーID</label>
+{#						<input type="radio" name="search" value="login_code" id="users01" ><label for="users01">ユーザーID</label>#}
 						<input type="radio" name="search" value="mail_address" id="users02"checked><label for="users02">メールアドレス</label>
-						<input type="radio" name="search" value="order_code" id="users04"><label for="users04">出品ID</label>
+{#						<input type="radio" name="search" value="order_code" id="users04"><label for="users04">出品ID</label>#}
 						<input type="radio" name="search" value="trade_code" id="users05"><label for="users05">取引ID</label>
 						<input type="radio" name="search" value="gift_no" id="users06"><label for="users06">ギフト券番号</label>
 						<input type="text" name="word"  placeholder="文字列を入力" />
@@ -138,7 +138,7 @@
 				</ul>
 
 				<ul class="search-form">
-					<li>チェック完了日時</li>
+					<li>チェック日時</li>
 					<li>
 					<div style="padding:0px 0px 8px 8px; float:left;">						
 					<input type="text" name="ph_s_year" class="year" style="width:80px" >
@@ -208,37 +208,37 @@
 					</li>
 				</ul>
 
-					<ul class="search-form">
-						<li>額面</li>
-						<li>
-							<input type="number" name="s_par"  placeholder="金額を入力" />
-							～
-							<input type="number" name="e_par"  placeholder="金額を入力" />
-						</li>
-						<li>販売金額</li>
-						<li>
-							<input type="number" name="s_sales_amount"  placeholder="金額を入力" />
-							～
-							<input type="number" name="e_sales_amount"  placeholder="金額を入力" />
-						</li>
-					</ul>
+{#					<ul class="search-form">#}
+{#						<li>額面</li>#}
+{#						<li>#}
+{#							<input type="number" name="s_par"  placeholder="金額を入力" />#}
+{#							～#}
+{#							<input type="number" name="e_par"  placeholder="金額を入力" />#}
+{#						</li>#}
+{#						<li>販売金額</li>#}
+{#						<li>#}
+{#							<input type="number" name="s_sales_amount"  placeholder="金額を入力" />#}
+{#							～#}
+{#							<input type="number" name="e_sales_amount"  placeholder="金額を入力" />#}
+{#						</li>#}
+{#					</ul>#}
 					<ul class="search-form">
 						<li>チェック状況</li>
 						<li>
 							
 
-							<input type="checkbox" name="trade_status[]" value="1" id="status01"><label for="status01">コード確認中</label>
-							<input type="checkbox" name="trade_status[]" value="2" id="status02"><label for="status02">確定</label>
-							<input type="checkbox" name="trade_status[]" value="3" id="status03"checked><label for="status03">キャンセル</label>
+							<input type="checkbox" name="trade_status[]" value="0" id="status01"><label for="status01">コード確認中</label>
+							<input type="checkbox" name="trade_status[]" value="16" id="status02"><label for="status02">取引完了</label>
+{#							<input type="checkbox" name="trade_status[]" value="3" id="status03"checked><label for="status03">キャンセル</label>#}
 
 							<!-- input type="checkbox" name="trade_status[]" value="4" id="status04"checked><label for="status04">運営完了</label -->
 							<!-- input type="checkbox" name="trade_status[]" value="5" id="status05"checked><label for="status05">VNS接続エラー</label -->
-							<input type="checkbox" name="trade_status[]" value="7" id="status06"checked><label for="status06">amazon接続エラー</label>
-							<input type="checkbox" name="trade_status[]" value="9" id="status07"checked><label for="status07">チャージ時エラー</label>
+{#							<input type="checkbox" name="trade_status[]" value="7" id="status06"checked><label for="status06">amazon接続エラー</label>#}
+							<input type="checkbox" name="trade_status[]" value="22" id="status07"checked><label for="status07">チャージ時エラー</label>
 
-							<input type="checkbox" name="trade_status[]" value="13" id="status08"checked><label for="status08">番号違いエラー</label>
-							<input type="checkbox" name="trade_status[]" value="6" id="status09"checked><label for="status09">額面違いエラー</label>
-							<input type="checkbox" name="trade_status[]" value="8" id="status10"checked><label for="status10">ギフル接続エラー</label>
+							<input type="checkbox" name="trade_status[]" value="23" id="status08"checked><label for="status08">番号違いエラー</label>
+{#							<input type="checkbox" name="trade_status[]" value="6" id="status09"checked><label for="status09">額面違いエラー</label>#}
+{#							<input type="checkbox" name="trade_status[]" value="x" id="status10"checked><label for="status10">ギフル接続エラー</label>#}
 
 						</li>
 					</ul>
@@ -249,8 +249,8 @@
 						<select name="order">
 							<option value="1"selected>VNS登録日時・降順</option>
 							<option value="2">VNS登録日時・昇順</option>
-							<option value="3">チェック完了日時・降順</option>
-							<option value="4">チェック完了日時・昇順</option>
+							<option value="3">チェック日時・降順</option>
+							<option value="4">チェック日時・昇順</option>
 						</select>
 					</li>
 				</ul>
@@ -264,6 +264,7 @@
 							<option value="50"selected>50件</option>
 							<option value="100">100件</option>
 							<option value="1000">1000件</option>
+                            <option value="0">全部</option>
 						</select>
 					</li>						
 				</ul>
@@ -274,22 +275,22 @@
 				</div>
 				</ul>
 			</form>			<ol class="split">
-				<li><h3>取引リスト/6043件</h3></li>
+				<li><h3>取引リスト/{{ list|length }}件</h3></li>
 
 			</ol>
 				<table class="listtable">
 					<tr>
 						<th>VNS登録日時</th>
 						<th>チェック日時</th>
-						<th>出品ID</th>
+{#						<th>出品ID</th>#}
 						<th>取引番号</th>
 						<th>ギフト券番号</th>
-						<th>有効期限</th>
-						<th>額面</th>
-						<th>販売額</th>
-						<th>割引</th>
-						<th>出品者</th>
-						<th>イーメール</th>
+{#						<th>有効期限</th>#}
+{#						<th>額面</th>#}
+{#						<th>販売額</th>#}
+{#						<th>割引</th>#}
+{#						<th>出品者</th>#}
+						<th>メールアドレス</th>
 						<th>取引状態</th>
 						<th>SS/DL</th>
 
@@ -299,26 +300,37 @@
                     <tr class="nolink">
 						<td><p class="data">{{ info.vns_login_date }}<br />{{ info.vns_login_time }}</p></td>
 						<td><p class="data">{{ info.charge_start_date }}<br />{{ info.charge_start_time }}</p></td>
-						<td>
-							<a href="/exhibits/?search=order_code&word=570511f3c824b"><p class="data"></p></a>
-						</td>
+{#						<td>#}
+{#							<a href="/exhibits/?search=order_code&word=570511f3c824b"><p class="data"></p></a>#}
+{#						</td>#}
 						<td><p class="data">{{ info.trade_no }}</p></td>
 						<td><p class="data">{{ info.gift_code }}</p></td>
-						<td><p class="data">
-						-						</p></td>
-						<td><p class="yen"></p></td>
-						<td><p class="yen"></p></td>
-						<td><p class="per"></p>
-							<p class="yen"></p></td>
-
-						<td>
-							<p></p>
-						</td>
+{#						<td><p class="data">#}
+{#						-						</p></td>#}
+{#						<td><p class="yen"></p></td>#}
+{#						<td><p class="yen"></p></td>#}
+{#						<td><p class="per"></p>#}
+{#							<p class="yen"></p></td>#}
+{##}
+{#						<td>#}
+{#							<p></p>#}
+{#						</td>#}
 						<td>
 							<p>{{ info.user_email }}</p>
 						</td>
 						<td>
-							<p>{{ info.code_status }}</p>
+                            {% if info.code_status == 16 %}
+                                {% set status = "取引完了" %}
+                            {% elif info.code_status == 23 %}
+                                {% set status = "番号違いエラー" %}
+                            {% elif info.code_status == 22 %}
+                                {% set status = "チャージ時エラー" %}
+                            {% elif info.code_status == 0 %}
+                                {% set status = "コード確認中" %}
+                            {% else %}
+                                {% set status = "ギフル接続エラー" %}
+                            {% endif %}
+                            <p>{{ status }}</p>
 						</td>
 						<td>
 							<a href="">

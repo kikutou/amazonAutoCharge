@@ -3,6 +3,7 @@ import flask
 import time
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_, text
 
 import sys
 reload(sys)
@@ -103,8 +104,18 @@ if __name__ == '__main__':
     #
     # trade = code[0].trade
     # print trade.email
-    print code[0].time[0:10]
-    print code[0].time[10::]
+    limit = '1'
+    data1 = "2015"
+    data2 = 22
+    data3 = None
+    trade = Trade.query.filter(Trade.email == "nightblizzard@sina.com").first()
+    code_s = Code.query.filter(Code.trade==trade).order_by(Code.time.desc()).limit(limit).all()
+    # trade = code_s[0].trade.query.filter(Trade.status == 2).all()
+
+    # print trade
+    # print trade.email
+    print code_s
+    # print code_w
 
     app.run(debug=True, threaded=True, port=4000, host='0.0.0.0')
 

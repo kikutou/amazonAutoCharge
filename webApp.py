@@ -1,5 +1,6 @@
 # coding=utf-8
 import time
+from math import ceil
 import demjson
 import requests
 import os
@@ -183,165 +184,93 @@ def index():
     return render_template('admin-index.html')
 
 
-@app.route('/admin')
-def admin():
+@app.route('/admin', methods = ['GET', 'POST'])
+def admin(page=1):
+
     list = []
-    if request.args:
-        # try:
-        search = request.args['search']
-        word = request.args['word']
-        ex_s_year = request.args['ex_s_year']
-        ex_s_month = request.args['ex_s_month']
-        ex_s_day = request.args['ex_s_day']
-        ex_e_year = request.args['ex_e_year']
-        ex_e_month = request.args['ex_e_month']
-        ex_e_day = request.args['ex_e_day']
-        ph_s_year = request.args['ph_s_year']
-        ph_s_month = request.args['ph_s_month']
-        ph_s_day = request.args['ph_s_day']
-        ph_e_year = request.args['ph_e_year']
-        ph_e_month = request.args['ph_e_month']
-        ph_e_day = request.args['ph_e_day']
-        status = request.args.getlist('trade_status[]')
-        order = request.args['order']
-        limit = request.args['limit']
 
-        print search, word, ex_s_year, ex_s_month, ex_s_day, ex_e_year, ex_e_month, ex_e_day, ph_s_year, \
-            ph_s_month, ph_s_day, ph_e_year, ph_e_month, ph_e_day, status, order, limit
+    if 'page' in request.args:
+        page = request.args['page']
 
-        if len(status) != 0:
-            status = status + ['', '', '', '']
+    if 'search' in request.args:
 
-        # コード関連情報で輪番
-        if order == '3' or order == '4':
+        try:
+            search = request.args['search']
+            word = request.args['word']
+            ex_s_year = request.args['ex_s_year']
+            ex_s_month = request.args['ex_s_month']
+            ex_s_day = request.args['ex_s_day']
+            ex_e_year = request.args['ex_e_year']
+            ex_e_month = request.args['ex_e_month']
+            ex_e_day = request.args['ex_e_day']
+            ph_s_year = request.args['ph_s_year']
+            ph_s_month = request.args['ph_s_month']
+            ph_s_day = request.args['ph_s_day']
+            ph_e_year = request.args['ph_e_year']
+            ph_e_month = request.args['ph_e_month']
+            ph_e_day = request.args['ph_e_day']
+            status = request.args.getlist('trade_status[]')
+            order = request.args['order']
+            limit = request.args['limit']
 
-            print 'code info'
+            # print search, word, ex_s_year, ex_s_month, ex_s_day, ex_e_year, ex_e_month, ex_e_day, ph_s_year, \
+            #     ph_s_month, ph_s_day, ph_e_year, ph_e_month, ph_e_day, status, order, limit
 
-            if search == 'gift_no' and word != "":
-                gifcodes_info = Code.query.filter(Code.code == request.args['word'])
+            if len(status) != 0:
+                status = status + ['', '', '', '']
 
-                if len(status) != 0:
-                    gifcodes_info = gifcodes_info.filter(or_(Code.result == status[0], Code.result == status[1],
-                                                             Code.result == status[2], Code.result == status[3],
-                                                             Code.result == status[4]))
+            # コード関連情報で輪番
+            if order == '3' or order == '4':
 
-            else:
-                if len(status) != 0:
-                    gifcodes_info = Code.query.filter(or_(Code.result == status[0], Code.result == status[1],
-                                                          Code.result == status[2], Code.result == status[3],
-                                                          Code.result == status[4]))
+                print 'code info'
+
+                if search == 'gift_no' and word != "":
+                    gifcodes_info = Code.query.filter(Code.code == request.args['word'])
+
+                    if len(status) != 0:
+                        gifcodes_info = gifcodes_info.filter(or_(Code.result == status[0], Code.result == status[1],
+                                                                 Code.result == status[2], Code.result == status[3],
+                                                                 Code.result == status[4]))
+
                 else:
-                    gifcodes_info = Code.query
+                    if len(status) != 0:
+                        gifcodes_info = Code.query.filter(or_(Code.result == status[0], Code.result == status[1],
+                                                              Code.result == status[2], Code.result == status[3],
+                                                              Code.result == status[4]))
+                    else:
+                        gifcodes_info = Code.query
 
-            if order == '3':
-                gifcodes_info = gifcodes_info.order_by(Code.time)
-            else:
-                gifcodes_info = gifcodes_info.order_by(Code.time.desc())
+                if order == '3':
+                    gifcodes_info = gifcodes_info.order_by(Code.time)
+                else:
+                    gifcodes_info = gifcodes_info.order_by(Code.time.desc())
 
-            if limit == '0':
-                gifcodes_info = gifcodes_info.all()
-            else:
-                gifcodes_info = gifcodes_info.limit(limit).all()
-
-            for gifcode_info in gifcodes_info:
-                trade_info = gifcode_info.trade
-
-                if word != '' and ((search == 'mail_address' and trade_info.email != word) or (search == 'trade_code' and trade_info.serial != word)):
-                    continue
-
-                if ex_s_year and ex_e_year and ex_s_month and ex_e_month and ex_s_day and ex_e_day:
-                    if str(trade_info.start)[0:4] < ex_s_year or str(trade_info.start)[0:4] > ex_e_year:
-                        continue
-                    elif ex_s_year == ex_e_year and (str(trade_info.start)[5:7] < ex_s_month or str(trade_info.start)[5:7] > ex_e_month):
-                        continue
-                    elif (ex_s_year == ex_e_year and ex_s_month == ex_e_month) and (str(trade_info.start)[8:10] < ex_s_day or str(trade_info.start)[8:10] > ex_e_day):
-                        continue
-
-                if ph_s_year and ph_e_year and ph_s_month and ph_e_month and ph_s_day and ph_e_day:
-                    if str(gifcode_info.time)[0:4] < ph_s_year or str(gifcode_info.time)[0:4] > ph_e_year:
-                        continue
-                    elif ph_s_year == ph_e_year and (str(gifcode_info.time)[5:7] < ph_s_month or str(gifcode_info.time)[5:7] > ph_e_month):
-                        continue
-                    elif (ph_s_year == ph_e_year and ph_s_month == ph_e_month) and (str(gifcode_info.time)[8:10] < ph_s_day or str(gifcode_info.time)[8:10] > ph_e_day):
-                        continue
-
-                info = {
-                    'id': gifcode_info.id,
-                    'vns_login_date': str(trade_info.start)[0:10],
-                    'vns_login_time': str(trade_info.start)[11::],
-                    'charge_start_date': str(gifcode_info.time)[0:10],
-                    'charge_start_time': str(gifcode_info.time)[11::],
-                    'gift_code': gifcode_info.code,
-                    'code_status': gifcode_info.result,
-                    'user_email': trade_info.email,
-                    'trade_no': trade_info.serial,
-                }
-                print info
-
-                list.append(info)
-
-        # 取引関連情報で輪番
-        else:
-
-            print 'trade info'
-
-            if search == 'trade_code' and word != "":
-                trades_info = Trade.query.filter(Trade.serial == word)
-
-            elif search == 'mail_address' and word != "":
-                trades_info = Trade.query.filter(Trade.email == word)
-
-            else:
-                trades_info = Trade.query
-
-            if order == '1':
-                trades_info = trades_info.order_by(Trade.start)
-            else:
-                trades_info = trades_info.order_by(Trade.start.desc())
-
-            if limit == '0':
-                trades_info = trades_info.all()
-            else:
-                trades_info = trades_info.limit(limit).all()
-
-            print trades_info
-
-            for trade_info in trades_info:
-
-                if ex_s_year and ex_e_year and ex_s_month and ex_e_month and ex_s_day and ex_e_day:
-                    if str(trade_info.start)[0:4] < ex_s_year or str(trade_info.start)[0:4] > ex_e_year:
-                        print 'continue1'
-                        continue
-                    elif ex_s_year == ex_e_year and (str(trade_info.start)[5:7] < ex_s_month or str(trade_info.start)[5:7] > ex_e_month):
-                        print 'continue1'
-                        continue
-                    elif (ex_s_year == ex_e_year and ex_s_month == ex_e_month) and (str(trade_info.start)[8:10] < ex_s_day or str(trade_info.start)[8:10] > ex_e_day):
-                        print 'continue1'
-                        continue
-
-                gifcodes_info = Code.query.filter(Code.trade == trade_info).all()
-                print gifcodes_info
+                if limit == '0':
+                    gifcodes_info = gifcodes_info.all()
+                else:
+                    gifcodes_info = gifcodes_info.limit(limit).all()
 
                 for gifcode_info in gifcodes_info:
+                    trade_info = gifcode_info.trade
 
-                    if word != '' and search == 'gift_no' and gifcode_info.code != word:
+                    if word != '' and ((search == 'mail_address' and trade_info.email != word) or (search == 'trade_code' and trade_info.serial != word)):
                         continue
+
+                    if ex_s_year and ex_e_year and ex_s_month and ex_e_month and ex_s_day and ex_e_day:
+                        if str(trade_info.start)[0:4] < ex_s_year or str(trade_info.start)[0:4] > ex_e_year:
+                            continue
+                        elif ex_s_year == ex_e_year and (str(trade_info.start)[5:7] < ex_s_month or str(trade_info.start)[5:7] > ex_e_month):
+                            continue
+                        elif (ex_s_year == ex_e_year and ex_s_month == ex_e_month) and (str(trade_info.start)[8:10] < ex_s_day or str(trade_info.start)[8:10] > ex_e_day):
+                            continue
 
                     if ph_s_year and ph_e_year and ph_s_month and ph_e_month and ph_s_day and ph_e_day:
                         if str(gifcode_info.time)[0:4] < ph_s_year or str(gifcode_info.time)[0:4] > ph_e_year:
                             continue
-                        elif ph_s_year == ph_e_year and (
-                                str(gifcode_info.time)[5:7] < ph_s_month or str(gifcode_info.time)[5:7] > ph_e_month):
+                        elif ph_s_year == ph_e_year and (str(gifcode_info.time)[5:7] < ph_s_month or str(gifcode_info.time)[5:7] > ph_e_month):
                             continue
-                        elif (ph_s_year == ph_e_year and ph_s_month == ph_e_month) and (
-                                str(gifcode_info.time)[8:10] < ph_s_day or str(gifcode_info.time)[8:10] > ph_e_day):
+                        elif (ph_s_year == ph_e_year and ph_s_month == ph_e_month) and (str(gifcode_info.time)[8:10] < ph_s_day or str(gifcode_info.time)[8:10] > ph_e_day):
                             continue
-
-                    print gifcode_info.result
-                    print status
-                    if len(status) != 0 and str(gifcode_info.result) not in status:
-                        print 'continue0'
-                        continue
 
                     info = {
                         'id': gifcode_info.id,
@@ -354,21 +283,95 @@ def admin():
                         'user_email': trade_info.email,
                         'trade_no': trade_info.serial,
                     }
-                    print info
 
                     list.append(info)
 
-        print 'list='
-        print list
-        return render_template('admin-list.html', list=list)
+            # 取引関連情報で輪番
+            else:
 
-        # except:
-        #     print 'search err'
-        #     return render_template('admin-list.html')
+                if search == 'trade_code' and word != "":
+                    trades_info = Trade.query.filter(Trade.serial == word)
+
+                elif search == 'mail_address' and word != "":
+                    trades_info = Trade.query.filter(Trade.email == word)
+
+                else:
+                    trades_info = Trade.query
+
+                if order == '1':
+                    trades_info = trades_info.order_by(Trade.start)
+                else:
+                    trades_info = trades_info.order_by(Trade.start.desc())
+
+                if limit == '0':
+                    trades_info = trades_info.all()
+                else:
+                    trades_info = trades_info.limit(limit).all()
+
+                print trades_info
+
+                for trade_info in trades_info:
+
+                    if ex_s_year and ex_e_year and ex_s_month and ex_e_month and ex_s_day and ex_e_day:
+                        if str(trade_info.start)[0:4] < ex_s_year or str(trade_info.start)[0:4] > ex_e_year:
+                            continue
+                        elif ex_s_year == ex_e_year and (str(trade_info.start)[5:7] < ex_s_month or str(trade_info.start)[5:7] > ex_e_month):
+                            continue
+                        elif (ex_s_year == ex_e_year and ex_s_month == ex_e_month) and (str(trade_info.start)[8:10] < ex_s_day or str(trade_info.start)[8:10] > ex_e_day):
+                            continue
+
+                    gifcodes_info = Code.query.filter(Code.trade == trade_info).all()
+                    print gifcodes_info
+
+                    for gifcode_info in gifcodes_info:
+
+                        if word != '' and search == 'gift_no' and gifcode_info.code != word:
+                            continue
+
+                        if ph_s_year and ph_e_year and ph_s_month and ph_e_month and ph_s_day and ph_e_day:
+                            if str(gifcode_info.time)[0:4] < ph_s_year or str(gifcode_info.time)[0:4] > ph_e_year:
+                                continue
+                            elif ph_s_year == ph_e_year and (
+                                    str(gifcode_info.time)[5:7] < ph_s_month or str(gifcode_info.time)[5:7] > ph_e_month):
+                                continue
+                            elif (ph_s_year == ph_e_year and ph_s_month == ph_e_month) and (
+                                    str(gifcode_info.time)[8:10] < ph_s_day or str(gifcode_info.time)[8:10] > ph_e_day):
+                                continue
+
+                        print gifcode_info.result
+                        print status
+                        if len(status) != 0 and str(gifcode_info.result) not in status:
+                            continue
+
+                        info = {
+                            'id': gifcode_info.id,
+                            'vns_login_date': str(trade_info.start)[0:10],
+                            'vns_login_time': str(trade_info.start)[11::],
+                            'charge_start_date': str(gifcode_info.time)[0:10],
+                            'charge_start_time': str(gifcode_info.time)[11::],
+                            'gift_code': gifcode_info.code,
+                            'code_status': gifcode_info.result,
+                            'user_email': trade_info.email,
+                            'trade_no': trade_info.serial,
+                        }
+
+                        list.append(info)
+
+            return render_template('admin-list.html', list=list, count=len(list))
+
+        except:
+
+            return render_template('admin-list.html')
 
     else:
-        gifcodes_info = Code.query.all()
+        paginate = Code.query.paginate(int(page), 2, True)
 
+        total_page = ceil(paginate.total/paginate.per_page)
+        total_page = str(total_page).replace('.0', '')
+
+        gifcodes_info = paginate.items
+
+        count = paginate.total
         for gifcode_info in gifcodes_info:
             trade_info = gifcode_info.trade
 
@@ -383,11 +386,10 @@ def admin():
                 'user_email': trade_info.email,
                 'trade_no': trade_info.serial,
             }
-            print info
 
             list.append(info)
 
-    return render_template('admin-list.html', list= list)
+    return render_template('admin-list.html', list=list, paginate=paginate, total_page=total_page, count=count)
 
 
 @app.route('/amazon-login', methods=['post'])

@@ -275,7 +275,7 @@
 				</div>
 				</ul>
 			</form>			<ol class="split">
-				<li><h3>取引リスト/{{ list|length }}件</h3></li>
+				<li><h3>取引リスト/{{ count }}件</h3></li>
 
 			</ol>
 				<table class="listtable">
@@ -344,28 +344,33 @@
 
 				</table>
 
-
+            {% if paginate %}
 			<ul class="paging"><!-- paging -->
 								<!-- ページ数表示 -->
-									<p><li>【1/121】</li></p>
+									<p><li>【{{ paginate.page }}/{{ total_page }}】</li></p>
 								<!-- 先頭ページ以外で表示 -->
 									<li><i></i></li>
 								<!-- ページ数表示 -->
+            {% if paginate.has_prev %}
+                <li><a href="{{ url_for('admin', page = paginate.prev_num) }}"><i class="fa fa-arrow-left"></i>前へ</a></li>
+            {% else %}
+                <li><i class="fa fa-arrow-left"></i>前へ</li>
+            {% endif %}
 
-			<li><a href=""><span>1</span><i class="current"></i></a></li>
-			<li><a href="">2<i class="next"></i></a></li>
-			<li><a href="">3<i class="next"></i></a></li>
-			<li><a href="">4<i class="next"></i></a></li>
-			<li><a href="">5<i class="next"></i></a></li>
-			<li><a href="">6<i class="next"></i></a></li>
-			<li><a href="">7<i class="next"></i></a></li>
-			<li><a href="">8<i class="next"></i></a></li>
-			<li><a href="">9<i class="next"></i></a></li>
-			<li><a href="">10<i class="next"></i></a></li>
-			<li><a href="">次へ<i class="fa fa-arrow-right"></i></a></li>
+            {% for p in range(0, total_page|int) %}
+                {% set p=p+1 %}
+                <li><a href="{{ url_for('admin', page = p) }}">{{ p }}<i class="next"></i></a></li>
+            {% endfor %}
+            
+            
+            {% if paginate.has_next %}
+                <li><a href="{{ url_for('admin', page = paginate.next_num) }}">次へ<i class="fa fa-arrow-right"></i></a></li>
+            {% else %}
+                <li>次へ<i class="fa fa-arrow-right"></i></li>
+            {% endif %}
 
-
-					</ul><!-- /paging -->
+            </ul><!-- /paging -->
+            {% endif %}
 	</div><!-- /padder -->
 	</section>		
 	<footer><!-- footer -->

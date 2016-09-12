@@ -5,12 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1471069433.22.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/1471069440.19.jpg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/browser_screenshot.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/pic.jpg" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
@@ -47,8 +41,8 @@
       <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="589" column="46" selection-start-line="589" selection-start-column="46" selection-end-line="589" selection-end-column="46" />
+            <state relative-caret-position="332">
+              <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
               <folding>
                 <element signature="e#15#26#0" expanded="true" />
               </folding>
@@ -101,8 +95,8 @@
         <option value="$PROJECT_DIR$/templates/admin-index.html" />
         <option value="$PROJECT_DIR$/write.py" />
         <option value="$PROJECT_DIR$/templates/admin-list.html" />
-        <option value="$PROJECT_DIR$/webApp.py" />
         <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/webApp.py" />
       </list>
     </option>
   </component>
@@ -900,8 +894,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="589" column="46" selection-start-line="589" selection-start-column="46" selection-end-line="589" selection-end-column="46" />
+        <state relative-caret-position="332">
+          <caret line="24" column="34" selection-start-line="24" selection-start-column="34" selection-end-line="24" selection-end-column="34" />
           <folding>
             <element signature="e#15#26#0" expanded="true" />
           </folding>

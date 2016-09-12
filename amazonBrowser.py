@@ -54,7 +54,8 @@ def amazon_login(browser, email, password, login_captcha):
         print 'login ok'
         #browser.driver.save_screenshot('./your_screenshot.png')
 
-        gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+        # gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+        gift_link = browser.find_link_by_href('/gp/gc/ref=nav_cs_gc')
 
         if gift_link:
 
@@ -161,7 +162,8 @@ def view_amazon_charge(browser):
     # url1 = 'https://www.amazon.co.jp/gc/redeem/ref=gc_redeem_new_exp_DesktopRedirect'
     # url1 = 'https://www.amazon.co.jp/'
     # browser.visit(url1)
-    gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+    # gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+    gift_link = browser.find_link_by_href('/gp/gc/ref=nav_cs_gc')
     if gift_link:
         gift_link.click()
     else:

@@ -187,6 +187,8 @@ def index():
 @app.route('/admin', methods = ['GET', 'POST'])
 def admin(page=1):
 
+    db.create_all()
+
     list = []
 
     if 'page' in request.args:
@@ -596,22 +598,11 @@ def auto_charge():
 
                 j += 1
 
-                print 'send report'
                 response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
 
                 print response.status_code
 
-                print 'req'
-                print response.text
-
                 response_text = demjson.decode(response.text)
-
-                print type(response_text)
-
-                print response_text['result']
-                print response
-                print response.content
-                # print response.content['result']
 
                 if response_text['result'] == 'ERROR':
                     trade.status = 3
@@ -625,8 +616,6 @@ def auto_charge():
                     return flask.jsonify(result)
 
             except:
-
-                print "db update fail"
 
                 trade.status = 3
                 db.session.add(trade)

@@ -1,11 +1,9 @@
 # coding=utf-8
-a=0
-b=0
-c=2
+import requests
+report = {
+    'email': 'nightblizzard@sina.com',
+    'password': 'sc07051989'
+}
+response = requests.post("http://52.197.23.9:4000/amazon-login", data=report, verify=False)
 
-arr =[1, 2, 3]
-
-if 41 not in arr:
-    print 'yes'
-else:
-    print 'no'
+print response.status_code

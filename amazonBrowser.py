@@ -325,7 +325,8 @@ def amazon_charge(browser, code):
 
 
 def save_history(browser):
-    gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+    # gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+    gift_link = browser.find_link_by_href('/gp/gc/ref=nav_cs_gc')
     if gift_link:
         gift_link.click()
 
@@ -338,7 +339,8 @@ def save_history(browser):
             history = browser.html
 
             for i in range(0, 3):
-                gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+                # gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
+                gift_link = browser.find_link_by_href('/gp/gc/ref=nav_cs_gc')
                 if gift_link:
                     gift_link.click()
                     break

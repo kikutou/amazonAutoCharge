@@ -1,5 +1,6 @@
 # coding=utf-8
 import time
+from math import ceil
 import demjson
 import requests
 import os
@@ -7,6 +8,7 @@ import random
 import flask
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 import BrowserSaver
 import amazonBrowser
 # import sendMail
@@ -20,7 +22,7 @@ app = Flask(__name__)
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/userData?charset=utf8'
 app.config['SQLALCHEMY_BINDS'] = {
-    'master': 'mysql://root:123456@localhost:3306/userData?charset=utf8',
+    'master': 'mysql://root:sc07051989@localhost:3306/userData?charset=utf8',
     'slave': 'mysql://root:123456@localhost:3306/userData?charset=utf8'
 }
 # 初始化
@@ -77,6 +79,7 @@ class Code(db.Model):
     __bind_key__ = 'master'
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(30), nullable=False)
+    time = db.Column(db.String(20), nullable=True)
     result = db.Column(db.Integer)
     message = db.Column(db.Text)
     balance = db.Column(db.Text, nullable=True)
@@ -84,8 +87,9 @@ class Code(db.Model):
 
     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
 
-    def __init__(self, code, result=None, message=None, balance=None, amount=None):
+    def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
         self.code = code
+        self.time = time
         if result is None:
             result = 0
         self.result = result
@@ -146,25 +150,29 @@ class Code(db.Model):
 #     __tablename__ = 'codes_s'
 #     __bind_key__ = 'slave'
 #     id = db.Column(db.Integer, primary_key=True)
-#     code = db.Column(db.String(30), unique=True, nullable=False)
+#     code = db.Column(db.String(30), nullable=False)
+#     time = db.Column(db.String(20), nullable=True)
 #     result = db.Column(db.Integer)
 #     message = db.Column(db.Text)
 #     balance = db.Column(db.Text, nullable=True)
 #     amount = db.Column(db.Text, nullable=True)
 #
 #     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
-#
-#     def __init__(self, code, result=None, message=None, balance=None, amount=None):
-#         self.code = code
-#         if result is None:
-#             result = 0
-#         self.result = result
-#         self.message = message
-#         self.balance = balance
-#         self.amount = amount
-#
-#     def __repr__(self):
-#         return '<code: %s 金額: %f>' % (self.code, self.sum)
+
+
+def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
+    self.code = code
+    self.time = time
+    if result is None:
+        result = 0
+    self.result = result
+    self.message = message
+    self.balance = balance
+    self.amount = amount
+
+
+def __repr__(self):
+    return '<code: %s>' % (self.code)
 
 
 @app.route('/')
@@ -176,36 +184,214 @@ def index():
     return render_template('admin-index.html')
 
 
-@app.route('/admin')
-def admin():
+@app.route('/admin', methods = ['GET', 'POST'])
+def admin(page=1):
 
-    id = ""
-    vns_login_time = ""
-    charge_start_time = ""
-    gift_code = ""
-    code_status = ""
-    user_email = ""
-    trade_no = ""
+    db.create_all()
 
     list = []
 
-    gifcodes_info = Code.query.all()
-    for gifcode_info in gifcodes_info:
+    if 'page' in request.args:
+        page = request.args['page']
 
+    if 'search' in request.args:
 
+        try:
+            search = request.args['search']
+            word = request.args['word']
+            ex_s_year = request.args['ex_s_year']
+            ex_s_month = request.args['ex_s_month']
+            ex_s_day = request.args['ex_s_day']
+            ex_e_year = request.args['ex_e_year']
+            ex_e_month = request.args['ex_e_month']
+            ex_e_day = request.args['ex_e_day']
+            ph_s_year = request.args['ph_s_year']
+            ph_s_month = request.args['ph_s_month']
+            ph_s_day = request.args['ph_s_day']
+            ph_e_year = request.args['ph_e_year']
+            ph_e_month = request.args['ph_e_month']
+            ph_e_day = request.args['ph_e_day']
+            status = request.args.getlist('trade_status[]')
+            order = request.args['order']
+            limit = request.args['limit']
 
-        info = {
-            'id': gifcode_info.id,
-            'vns_login_time': "",
-            'charge_start_time': "",
-            'gift_code': "",
-            'code_status': "",
-            'user_email': "",
-            'trade_no': "",
-        }
+            # print search, word, ex_s_year, ex_s_month, ex_s_day, ex_e_year, ex_e_month, ex_e_day, ph_s_year, \
+            #     ph_s_month, ph_s_day, ph_e_year, ph_e_month, ph_e_day, status, order, limit
 
+            if len(status) != 0:
+                status = status + ['', '', '', '']
 
-    return render_template('admin-list.html')
+            # コード関連情報で輪番
+            if order == '3' or order == '4':
+
+                print 'code info'
+
+                if search == 'gift_no' and word != "":
+                    gifcodes_info = Code.query.filter(Code.code == request.args['word'])
+
+                    if len(status) != 0:
+                        gifcodes_info = gifcodes_info.filter(or_(Code.result == status[0], Code.result == status[1],
+                                                                 Code.result == status[2], Code.result == status[3],
+                                                                 Code.result == status[4]))
+
+                else:
+                    if len(status) != 0:
+                        gifcodes_info = Code.query.filter(or_(Code.result == status[0], Code.result == status[1],
+                                                              Code.result == status[2], Code.result == status[3],
+                                                              Code.result == status[4]))
+                    else:
+                        gifcodes_info = Code.query
+
+                if order == '3':
+                    gifcodes_info = gifcodes_info.order_by(Code.time)
+                else:
+                    gifcodes_info = gifcodes_info.order_by(Code.time.desc())
+
+                if limit == '0':
+                    gifcodes_info = gifcodes_info.all()
+                else:
+                    gifcodes_info = gifcodes_info.limit(limit).all()
+
+                for gifcode_info in gifcodes_info:
+                    trade_info = gifcode_info.trade
+
+                    if word != '' and ((search == 'mail_address' and trade_info.email != word) or (search == 'trade_code' and trade_info.serial != word)):
+                        continue
+
+                    if ex_s_year and ex_e_year and ex_s_month and ex_e_month and ex_s_day and ex_e_day:
+                        if str(trade_info.start)[0:4] < ex_s_year or str(trade_info.start)[0:4] > ex_e_year:
+                            continue
+                        elif ex_s_year == ex_e_year and (str(trade_info.start)[5:7] < ex_s_month or str(trade_info.start)[5:7] > ex_e_month):
+                            continue
+                        elif (ex_s_year == ex_e_year and ex_s_month == ex_e_month) and (str(trade_info.start)[8:10] < ex_s_day or str(trade_info.start)[8:10] > ex_e_day):
+                            continue
+
+                    if ph_s_year and ph_e_year and ph_s_month and ph_e_month and ph_s_day and ph_e_day:
+                        if str(gifcode_info.time)[0:4] < ph_s_year or str(gifcode_info.time)[0:4] > ph_e_year:
+                            continue
+                        elif ph_s_year == ph_e_year and (str(gifcode_info.time)[5:7] < ph_s_month or str(gifcode_info.time)[5:7] > ph_e_month):
+                            continue
+                        elif (ph_s_year == ph_e_year and ph_s_month == ph_e_month) and (str(gifcode_info.time)[8:10] < ph_s_day or str(gifcode_info.time)[8:10] > ph_e_day):
+                            continue
+
+                    info = {
+                        'id': gifcode_info.id,
+                        'vns_login_date': str(trade_info.start)[0:10],
+                        'vns_login_time': str(trade_info.start)[11::],
+                        'charge_start_date': str(gifcode_info.time)[0:10],
+                        'charge_start_time': str(gifcode_info.time)[11::],
+                        'gift_code': gifcode_info.code,
+                        'code_status': gifcode_info.result,
+                        'user_email': trade_info.email,
+                        'trade_no': trade_info.serial,
+                    }
+
+                    list.append(info)
+
+            # 取引関連情報で輪番
+            else:
+
+                if search == 'trade_code' and word != "":
+                    trades_info = Trade.query.filter(Trade.serial == word)
+
+                elif search == 'mail_address' and word != "":
+                    trades_info = Trade.query.filter(Trade.email == word)
+
+                else:
+                    trades_info = Trade.query
+
+                if order == '1':
+                    trades_info = trades_info.order_by(Trade.start)
+                else:
+                    trades_info = trades_info.order_by(Trade.start.desc())
+
+                if limit == '0':
+                    trades_info = trades_info.all()
+                else:
+                    trades_info = trades_info.limit(limit).all()
+
+                print trades_info
+
+                for trade_info in trades_info:
+
+                    if ex_s_year and ex_e_year and ex_s_month and ex_e_month and ex_s_day and ex_e_day:
+                        if str(trade_info.start)[0:4] < ex_s_year or str(trade_info.start)[0:4] > ex_e_year:
+                            continue
+                        elif ex_s_year == ex_e_year and (str(trade_info.start)[5:7] < ex_s_month or str(trade_info.start)[5:7] > ex_e_month):
+                            continue
+                        elif (ex_s_year == ex_e_year and ex_s_month == ex_e_month) and (str(trade_info.start)[8:10] < ex_s_day or str(trade_info.start)[8:10] > ex_e_day):
+                            continue
+
+                    gifcodes_info = Code.query.filter(Code.trade == trade_info).all()
+                    print gifcodes_info
+
+                    for gifcode_info in gifcodes_info:
+
+                        if word != '' and search == 'gift_no' and gifcode_info.code != word:
+                            continue
+
+                        if ph_s_year and ph_e_year and ph_s_month and ph_e_month and ph_s_day and ph_e_day:
+                            if str(gifcode_info.time)[0:4] < ph_s_year or str(gifcode_info.time)[0:4] > ph_e_year:
+                                continue
+                            elif ph_s_year == ph_e_year and (
+                                    str(gifcode_info.time)[5:7] < ph_s_month or str(gifcode_info.time)[5:7] > ph_e_month):
+                                continue
+                            elif (ph_s_year == ph_e_year and ph_s_month == ph_e_month) and (
+                                    str(gifcode_info.time)[8:10] < ph_s_day or str(gifcode_info.time)[8:10] > ph_e_day):
+                                continue
+
+                        print gifcode_info.result
+                        print status
+                        if len(status) != 0 and str(gifcode_info.result) not in status:
+                            continue
+
+                        info = {
+                            'id': gifcode_info.id,
+                            'vns_login_date': str(trade_info.start)[0:10],
+                            'vns_login_time': str(trade_info.start)[11::],
+                            'charge_start_date': str(gifcode_info.time)[0:10],
+                            'charge_start_time': str(gifcode_info.time)[11::],
+                            'gift_code': gifcode_info.code,
+                            'code_status': gifcode_info.result,
+                            'user_email': trade_info.email,
+                            'trade_no': trade_info.serial,
+                        }
+
+                        list.append(info)
+
+            return render_template('admin-list.html', list=list, count=len(list))
+
+        except:
+
+            return render_template('admin-list.html')
+
+    else:
+        paginate = Code.query.paginate(int(page), 2, True)
+
+        total_page = ceil(paginate.total/paginate.per_page)
+        total_page = str(total_page).replace('.0', '')
+
+        gifcodes_info = paginate.items
+
+        count = paginate.total
+        for gifcode_info in gifcodes_info:
+            trade_info = gifcode_info.trade
+
+            info = {
+                'id': gifcode_info.id,
+                'vns_login_date': str(trade_info.start)[0:10],
+                'vns_login_time': str(trade_info.start)[11::],
+                'charge_start_date': str(gifcode_info.time)[0:10],
+                'charge_start_time': str(gifcode_info.time)[11::],
+                'gift_code': gifcode_info.code,
+                'code_status': gifcode_info.result,
+                'user_email': trade_info.email,
+                'trade_no': trade_info.serial,
+            }
+
+            list.append(info)
+
+    return render_template('admin-list.html', list=list, paginate=paginate, total_page=total_page, count=count)
 
 
 @app.route('/amazon-login', methods=['post'])
@@ -315,6 +501,7 @@ def auto_charge():
         for code in codes:
 
             try:
+                charge_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
                 check_code = Code.query.filter_by(code=code).all()
                 print check_code
@@ -323,6 +510,7 @@ def auto_charge():
                     print "code exist"
 
                     db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.time: charge_time,
                         Code.result: '23',
                         Code.message: 'このコードはもう使われました',
                         Code.balance: "",
@@ -379,6 +567,7 @@ def auto_charge():
                     file_history.close()
 
                     db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.time: charge_time,
                         Code.result: send_result,
                         Code.message: result['message'],
                         Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
@@ -387,14 +576,14 @@ def auto_charge():
 
                     db.session.commit()
 
-                # Send report to PHP
-                # report = [('code', code), ('result', '1'), ('message', result['message'])]
-                # report = urllib.urlencode(report)
-                # path = 'https://153.121.38.177:9080/vnc_connect/db'
-                # req = urllib2.Request(path, report)
-                # req.add_header("Content-type", "application/x-www-form-urlencoded")
-                # page = urllib2.urlopen(req).read()
-                # print page
+                    # Send report to PHP
+                    # report = [('code', code), ('result', '1'), ('message', result['message'])]
+                    # report = urllib.urlencode(report)
+                    # path = 'https://153.121.38.177:9080/vnc_connect/db'
+                    # req = urllib2.Request(path, report)
+                    # req.add_header("Content-type", "application/x-www-form-urlencoded")
+                    # page = urllib2.urlopen(req).read()
+                    # print page
 
                     report = {
                         'code': code,
@@ -409,22 +598,11 @@ def auto_charge():
 
                 j += 1
 
-                print 'send report'
                 response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
 
                 print response.status_code
 
-                print 'req'
-                print response.text
-
                 response_text = demjson.decode(response.text)
-
-                print type(response_text)
-
-                print response_text['result']
-                print response
-                print response.content
-                # print response.content['result']
 
                 if response_text['result'] == 'ERROR':
                     trade.status = 3
@@ -438,8 +616,6 @@ def auto_charge():
                     return flask.jsonify(result)
 
             except:
-
-                print "db update fail"
 
                 trade.status = 3
                 db.session.add(trade)

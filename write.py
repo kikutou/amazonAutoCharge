@@ -3,6 +3,7 @@ import flask
 import time
 from flask import Flask, request, render_template
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_, text
 
 import sys
 reload(sys)
@@ -70,7 +71,8 @@ class Code(db.Model):
     __tablename__ = 'codes'
     __bind_key__ = 'master'
     id = db.Column(db.Integer, primary_key=True)
-    code = db.Column(db.String(30), unique=True, nullable=False)
+    code = db.Column(db.String(30), nullable=False)
+    time = db.Column(db.String(20), nullable=True)
     result = db.Column(db.Integer)
     message = db.Column(db.Text)
     balance = db.Column(db.Text, nullable=True)
@@ -78,8 +80,9 @@ class Code(db.Model):
 
     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
 
-    def __init__(self, code, result=None, message=None, balance=None, amount=None):
+    def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
         self.code = code
+        self.time = time
         if result is None:
             result = 0
         self.result = result
@@ -92,12 +95,27 @@ class Code(db.Model):
 
 
 if __name__ == '__main__':
-    db.create_all()
-
+    # print time.time()
+    #
+    # db.create_all()
+    #
     code = Code.query.all()
-    print code[0].id
+    # print code[0].id
+    #
+    # trade = code[0].trade
+    # print trade.email
+    limit = '1'
+    data1 = "2015"
+    data2 = 22
+    data3 = None
+    trade = Trade.query.filter(Trade.email == "nightblizzard@sina.com").first()
+    code_s = Code.query.filter(Code.trade==trade).order_by(Code.time.desc()).limit(limit).all()
+    # trade = code_s[0].trade.query.filter(Trade.status == 2).all()
 
-    trade = Trade.query.filter(Trade.codes=code)
+    # print trade
+    # print trade.email
+    print code_s
+    # print code_w
 
     app.run(debug=True, threaded=True, port=4000, host='0.0.0.0')
 

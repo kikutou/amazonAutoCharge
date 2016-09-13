@@ -218,7 +218,7 @@ def index():
 @app.route('/admin', methods = ['GET', 'POST'])
 def admin(page=1):
 
-    if session['account']:
+    if session and session['account']:
         db.create_all()
 
         list = []

@@ -184,22 +184,24 @@ def index():
     """
     :return adminログイン画面を表示する。:
     """
-    if request.data and request.data['u'] and request.data['p']:
+    print request.values
+    if request.values and request.values['u'] and request.values['p']:
         try:
-            u = request.data['u']
-            p = request.data['p']
+            u = request.values['u']
+            p = request.values['p']
+
+            u = str(u)
+            p = str(p)
 
             admindb = MySQLdb.connect("localhost", "root", "123456", "admin")
 
             cursor = admindb.cursor()
 
-            sql = 'select * from accounts where account="%s" and password=MD5("%s")' % (u, p)
+            sql = 'select * from accounts where account="%s" and password=MD5("%s")' % (u,p)
 
             cursor.execute(sql)
 
             user = cursor.fetchone()
-
-            print user
 
             admindb.close()
 
@@ -209,10 +211,17 @@ def index():
                 return redirect('/admin')
             else:
                 return render_template('admin-index.html')
-        except:
+        except Exception as e:
+            print e
             return render_template('admin-index.html')
     else:
         return render_template('admin-index.html')
+
+
+@app.route('/logout', methods=['GET'])
+def logout():
+    session.clear()
+    return redirect('/')
 
 
 @app.route('/admin', methods = ['GET', 'POST'])

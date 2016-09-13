@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/admin-list.html" afterPath="$PROJECT_DIR$/templates/admin-list.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
@@ -17,13 +19,13 @@
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/amazonAutoCharge$amazonBrowser.coverage" NAME="amazonBrowser Coverage Results" MODIFIED="1471072351900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/amazonAutoCharge$xvfbwrapper.coverage" NAME="xvfbwrapper Coverage Results" MODIFIED="1470134957444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="/usr/local/lib/python2.7/dist-packages" />
-    <SUITE FILE_PATH="coverage/amazonAutoCharge$test.coverage" NAME="test Coverage Results" MODIFIED="1473741383987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/amazonAutoCharge$test.coverage" NAME="test Coverage Results" MODIFIED="1473742856019" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/amazonAutoCharge$code_input.coverage" NAME="code_input Coverage Results" MODIFIED="1470036507298" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/amazonAutoCharge$write.coverage" NAME="write Coverage Results" MODIFIED="1472905773898" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/amazonAutoCharge$py_test_in_amazonAutoCharge.coverage" NAME="py.test in amazonAutoCharge Coverage Results" MODIFIED="1473041455918" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/amazonAutoCharge$tryrundb.coverage" NAME="tryrundb Coverage Results" MODIFIED="1469856561171" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/amazonAutoCharge$amazonAutoCharge.coverage" NAME="amazonAutoCharge Coverage Results" MODIFIED="1473050181044" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/amazonAutoCharge$py_test_in_testApp_py.coverage" NAME="py.test in testApp.py Coverage Results" MODIFIED="1473407871317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/amazonAutoCharge$amazonAutoCharge.coverage" NAME="amazonAutoCharge Coverage Results" MODIFIED="1473744803011" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/amazonAutoCharge$testre.coverage" NAME="testre Coverage Results" MODIFIED="1472453496310" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
@@ -35,25 +37,25 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="amazonBrowser.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
+      <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5085">
-              <caret line="347" column="36" selection-start-line="347" selection-start-column="36" selection-end-line="347" selection-end-column="36" />
-              <folding />
+            <state relative-caret-position="-769">
+              <caret line="226" column="47" selection-start-line="226" selection-start-column="47" selection-end-line="226" selection-end-column="47" />
+              <folding>
+                <element signature="e#15#26#0" expanded="true" />
+                <marker date="1473744914870" expanded="true" signature="5657:5721" ph="select * fro... accounts" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/webApp.py">
+      <file leaf-file-name="admin-list.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="220" column="19" selection-start-line="220" selection-start-column="19" selection-end-line="220" selection-end-column="19" />
-              <folding>
-                <element signature="e#15#26#0" expanded="true" />
-                <marker date="1473742127459" expanded="true" signature="5575:5639" ph="select * fro... accounts" />
-              </folding>
+            <state relative-caret-position="615">
+              <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -61,8 +63,8 @@
       <file leaf-file-name="admin-index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/admin-index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+            <state relative-caret-position="240">
+              <caret line="52" column="8" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -71,12 +73,12 @@
       <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="60">
-              <caret line="4" column="30" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="30" />
+            <state relative-caret-position="150">
+              <caret line="10" column="17" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="17" />
               <folding>
                 <element signature="e#15#29#0" expanded="true" />
-                <marker date="1473741382350" expanded="true" signature="265:329" ph="select * fro... accounts" />
-                <marker date="1473741382350" expanded="true" signature="265:330" ph="select * fro... accounts" />
+                <marker date="1473742788009" expanded="true" signature="255:319" ph="select * fro... accounts" />
+                <marker date="1473742788009" expanded="true" signature="255:320" ph="select * fro... accounts" />
               </folding>
             </state>
           </provider>
@@ -114,10 +116,10 @@
         <option value="$PROJECT_DIR$/BrowserSaver.py" />
         <option value="$PROJECT_DIR$/testre.py" />
         <option value="$PROJECT_DIR$/write.py" />
-        <option value="$PROJECT_DIR$/templates/admin-list.html" />
         <option value="$PROJECT_DIR$/amazonBrowser.py" />
-        <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/templates/admin-index.html" />
+        <option value="$PROJECT_DIR$/test.py" />
+        <option value="$PROJECT_DIR$/templates/admin-list.html" />
         <option value="$PROJECT_DIR$/webApp.py" />
       </list>
     </option>
@@ -130,9 +132,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="92" />
-    <option name="y" value="58" />
+    <option name="y" value="52" />
     <option name="width" value="1525" />
-    <option name="height" value="874" />
+    <option name="height" value="848" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -215,7 +217,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Python.amazonAutoCharge">
     <configuration default="false" name="py.test in amazonAutoCharge" type="tests" factoryName="py.test" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -560,7 +562,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="92" y="58" width="1525" height="874" extended-state="0" />
+    <frame x="92" y="52" width="1525" height="848" extended-state="4" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18644068" sideWeight="0.492126" order="0" side_tool="false" content_ui="combo" />
@@ -569,7 +571,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36979166" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38274932" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.15420875" sideWeight="0.507874" order="2" side_tool="true" content_ui="tabs" />
@@ -621,7 +623,7 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="e#15#26#0" expanded="true" />
-            <marker date="1473742127459" expanded="true" signature="5575:5639" ph="select * fro... accounts" />
+            <marker date="1473744914870" expanded="true" signature="5657:5721" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>
@@ -857,13 +859,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="360" column="31" selection-start-line="360" selection-start-column="31" selection-end-line="360" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/pic.jpg" />
     <entry file="file://$PROJECT_DIR$/1471069433.22.jpg" />
     <entry file="file://$PROJECT_DIR$/1471069440.19.jpg" />
@@ -898,39 +893,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5085">
-          <caret line="347" column="36" selection-start-line="347" selection-start-column="36" selection-end-line="347" selection-end-column="36" />
+        <state relative-caret-position="210">
+          <caret line="360" column="9" selection-start-line="360" selection-start-column="9" selection-end-line="360" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="30" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="30" />
+        <state relative-caret-position="150">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="17" />
           <folding>
             <element signature="e#15#29#0" expanded="true" />
-            <marker date="1473741382350" expanded="true" signature="265:329" ph="select * fro... accounts" />
-            <marker date="1473741382350" expanded="true" signature="265:330" ph="select * fro... accounts" />
+            <marker date="1473742788009" expanded="true" signature="255:319" ph="select * fro... accounts" />
+            <marker date="1473742788009" expanded="true" signature="255:320" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/admin-index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="57" column="26" selection-start-line="57" selection-start-column="26" selection-end-line="57" selection-end-column="26" />
+        <state relative-caret-position="240">
+          <caret line="52" column="8" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="615">
+          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="220" column="19" selection-start-line="220" selection-start-column="19" selection-end-line="220" selection-end-column="19" />
+        <state relative-caret-position="-769">
+          <caret line="226" column="47" selection-start-line="226" selection-start-column="47" selection-end-line="226" selection-end-column="47" />
           <folding>
             <element signature="e#15#26#0" expanded="true" />
-            <marker date="1473742127459" expanded="true" signature="5575:5639" ph="select * fro... accounts" />
+            <marker date="1473744914870" expanded="true" signature="5657:5721" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>

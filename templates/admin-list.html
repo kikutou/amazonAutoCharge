@@ -36,7 +36,23 @@
 	</header><!-- /header -->
 	<section class="base-contents">	
 					<div class="sidebar"><!-- sidebar -->
-						<a href="/logout/" class="nav">ログアウト</a>
+						<a href="javascript:;" class="nav" id="logout">ログアウト</a>
+                        <form action="/logout" method="get" id="clear">
+                            <input type="hidden" name="clearsession">
+                        </form>
+                        <script>
+                            $("#logout").click(function () {
+                                $("#clear").submit();
+{#                                $.ajax({#}
+{#                                    url: '/logout',#}
+{#                                    type: 'get',#}
+{#                                    complete: function (result) {#}
+{#                                        alert(result.status);#}
+{#                                        window.location.href = '/'#}
+{#                                    }#}
+{#                                })#}
+                            })
+                        </script>
 					</div><!-- /sidebar -->
 		
 	<div class="padder"><!-- padder -->

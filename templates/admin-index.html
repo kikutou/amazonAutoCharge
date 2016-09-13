@@ -44,19 +44,13 @@
 				<li>
 					<div class="loginbox">
 						<h2>ログイン</h2>
-						<form action="/login/." name="login" id="Form" method="post" accept-charset="utf-8">
+						<form name="login" id="Form" method="post" accept-charset="utf-8">
 							<div style="display:none;">
 								<input type="hidden" name="_method" value="POST"/>
 							</div>
-							<input name="data[email]" type="email" placeholder="メールアドレス" id="email"/>
-							<input name="data[password]" type="password" placeholder="パスワード" id="password"/>
-							<input type="submit" value="ログイン" id="submit" name="buttonLogin" onclick="return admin()"/>
-                            <script>
-                                function admin() {
-                                    window.location.href='/admin';
-                                    return false
-                                }
-                            </script>
+							<input name="u" type="text" placeholder="メールアドレス" id="text"/>
+							<input name="p" type="password" placeholder="パスワード" id="password"/>
+							<input type="submit" value="ログイン" />
 						</form>
 					</div>
 				</li>

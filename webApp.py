@@ -184,7 +184,6 @@ def index():
     """
     :return adminログイン画面を表示する。:
     """
-    print request.values
     if request.values and request.values['u'] and request.values['p']:
         try:
             u = request.values['u']

@@ -623,6 +623,10 @@ def auto_charge():
                         # コードは無効
                         send_result = '23'
                         # sendMail.sendGmail('wangrunbo921@gmail.com', result['title'], result['message'])
+                    elif result['code'] == 25:
+                        # コード未入力エラー
+                        send_result = '25'
+
 
                     else:
                         # 画像認証失敗まだはページエラー

@@ -213,7 +213,20 @@ def amazon_charge(browser, code):
         code_input_field = browser.find_by_id('gc-redemption-input')
         charge_button = browser.find_by_name('applytoaccount')
 
-        amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field, code, code_input_field, charge_button)
+        input_result = amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field, code, code_input_field, charge_button)
+
+        if input_result is not True:
+            browser.reload()
+            captcha_input_field = browser.find_by_name('captchaInput')
+            code_input_field = browser.find_by_id('gc-redemption-input')
+            charge_button = browser.find_by_name('applytoaccount')
+            input_result = amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field, code, code_input_field, charge_button)
+            if input_result is not True:
+                return {
+                    'code': 25,
+                    'title': 'コード未入力エラー',
+                    'message': "Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。",
+                }
 
     else:
 
@@ -236,11 +249,32 @@ def amazon_charge(browser, code):
 
             print 'fail to get charge field'
 
-            return {
-                'code': 4,
-                'title': 'チャージ時エラー',
-                'message': "Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。",
-            }
+            browser.reload()
+            code_input_field = browser.find_by_id('gc-redemption-input')
+            charge_button = browser.find_by_name('applytoaccount')
+            captcha_input_field = browser.find_by_name('captchaInput')
+            captcha_image_field = browser.find_by_css('img.gc-captcha-image')
+
+            if not (code_input_field and charge_button):
+                return {
+                    'code': 25,
+                    'title': 'コード未入力エラー',
+                    'message': "Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。",
+                }
+            else:
+                if captcha_input_field and captcha_image_field:
+                    input_result = amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field, code,
+                                                             code_input_field, charge_button)
+                    if input_result is not True:
+                        return {
+                            'code': 25,
+                            'title': 'コード未入力エラー',
+                            'message': "Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。",
+                        }
+                else:
+                    # チャージする
+                    code_input_field.fill(code)
+                    charge_button.click()
 
     # チャージが完了するまで待ち
     time.sleep(0.5)
@@ -409,23 +443,6 @@ def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field,
 
         # ダウンロードされた画像ファイルを削除する
         os.remove(path)
-
-        # 再ロ入力する
-        if code_input_field and captcha_input_field and confirm_button:
-
-            code_input_field.fill(code)
-            captcha_input_field.fill(captcha)
-            confirm_button.click()
-
-        else:
-            return {
-                'code': 4,
-                'title': 'Amazon接続エラー',
-                'message': 'Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。',
-            }
-
-        return captcha_get
-
     except:
 
         print 'some problem in captcha'
@@ -435,6 +452,22 @@ def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field,
             'title': 'Amazon接続エラー',
             'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
         }
+
+    # 再ロ入力する
+    if code_input_field and captcha_input_field and confirm_button:
+
+        code_input_field.fill(code)
+        captcha_input_field.fill(captcha)
+        confirm_button.click()
+
+    else:
+        return {
+            'code': 4,
+            'title': 'Amazon接続エラー',
+            'message': 'Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。',
+        }
+
+    return captcha_get
 
 
 def amazon_captcha_input(browser, non_auto_captcha, captcha_input_field, code, code_input_field, confirm_button):

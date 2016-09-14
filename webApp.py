@@ -549,7 +549,7 @@ def auto_charge():
 
         browser = BrowserSaver.Browsers().get_browser(email)
 
-        amazonBrowser.view_amazon_charge(browser)
+        view_charge_page_result = amazonBrowser.view_amazon_charge(browser)
 
         # 取引状態を処理にします
         trade.status = 1
@@ -586,6 +586,26 @@ def auto_charge():
                         'message': 'このコードはもう使われました',
                         'trade_code': trade_codes[j]
                     }
+                elif view_charge_page_result is not None:
+
+                    db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({
+                        Code.time: charge_time,
+                        Code.result: '25',
+                        Code.message: 'チャージに移動する時エラーが発生しました。ページ上の問題かもしれません。',
+                        Code.balance: "",
+                        Code.amount: "",
+                    })
+
+                    db.session.commit()
+
+                    report = {
+                        'code': code,
+                        'result': '25',
+                        'title': "",
+                        'message': 'チャージに移動する時エラーが発生しました。ページ上の問題かもしれません。',
+                        'trade_code': trade_codes[j]
+                    }
+
                 else:
 
                     print code

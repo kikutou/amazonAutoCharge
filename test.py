@@ -1,9 +1,8 @@
 from splinter import Browser
 import time
-try:
-    browser = Browser('firefox')
-    browser.visit('http://www.baidu.com')
-    raise Exception('error')
-except:
-    time.sleep(3)
-    browser.quit()
+browser = Browser('firefox')
+browser.visit('http://www.baidu.com')
+browser.find_by_id('kw').fill('123151')
+time.sleep(3)
+browser.reload()
+

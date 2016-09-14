@@ -164,28 +164,38 @@ def view_amazon_charge(browser):
     # browser.visit(url1)
     # gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
     gift_link = browser.find_link_by_href('/gp/gc/ref=nav_cs_gc')
+
     if gift_link:
         gift_link.click()
     else:
-
-        return {
-            'code': 4,
-            'title': 'Amazon接続エラー',
-            'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
-        }
+        browser.reload()
+        gift_link = browser.find_link_by_href('/gp/gc/ref=nav_cs_gc')
+        if gift_link:
+            gift_link.click()
+        else:
+            return {
+                'code': 25,
+                'title': 'コード未入力エラー',
+                'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
+            }
 
     charge_link = browser.find_link_by_text(unicode('アカウントに登録','utf8'))
     if charge_link:
         charge_link.click()
     else:
-
-        return {
-            'code': 4,
-            'title': 'Amazon接続エラー',
-            'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
-        }
+        browser.reload()
+        charge_link = browser.find_link_by_text(unicode('アカウントに登録', 'utf8'))
+        if charge_link:
+            charge_link.click()
+        else:
+            return {
+                'code': 25,
+                'title': 'コード未入力エラー',
+                'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
+            }
 
     print 'visit charge page ok'
+    return
 
 
 def amazon_charge(browser, code):

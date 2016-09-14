@@ -543,7 +543,7 @@ def get_recent_charge_info(browser, code, html_code_before_charge, html_code_aft
             }
 
         recent_charged_code = None
-        recent_charged_amount = None
+        recent_charged_amount = ""
 
         for tr in trs:
             tds = tr.find_by_tag('td')

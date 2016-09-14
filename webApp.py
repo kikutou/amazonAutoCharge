@@ -626,8 +626,6 @@ def auto_charge():
                     elif result['code'] == 25:
                         # コード未入力エラー
                         send_result = '25'
-
-
                     else:
                         # 画像認証失敗まだはページエラー
                         send_result = '22'

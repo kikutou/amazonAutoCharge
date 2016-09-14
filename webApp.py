@@ -26,8 +26,8 @@ app.secret_key = os.urandom(24).encode('hex')
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:123456@localhost:3306/userData?charset=utf8'
 app.config['SQLALCHEMY_BINDS'] = {
-    'master': 'mysql://root:123456@localhost:3306/userData?charset=utf8',
-    'slave': 'mysql://root:123456@localhost:3306/userData?charset=utf8'
+    'master': 'mysql://root:sc07051989@localhost:3306/userData?charset=utf8',
+    'slave': 'mysql://root:sc07051989@localhost:3306/userData?charset=utf8'
 }
 # 初始化
 db = SQLAlchemy(app)
@@ -192,7 +192,7 @@ def index():
             u = str(u)
             p = str(p)
 
-            admindb = MySQLdb.connect("localhost", "root", "123456", "admin")
+            admindb = MySQLdb.connect("localhost", "root", "sc07051989", "admin")
 
             cursor = admindb.cursor()
 
@@ -399,8 +399,6 @@ def admin(page=1):
                                             gifcode_info.time)[8:10] > ph_e_day):
                                     continue
 
-                            print gifcode_info.result
-                            print status
                             if len(status) != 0 and str(gifcode_info.result) not in status:
                                 continue
 
@@ -425,7 +423,7 @@ def admin(page=1):
                 return render_template('admin-list.html')
 
         else:
-            paginate = Code.query.paginate(int(page), 2, True)
+            paginate = Code.query.paginate(int(page), 50, True)
 
             total_page = ceil(paginate.total / paginate.per_page)
             total_page = str(total_page).replace('.0', '')

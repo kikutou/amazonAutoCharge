@@ -25,6 +25,7 @@ print len(trs)
 
 d=""
 c=""
+a=""
 
 for tr in trs:
     tds = tr.find_by_tag('td')
@@ -32,22 +33,31 @@ for tr in trs:
         continue
     recent_charge_date = tds[0].value
     recent_charge_code = tds[1].value
+    recent_charge_amount = tds[2].value
 
     if recent_charge_code.find(unicode('登録','utf8')) != -1:
         d = recent_charge_date
         c = recent_charge_code
+        a = recent_charge_amount
         break
 
 
 print d
 print c
+print a
+print type(a)
+print str(a)
+print 'amount:'+a
 
 if d!="" and c!="":
     nostr=c[-5:-1]
     print nostr
+    print type(nostr)
 
     if nostr=="5E5Y":
         print 'nostr yes'
+    elif str=="5E5Y":
+        print 'str yes'
     else:
         print 'no'
 

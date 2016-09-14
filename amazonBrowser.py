@@ -347,25 +347,21 @@ def amazon_charge(browser, code):
 
             html_code_after_charge = browser.html
 
-            return {
-                'code': 4,
-                'title': 'チャージ時エラー',
-                'message': 'Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。',
-                'html_code_before_charge': html_code_before_charge,
-                'html_code_after_charge': html_code_after_charge
-            }
+            return get_recent_charge_info(browser, code, html_code_before_charge, html_code_after_charge)
 
     else:
 
         html_code_after_charge = browser.html
 
-        return {
-            'code': 4,
-            'title': 'チャージ時エラー',
-            'message': "Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。",
-            'html_code_before_charge': html_code_before_charge,
-            'html_code_after_charge': html_code_after_charge
-        }
+        return get_recent_charge_info(browser, code, html_code_before_charge, html_code_after_charge)
+
+        # return {
+        #     'code': 4,
+        #     'title': 'チャージ時エラー',
+        #     'message': "Amazonでチャージの手続きを行いましたが、レスポンスが返ってきません。チャージが正常に完了していない可能性があります。",
+        #     'html_code_before_charge': html_code_before_charge,
+        #     'html_code_after_charge': html_code_after_charge
+        # }
 
 
 def save_history(browser):
@@ -530,23 +526,62 @@ def change_captcha(email):
     return captcha_image_field['src']
 
 
-def get_recent_charge_info(browser):
+def get_recent_charge_info(browser, code, html_code_before_charge, html_code_after_charge):
     try:
         browser.find_link_by_href('/gp/gc/ref=nav_cs_gc').click()
         browser.find_link_by_text(unicode('残高・利用履歴', 'utf8')).click()
 
         table = browser.find_by_css('table.gcYAData')[0]
-        tr = table.find_by_tag('tr')[1]
-        tds = tr.find_by_tag('td')
-        recent_charge_date = tds[0].value
-        recent_charge_code = tds[1].value
+        trs = table.find_by_tag('tr')
+        if len(trs) == 0:
+            return {
+                'code': 22,
+                'title': 'コード入力後エラー',
+                'message': "コード入力後、正しくチャージ状態を取得できなっかた。",
+                'html_code_before_charge': html_code_before_charge,
+                'html_code_after_charge': html_code_after_charge
+            }
+
+        recent_charged_code = None
+        recent_charged_amount = None
+
+        for tr in trs:
+            tds = tr.find_by_tag('td')
+            if not tds:
+                continue
+            history_type = tds[1].value
+            charged_amount = tds[2].value
+
+            if history_type.find(unicode('登録', 'utf8')) != -1:
+                recent_charged_code = history_type[-5:-1]
+                recent_charged_amount = charged_amount
+                break
+
+        if recent_charged_code == code[-4:]:
+            return {
+                'code': 1,
+                'message': recent_charged_amount +'がお客様のギフト券アカウントに追加されました',
+                'html_code_before_charge': html_code_before_charge,
+                'html_code_after_charge': html_code_after_charge
+            }
+
+        else:
+            return {
+                'code': 22,
+                'title': 'コード入力後エラー',
+                'message': "コード入力後、正しくチャージ状態を取得できなっかた。",
+                'html_code_before_charge': html_code_before_charge,
+                'html_code_after_charge': html_code_after_charge
+            }
 
     except:
-        browser.quit()
+
         return {
             'code': 22,
             'title': 'コード入力後エラー',
-            'message': 'コード入力後、正しくチャージ金額を取得できなっかた。'
+            'message': "コード入力後、正しくチャージ状態を取得できなっかた。",
+            'html_code_before_charge': html_code_before_charge,
+            'html_code_after_charge': html_code_after_charge
         }
 
 

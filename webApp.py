@@ -423,7 +423,7 @@ def admin(page=1):
                 return render_template('admin-list.html')
 
         else:
-            paginate = Code.query.paginate(int(page), 20, True)
+            paginate = Code.query.paginate(int(page), 10, True)
 
             total_page = ceil(paginate.total / paginate.per_page)
             total_page = str(total_page).replace('.0', '')

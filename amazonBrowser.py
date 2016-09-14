@@ -530,6 +530,26 @@ def change_captcha(email):
     return captcha_image_field['src']
 
 
+def get_recent_charge_info(browser):
+    try:
+        browser.find_link_by_href('/gp/gc/ref=nav_cs_gc').click()
+        browser.find_link_by_text(unicode('残高・利用履歴', 'utf8')).click()
+
+        table = browser.find_by_css('table.gcYAData')[0]
+        tr = table.find_by_tag('tr')[1]
+        tds = tr.find_by_tag('td')
+        recent_charge_date = tds[0].value
+        recent_charge_code = tds[1].value
+
+    except:
+        browser.quit()
+        return {
+            'code': 22,
+            'title': 'コード入力後エラー',
+            'message': 'コード入力後、正しくチャージ金額を取得できなっかた。'
+        }
+
+
 def amazon_login_main(email, password, login_captcha):
 
     # ブラウザを新規する

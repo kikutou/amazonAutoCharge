@@ -46,7 +46,6 @@ print d
 print c
 print a
 print type(a)
-print str(a)
 print 'amount:'+a
 
 if d!="" and c!="":

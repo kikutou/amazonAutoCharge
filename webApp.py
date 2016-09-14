@@ -425,7 +425,7 @@ def admin(page=1):
         else:
             paginate = Code.query.paginate(int(page), 10, True)
 
-            total_page = ceil(paginate.total / paginate.per_page)
+            total_page = ceil(paginate.total / paginate.per_page)+1
             total_page = str(total_page).replace('.0', '')
 
             gifcodes_info = paginate.items

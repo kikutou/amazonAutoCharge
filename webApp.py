@@ -1,4 +1,5 @@
 # coding=utf-8
+# from OpenSSL import SSL
 import time
 from math import ceil
 import demjson
@@ -784,5 +785,8 @@ def changeCaptcha():
     return flask.jsonify(result)
 
 
+# context = SSL.Context(SSL.SSLv23_METHOD)
+# context.use_privatekey_file('yourserver.key')
+# context.use_certificate_file('yourserver.crt')
 if __name__ == '__main__':
     app.run(debug=True, threaded=True, port=4000, host='0.0.0.0')

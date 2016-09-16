@@ -785,6 +785,11 @@ def changeCaptcha():
     return flask.jsonify(result)
 
 
+@app.route('/getReq', methods=['get'])
+def getReq():
+    return 'get req'
+
+
 # context = SSL.Context(SSL.SSLv23_METHOD)
 # context.use_privatekey_file('yourserver.key')
 # context.use_certificate_file('yourserver.crt')

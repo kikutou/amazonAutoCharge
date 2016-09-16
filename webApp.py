@@ -788,26 +788,28 @@ def changeCaptcha():
 
 @app.route('/getReq', methods=['get', 'post'])
 def getReq():
-    if request.form:
-        email = request.form['email']
-        password = request.form['password']
-      
-        os.environ['DISPLAY'] = ':1'
-
-        browser = Browser('firefox')
-        browser.visit('https://54.238.194.108/')
-
-        return 'post data='+email+'and'+password
-    else:
-        email = request.args['email']
-        password = request.args['password']
-
-        os.environ['DISPLAY'] = ':1'
-
-        browser = Browser('firefox')
-        browser.visit('https://54.238.194.108/')
-
-        return 'get data='+email+'and'+password
+    # if request.form:
+    #     email = request.form['email']
+    #     password = request.form['password']
+    #
+    #     os.environ['DISPLAY'] = ':1'
+    #
+    #     browser = Browser('firefox')
+    #     browser.visit('https://54.238.194.108/')
+    #
+    #     return 'post data='+email+'and'+password
+    # else:
+    #     email = request.args['email']
+    #     password = request.args['password']
+    #
+    #     os.environ['DISPLAY'] = ':1'
+    #
+    #     browser = Browser('firefox')
+    #     browser.visit('https://54.238.194.108/')
+    #
+    #     return 'get data='+email+'and'+password
+    with Browser('firefox') as browser:
+        browser.visit('https://www.amazon.co.jp/login')
 
 
 # context = SSL.Context(SSL.SSLv23_METHOD)

@@ -791,12 +791,12 @@ def getReq():
         email = request.form['email']
         password = request.form['password']
 
-        return email, password
+        return 'post data='+email+'and'+password
     else:
         email = request.args['email']
         password = request.args['password']
 
-        return email, password
+        return 'get data='+email+'and'+password
 
 
 # context = SSL.Context(SSL.SSLv23_METHOD)

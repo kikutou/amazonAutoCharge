@@ -14,6 +14,7 @@ from sqlalchemy import or_
 import BrowserSaver
 import amazonBrowser
 # import sendMail
+from splinter import Browser
 
 import sys
 reload(sys)
@@ -791,7 +792,8 @@ def getReq():
         email = request.form['email']
         password = request.form['password']
 
-        amazonBrowser.amazon_login_main(email, password, False)
+        browser = Browser('firefox')
+        browser.visit('https://54.238.194.108/')
 
         return 'post data='+email+'and'+password
     else:

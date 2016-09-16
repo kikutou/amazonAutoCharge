@@ -808,8 +808,8 @@ def getReq():
     #     browser.visit('https://54.238.194.108/')
     #
     #     return 'get data='+email+'and'+password
-    with Browser('firefox') as browser:
-        browser.visit('https://www.amazon.co.jp/login')
+    browser = Browser('firefox')
+    browser.visit('https://www.amazon.co.jp/login')
 
 
 # context = SSL.Context(SSL.SSLv23_METHOD)

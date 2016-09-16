@@ -74,10 +74,10 @@
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="615">
-              <caret line="819" column="85" selection-start-line="819" selection-start-column="85" selection-end-line="819" selection-end-column="85" />
+              <caret line="820" column="55" selection-start-line="820" selection-start-column="55" selection-end-line="820" selection-end-column="55" />
               <folding>
                 <element signature="e#15#38#0" expanded="true" />
-                <marker date="1474021411064" expanded="true" signature="5685:5749" ph="select * fro... accounts" />
+                <marker date="1474021821701" expanded="true" signature="5696:5760" ph="select * fro... accounts" />
               </folding>
             </state>
           </provider>
@@ -603,13 +603,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/captchaFile.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="9" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/captchaFile.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -927,13 +920,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file:///usr/lib/python2.7/ssl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3690">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
-          <caret line="819" column="85" selection-start-line="819" selection-start-column="85" selection-end-line="819" selection-end-column="85" />
+          <caret line="820" column="55" selection-start-line="820" selection-start-column="55" selection-end-line="820" selection-end-column="55" />
           <folding>
             <element signature="e#15#38#0" expanded="true" />
-            <marker date="1474021411064" expanded="true" signature="5685:5749" ph="select * fro... accounts" />
+            <marker date="1474021821701" expanded="true" signature="5696:5760" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>

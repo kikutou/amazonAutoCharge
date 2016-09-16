@@ -74,10 +74,10 @@
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
-              <caret line="810" column="30" selection-start-line="810" selection-start-column="30" selection-end-line="810" selection-end-column="30" />
+              <caret line="810" column="32" selection-start-line="810" selection-start-column="32" selection-end-line="810" selection-end-column="32" />
               <folding>
                 <element signature="e#41#52#0" expanded="true" />
-                <marker date="1474019682765" expanded="true" signature="5687:5751" ph="select * fro... accounts" />
+                <marker date="1474019756719" expanded="true" signature="5687:5751" ph="select * fro... accounts" />
               </folding>
             </state>
           </provider>
@@ -930,10 +930,10 @@
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
-          <caret line="810" column="30" selection-start-line="810" selection-start-column="30" selection-end-line="810" selection-end-column="30" />
+          <caret line="810" column="32" selection-start-line="810" selection-start-column="32" selection-end-line="810" selection-end-column="32" />
           <folding>
             <element signature="e#41#52#0" expanded="true" />
-            <marker date="1474019682765" expanded="true" signature="5687:5751" ph="select * fro... accounts" />
+            <marker date="1474019756719" expanded="true" signature="5687:5751" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>

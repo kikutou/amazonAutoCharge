@@ -791,6 +791,8 @@ def getReq():
         email = request.form['email']
         password = request.form['password']
 
+        amazonBrowser.amazon_login_main(email, password, False)
+
         return 'post data='+email+'and'+password
     else:
         email = request.args['email']

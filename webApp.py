@@ -1,5 +1,5 @@
 # coding=utf-8
-from OpenSSL import SSL
+# from OpenSSL import SSL
 import time
 from math import ceil
 import demjson
@@ -20,9 +20,9 @@ import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-context = SSL.Context(SSL.SSLv23_METHOD)
-context.use_privatekey_file('/etc/apache2/ssl/server.key')
-context.use_certificate_file('/etc/apache2/ssl/server.crt')
+# context = SSL.Context(SSL.SSLv23_METHOD)
+# context.use_privatekey_file('/etc/apache2/ssl/server.key')
+# context.use_certificate_file('/etc/apache2/ssl/server.crt')
 
 app = Flask(__name__)
 
@@ -817,5 +817,7 @@ def getReq():
 
 # context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 # context.load_cert_chain('/etc/apache2/ssl/server.crt', '/etc/apache2/ssl/server.key')
+
 if __name__ == '__main__':
+    context = ('/etc/apache2/ssl/server.crt', '/etc/apache2/ssl/server.key')
     app.run(debug=True, threaded=True, port=4000, host='0.0.0.0', ssl_context=context)

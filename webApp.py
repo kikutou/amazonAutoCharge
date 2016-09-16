@@ -785,9 +785,18 @@ def changeCaptcha():
     return flask.jsonify(result)
 
 
-@app.route('/getReq', methods=['get'])
+@app.route('/getReq', methods=['get', 'post'])
 def getReq():
-    return 'get req'
+    if request.form:
+        email = request.form['email']
+        password = request.form['password']
+        tp = type(email)
+        return email, password, tp
+    else:
+        email = request.args['email']
+        password = request.args['password']
+        tp = type(email)
+        return email, password, tp
 
 
 # context = SSL.Context(SSL.SSLv23_METHOD)

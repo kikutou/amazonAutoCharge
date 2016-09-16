@@ -682,58 +682,7 @@ def amazon_charge_main(browser, code):
 
 if __name__ == '__main__':
 
-    data = [
-        {
-            # 'email': 'nightblizzard@sina.com',
-            # 'password': 'sc07051989',
-            # 'codes': ['code0', 'code1', 'code2', 'code3']
-            'email': 'juteng2005@gmail.com',
-            'password': 'Juteng378084190',
-            'codes': ['AQHPZDE8PRZDCMD', 'AQHZJSJQQGW7EYZ']
-            #'codes': ['AQHPZDE8PRZDCMD', 'AQHZJSJQQGW7EGP']
+    email = 'nightblizzard@sina.com'
+    password = 'sc07051989'
 
-        },
-        # {
-        #     'email': '512317052@qq.com',
-        #     'password': 'sc0705198',
-        #     'codes': ['hello']
-        # },
-        # {
-        #     'email': 'juteng2005@gmail.com',
-        #     'password': 'Juteng378084190',
-        #     'codes': ['solong']
-        # },
-    ]
-
-    result = []
-
-    for record in data:
-        login_result = amazon_login_main(record['email'], record['password'], False)
-        if login_result[0]['code'] == 7:
-            browser = BrowserSaver.Browsers().get_browser(record['email'])
-
-            view_amazon_charge(browser)
-
-            for code in record['codes']:
-
-                charge_result = amazon_charge_main(browser, code)
-
-                result = result + [charge_result]
-
-                if charge_result['code'] == 1:
-                    break
-
-    result_count = len(result)
-    for result_key in range(0, result_count):
-        print result[result_key]['code']
-        print result[result_key]['message']
-
-    """
-    data = {
-        'email': 'nightblizzard@sina.com',
-        'password': 'sc07051989',
-        'codes': 'hello'
-    }
-
-    print amazon_login_main(data['email'],data['password'],data['code'])
-    """
+    amazon_login_main(email, password, False)

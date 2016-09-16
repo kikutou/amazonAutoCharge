@@ -804,7 +804,7 @@ def getReq():
 
         os.environ['DISPLAY'] = ':1'
 
-        browser = Browser('firefox')
+        browser = Browser('firefox',service_args=['--ignore-ssl-errors=true', '--ssl-protocol=any'])
         browser.visit('https://54.238.194.108/')
 
         return 'get data='+email+'and'+password

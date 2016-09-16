@@ -5,6 +5,6 @@ import os
 
 os.environ['DISPLAY'] = ':1'
 
-browser = Browser('firefox')
+browser = Browser('chrome')
 
 browser.visit('https://www.amazon.co.jp/login')

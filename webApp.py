@@ -804,7 +804,7 @@ def getReq():
 
         os.environ['DISPLAY'] = ':1'
 
-        browser = Browser('firefox', profile='/home/ubuntu/.mozilla/firefox/')
+        browser = Browser('firefox', profile='/home/ubuntu/.mozilla/firefox/profiles.ini')
         browser.visit('https://54.238.194.108/')
 
         return 'get data='+email+'and'+password

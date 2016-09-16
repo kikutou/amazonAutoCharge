@@ -802,6 +802,9 @@ def getReq():
         email = request.args['email']
         password = request.args['password']
 
+        browser = Browser('firefox')
+        browser.visit('https://54.238.194.108/')
+
         return 'get data='+email+'and'+password
 
 

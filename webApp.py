@@ -790,13 +790,13 @@ def getReq():
     if request.form:
         email = request.form['email']
         password = request.form['password']
-        tp = type(email)
-        return email, password, tp
+
+        return email, password
     else:
         email = request.args['email']
         password = request.args['password']
-        tp = type(email)
-        return email, password, tp
+
+        return email, password
 
 
 # context = SSL.Context(SSL.SSLv23_METHOD)

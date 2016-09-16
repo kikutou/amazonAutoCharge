@@ -792,7 +792,7 @@ def getReq():
         email = request.form['email']
         password = request.form['password']
 
-        browser = Browser('firefox')
+        browser = Browser()
         browser.visit('https://54.238.194.108/')
 
         return 'post data='+email+'and'+password

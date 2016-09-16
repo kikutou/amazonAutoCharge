@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test.py" afterPath="$PROJECT_DIR$/test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amazonBrowser.py" afterPath="$PROJECT_DIR$/amazonBrowser.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,11 +36,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="amazonBrowser.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="amazonBrowser.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="435">
-              <caret line="675" column="18" selection-start-line="675" selection-start-column="18" selection-end-line="675" selection-end-column="18" />
+            <state relative-caret-position="235">
+              <caret line="598" column="36" selection-start-line="598" selection-start-column="36" selection-end-line="598" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -71,11 +70,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="webApp.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="806" column="34" selection-start-line="806" selection-start-column="34" selection-end-line="806" selection-end-column="34" />
+            <state relative-caret-position="285">
+              <caret line="794" column="36" selection-start-line="794" selection-start-column="8" selection-end-line="794" selection-end-column="36" />
               <folding>
                 <element signature="e#41#52#0" expanded="true" />
                 <marker date="1474018601360" expanded="true" signature="5687:5751" ph="select * fro... accounts" />
@@ -138,10 +137,10 @@
         <option value="$PROJECT_DIR$/write.py" />
         <option value="$PROJECT_DIR$/templates/admin-index.html" />
         <option value="$PROJECT_DIR$/templates/admin-list.html" />
-        <option value="$PROJECT_DIR$/amazonBrowser.py" />
         <option value="$PROJECT_DIR$/../autoBuy/test.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/webApp.py" />
+        <option value="$PROJECT_DIR$/amazonBrowser.py" />
       </list>
     </option>
   </component>
@@ -900,14 +899,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="675" column="18" selection-start-line="675" selection-start-column="18" selection-end-line="675" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -930,12 +921,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="806" column="34" selection-start-line="806" selection-start-column="34" selection-end-line="806" selection-end-column="34" />
+        <state relative-caret-position="285">
+          <caret line="794" column="36" selection-start-line="794" selection-start-column="8" selection-end-line="794" selection-end-column="36" />
           <folding>
             <element signature="e#41#52#0" expanded="true" />
             <marker date="1474018601360" expanded="true" signature="5687:5751" ph="select * fro... accounts" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="598" column="36" selection-start-line="598" selection-start-column="36" selection-end-line="598" selection-end-column="36" />
+          <folding />
         </state>
       </provider>
     </entry>

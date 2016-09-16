@@ -596,6 +596,8 @@ def amazon_login_main(email, password, login_captcha):
 
     if login_captcha is False:
 
+        os.environ['DISPLAY'] = ':1'
+
         browser = Browser('firefox')
         # browser = Browser('phantomjs',
         #                   user_agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:46.0) Gecko/20100101 Firefox/46.0")

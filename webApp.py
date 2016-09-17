@@ -459,6 +459,11 @@ def admin(page=1):
         return redirect('/')
 
 
+# @app.route('/download', methods=['post'])
+# def download():
+#
+
+
 @app.route('/amazon-login', methods=['post'])
 def amazon_login():
     """
@@ -568,7 +573,7 @@ def auto_charge():
             try:
                 charge_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
-                check_code = Code.query.filter_by(code=code).all()
+                check_code = Code.query.filter_by(code=code, result='16').all()
                 print check_code
                 if len(check_code) > 1:
 

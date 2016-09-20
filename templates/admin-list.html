@@ -361,16 +361,14 @@
                     <script>
                         $("#{{ i }}").on("click", function () {
                             alert('download');
-{#                            $.post(#}
-{#                                "/download",#}
-{#                                {#}
-{#                                    serial: {{ info.trade_no }} ,#}
-{#                                    code: {{ info.gift_code }}#}
-{#                                },#}
-{#                                function (result, status) {#}
-{#                                    alert(status);#}
-{#                                }#}
-{#                            )#}
+                            var serial = $(this).parent().parent().find("td:eq(1)").text();
+                            alert(serial);
+                            $.ajax({
+                                url: "/download",
+                                data: {
+
+                                }
+                            })
                         })
                     </script>
 

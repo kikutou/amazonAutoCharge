@@ -74,8 +74,8 @@
       <file leaf-file-name="admin-list.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="361" column="50" selection-start-line="361" selection-start-column="50" selection-end-line="361" selection-end-column="50" />
+            <state relative-caret-position="399">
+              <caret line="363" column="30" selection-start-line="363" selection-start-column="30" selection-end-line="372" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -917,8 +917,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="361" column="50" selection-start-line="361" selection-start-column="50" selection-end-line="361" selection-end-column="50" />
+        <state relative-caret-position="399">
+          <caret line="363" column="30" selection-start-line="363" selection-start-column="30" selection-end-line="372" selection-end-column="31" />
           <folding />
         </state>
       </provider>

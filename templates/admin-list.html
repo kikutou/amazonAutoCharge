@@ -361,16 +361,16 @@
                     <script>
                         $("#{{ i }}").on("click", function () {
                             alert('download');
-                            $.post(
-                                "/download",
-                                {
-                                    serial: {{ info.trade_no }} ,
-                                    code: {{ info.gift_code }}
-                                },
-                                function (result, status) {
-                                    alert(status);
-                                }
-                            )
+{#                            $.post(#}
+{#                                "/download",#}
+{#                                {#}
+{#                                    serial: {{ info.trade_no }} ,#}
+{#                                    code: {{ info.gift_code }}#}
+{#                                },#}
+{#                                function (result, status) {#}
+{#                                    alert(status);#}
+{#                                }#}
+{#                            )#}
                         })
                     </script>
 

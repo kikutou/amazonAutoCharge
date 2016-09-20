@@ -312,7 +312,9 @@
 
 					</tr>
                     {% if list %}
+                    {% set i = 0 %}
                     {% for info in list %}
+                    {% set i = i+1 %}
                     <tr class="nolink">
 						<td><p class="data">{{ info.vns_login_date }}<br />{{ info.vns_login_time }}</p></td>
 						<td><p class="data">{{ info.charge_start_date }}<br />{{ info.charge_start_time }}</p></td>
@@ -349,7 +351,7 @@
                             <p>{{ status }}</p>
 						</td>
 						<td>
-							<a id="download" href="javascript:;">
+							<a id={{ i }} href="javascript:;">
 								<i class="fa fa-download" aria-hidden="true"></i>
 								<!-- チャージ前後のスクリーンショットorHTMLファイルをzipでダウンロード -->
 							</a>
@@ -357,7 +359,7 @@
 					</tr>
 
                     <script>
-                        $("#download").click(function () {
+                        $("#{{ i }}").click(function () {
                             alert('download');
                             $.post(
                                 "/download",

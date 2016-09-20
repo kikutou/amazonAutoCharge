@@ -6,6 +6,7 @@ import demjson
 import requests
 import os
 import random
+import urllib
 import MySQLdb
 import flask
 from flask import Flask, request, render_template, redirect, session
@@ -467,11 +468,10 @@ def download():
     print serial
     print code
 
-    url = "https://localhost/amazon/app/trade/"+str(serial)+"/"+code+"/after.html"
+    url = "./trade/"+str(serial)+"/"+code+"/after.html"
 
     if os.path.exists(url):
-        r = requests.get(url)
-        return r.content
+        urllib.urlretrieve(url, "after.html")
     else:
         return False
 

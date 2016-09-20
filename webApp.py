@@ -467,13 +467,11 @@ def download():
     print serial
     print code
 
-    url = "./trade/"+str(serial)+"/"+code+"/after.html"
+    url = "https://localhost/amazon/app/trade/"+str(serial)+"/"+code+"/after.html"
 
     if os.path.exists(url):
-
         r = requests.get(url)
-
-        print len(r.content)
+        return r.content
     else:
         return False
 

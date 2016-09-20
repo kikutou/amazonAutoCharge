@@ -459,10 +459,10 @@ def admin(page=1):
         return redirect('/')
 
 
-@app.route('/download', methods=['post'])
+@app.route('/download')
 def download():
-    serial = request.form['serial']
-    code = request.form['code']
+    serial = request.args['serial']
+    code = request.args['code']
 
     print serial
     print code

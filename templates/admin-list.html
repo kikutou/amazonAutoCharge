@@ -351,32 +351,33 @@
                             <p>{{ status }}</p>
 						</td>
 						<td>
-							<a id={{ i }} href="javascript:;">
+                            {% set href = "/download?serial="~info.trade_no~"&code="~info.gift_code %}
+							<a href="/download?">
 								<i class="fa fa-download" aria-hidden="true"></i>
 								<!-- チャージ前後のスクリーンショットorHTMLファイルをzipでダウンロード -->
 							</a>
 						</td>
 					</tr>
 
-                    <script>
-                        $("#{{ i }}").on("click", function () {
-                            var serial = $(this).parent().parent().find("td:eq(2)").text();
-                            var code = $(this).parent().parent().find("td:eq(3)").text();
-                            $.ajax({
-                                url: "/download",
-                                type: "post",
-                                data: {
-                                    serial: serial,
-                                    code: code
-                                },
-                                success: function (result) {
-                                    if (result == false){
-                                        alert('No data to download!')
-                                    }
-                                }
-                            })
-                        })
-                    </script>
+{#                    <script>#}
+{#                        $("#{{ i }}").on("click", function () {#}
+{#                            var serial = $(this).parent().parent().find("td:eq(2)").text();#}
+{#                            var code = $(this).parent().parent().find("td:eq(3)").text();#}
+{#                            $.ajax({#}
+{#                                url: "/download",#}
+{#                                type: "post",#}
+{#                                data: {#}
+{#                                    serial: serial,#}
+{#                                    code: code#}
+{#                                },#}
+{#                                success: function (result) {#}
+{#                                    if (result == false){#}
+{#                                        alert('No data to download!')#}
+{#                                    }#}
+{#                                }#}
+{#                            })#}
+{#                        })#}
+{#                    </script>#}
 
                     {% endfor %}
                     {% endif %}

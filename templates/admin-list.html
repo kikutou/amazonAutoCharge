@@ -359,7 +359,7 @@
 					</tr>
 
                     <script>
-                        $("#{{ i }}").click(function () {
+                        $("#{{ i }}").on("click", function () {
                             alert('download');
                             $.post(
                                 "/download",

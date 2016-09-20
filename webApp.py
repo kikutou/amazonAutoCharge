@@ -459,9 +459,16 @@ def admin(page=1):
         return redirect('/')
 
 
-# @app.route('/download', methods=['post'])
-# def download():
-#
+@app.route('/download', methods=['post'])
+def download():
+    serial = request.form['serial']
+    code = request.form['code']
+
+    url = "./trade/"+str(serial)+"/"+code+"/after.html"
+
+    r = requests.get(url)
+
+    print len(r.content)
 
 
 @app.route('/amazon-login', methods=['post'])

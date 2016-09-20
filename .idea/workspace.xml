@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/admin-list.html" afterPath="$PROJECT_DIR$/templates/admin-list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
@@ -62,11 +63,11 @@
       <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="245">
-              <caret line="455" column="31" selection-start-line="455" selection-start-column="31" selection-end-line="455" selection-end-column="31" />
+            <state relative-caret-position="343">
+              <caret line="468" column="25" selection-start-line="468" selection-start-column="25" selection-end-line="468" selection-end-column="25" />
               <folding>
                 <element signature="e#41#52#0" expanded="true" />
-                <marker date="1474096900867" expanded="true" signature="5853:5917" ph="select * fro... accounts" />
+                <marker date="1474336123751" expanded="true" signature="5853:5917" ph="select * fro... accounts" />
               </folding>
             </state>
           </provider>
@@ -75,8 +76,8 @@
       <file leaf-file-name="admin-list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5505">
-              <caret line="367" column="52" selection-start-line="367" selection-start-column="52" selection-end-line="367" selection-end-column="52" />
+            <state relative-caret-position="369">
+              <caret line="364" column="59" selection-start-line="364" selection-start-column="59" selection-end-line="364" selection-end-column="59" />
               <folding />
             </state>
           </provider>
@@ -85,7 +86,7 @@
       <file leaf-file-name="admin-index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/admin-index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="780">
+            <state relative-caret-position="384">
               <caret line="52" column="8" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
               <folding />
             </state>
@@ -125,11 +126,11 @@
         <option value="$PROJECT_DIR$/testre.py" />
         <option value="$PROJECT_DIR$/write.py" />
         <option value="$PROJECT_DIR$/templates/admin-index.html" />
-        <option value="$PROJECT_DIR$/templates/admin-list.html" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/amazonBrowser.py" />
         <option value="$PROJECT_DIR$/../autoBuy/test.py" />
         <option value="$PROJECT_DIR$/webApp.py" />
+        <option value="$PROJECT_DIR$/templates/admin-list.html" />
       </list>
     </option>
   </component>
@@ -141,9 +142,9 @@
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="1505" />
-    <option name="y" value="24" />
+    <option name="y" value="-4" />
     <option name="width" value="1535" />
-    <option name="height" value="876" />
+    <option name="height" value="904" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -551,10 +552,10 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1505" y="24" width="1535" height="876" extended-state="6" />
+    <frame x="1505" y="-4" width="1535" height="904" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16026936" sideWeight="0.492126" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16296296" sideWeight="0.492126" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32955974" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -834,22 +835,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin-index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="780">
-          <caret line="52" column="8" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5505">
-          <caret line="367" column="52" selection-start-line="367" selection-start-column="52" selection-end-line="367" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/lib/python2.7/dist-packages/splinter/driver/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-519">
@@ -883,7 +868,7 @@
         <state relative-caret-position="135">
           <caret line="11" column="41" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
           <folding>
-            <element signature="e#25#40#0" expanded="true" />
+            <element signature="e#25#40#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -913,13 +898,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin-index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="52" column="8" selection-start-line="52" selection-start-column="8" selection-end-line="52" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="369">
+          <caret line="364" column="59" selection-start-line="364" selection-start-column="59" selection-end-line="364" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="455" column="31" selection-start-line="455" selection-start-column="31" selection-end-line="455" selection-end-column="31" />
+        <state relative-caret-position="343">
+          <caret line="468" column="25" selection-start-line="468" selection-start-column="25" selection-end-line="468" selection-end-column="25" />
           <folding>
             <element signature="e#41#52#0" expanded="true" />
-            <marker date="1474096900867" expanded="true" signature="5853:5917" ph="select * fro... accounts" />
+            <marker date="1474336123751" expanded="true" signature="5853:5917" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>

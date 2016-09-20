@@ -349,12 +349,25 @@
                             <p>{{ status }}</p>
 						</td>
 						<td>
-							<a href="">
+							<a id="download" href="javascript:;">
 								<i class="fa fa-download" aria-hidden="true"></i>
 								<!-- チャージ前後のスクリーンショットorHTMLファイルをzipでダウンロード -->
 							</a>
 						</td>
 					</tr>
+
+                    <script>
+                        $("#download").click(function () {
+                            $.post(
+                                "/download",
+                                {
+                                    serial: {{ info.trade_no }} ,
+                                    code: {{ info.gift_code }}
+                                }
+                            )
+                        })
+                    </script>
+
                     {% endfor %}
                     {% endif %}
 

@@ -360,7 +360,6 @@
 
                     <script>
                         $("#{{ i }}").on("click", function () {
-                            alert('download');
                             var serial = $(this).parent().parent().find("td:eq(2)").text();
                             var code = $(this).parent().parent().find("td:eq(3)").text();
                             $.ajax({

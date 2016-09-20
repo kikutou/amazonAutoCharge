@@ -470,6 +470,8 @@ def download():
     url = "./trade/"+str(serial)+"/"+code+"/after.html"
 
     if os.path.exists(url):
+        print 'file exist'
+        print send_file(url)
 
         response = make_response(send_file(url))
         response.headers["Content-Disposition"] = "attachment; filename=after.html;"

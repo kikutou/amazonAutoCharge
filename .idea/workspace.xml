@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/admin-list.html" afterPath="$PROJECT_DIR$/templates/admin-list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
@@ -61,11 +62,11 @@
       <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="430">
-              <caret line="474" column="82" selection-start-line="474" selection-start-column="82" selection-end-line="474" selection-end-column="82" />
+            <state relative-caret-position="250">
+              <caret line="473" column="27" selection-start-line="473" selection-start-column="27" selection-end-line="473" selection-end-column="27" />
               <folding>
                 <element signature="e#41#52#0" expanded="true" />
-                <marker date="1474344919448" expanded="true" signature="5879:5943" ph="select * fro... accounts" />
+                <marker date="1474345245826" expanded="true" signature="5879:5943" ph="select * fro... accounts" />
               </folding>
             </state>
           </provider>
@@ -84,8 +85,8 @@
       <file leaf-file-name="admin-list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="564">
-              <caret line="373" column="21" selection-start-line="373" selection-start-column="21" selection-end-line="373" selection-end-column="21" />
+            <state relative-caret-position="384">
+              <caret line="361" column="63" selection-start-line="361" selection-start-column="63" selection-end-line="361" selection-end-column="63" />
               <folding />
             </state>
           </provider>
@@ -961,14 +962,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="373" column="21" selection-start-line="373" selection-start-column="21" selection-end-line="373" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/trade/201609120412237882/5757733fed696_3707/after.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-510">
@@ -977,13 +970,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="361" column="63" selection-start-line="361" selection-start-column="63" selection-end-line="361" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="430">
-          <caret line="474" column="82" selection-start-line="474" selection-start-column="82" selection-end-line="474" selection-end-column="82" />
+        <state relative-caret-position="250">
+          <caret line="473" column="27" selection-start-line="473" selection-start-column="27" selection-end-line="473" selection-end-column="27" />
           <folding>
             <element signature="e#41#52#0" expanded="true" />
-            <marker date="1474344919448" expanded="true" signature="5879:5943" ph="select * fro... accounts" />
+            <marker date="1474345245826" expanded="true" signature="5879:5943" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>

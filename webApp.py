@@ -6,10 +6,9 @@ import demjson
 import requests
 import os
 import random
-import urllib
 import MySQLdb
 import flask
-from flask import Flask, request, render_template, redirect, session
+from flask import Flask, request, render_template, redirect, session, make_response, send_file
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 import BrowserSaver
@@ -471,7 +470,10 @@ def download():
     url = "./trade/"+str(serial)+"/"+code+"/after.html"
 
     if os.path.exists(url):
-        urllib.urlretrieve(url, "after.html")
+
+        response = make_response(send_file(url))
+        response.headers["Content-Disposition"] = "attachment; filename=after.html;"
+        return response
     else:
         return False
 

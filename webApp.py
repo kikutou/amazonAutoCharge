@@ -467,11 +467,15 @@ def download():
     print serial
     print code
 
-    # url = "./trade/"+str(serial)+"/"+code+"/after.html"
-    #
-    # r = requests.get(url)
-    #
-    # print len(r.content)
+    url = "./trade/"+str(serial)+"/"+code+"/after.html"
+
+    if os.path.exists(url):
+
+        r = requests.get(url)
+
+        print len(r.content)
+    else:
+        return False
 
 
 @app.route('/amazon-login', methods=['post'])

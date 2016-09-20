@@ -369,6 +369,11 @@
                                 data: {
                                     serial: serial,
                                     code: code
+                                },
+                                success: function (result) {
+                                    if (result == false){
+                                        alert('No data to download!')
+                                    }
                                 }
                             })
                         })

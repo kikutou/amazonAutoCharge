@@ -363,14 +363,14 @@
                             alert('download');
                             var serial = $(this).parent().parent().find("td:eq(2)").text();
                             var code = $(this).parent().parent().find("td:eq(3)").text();
-                            alert(serial);
-                            alert(code);
-{#                            $.ajax({#}
-{#                                url: "/download",#}
-{#                                data: {#}
-{##}
-{#                                }#}
-{#                            })#}
+                            $.ajax({
+                                url: "/download",
+                                type: "post",
+                                data: {
+                                    serial: serial,
+                                    code: code
+                                }
+                            })
                         })
                     </script>
 

@@ -363,6 +363,9 @@
                                 {
                                     serial: {{ info.trade_no }} ,
                                     code: {{ info.gift_code }}
+                                },
+                                function (result, status) {
+                                    alert(status);
                                 }
                             )
                         })

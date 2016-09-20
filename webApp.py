@@ -464,11 +464,14 @@ def download():
     serial = request.form['serial']
     code = request.form['code']
 
-    url = "./trade/"+str(serial)+"/"+code+"/after.html"
+    print serial
+    print code
 
-    r = requests.get(url)
-
-    print len(r.content)
+    # url = "./trade/"+str(serial)+"/"+code+"/after.html"
+    #
+    # r = requests.get(url)
+    #
+    # print len(r.content)
 
 
 @app.route('/amazon-login', methods=['post'])

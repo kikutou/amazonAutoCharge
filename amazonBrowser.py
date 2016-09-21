@@ -684,7 +684,7 @@ def amazon_charge_main(browser, code):
 
 if __name__ == '__main__':
 
-    email = 'nightblizzard@sina.com'
-    password = 'sc07051989'
+    email = ''
+    password = ''
 
     amazon_login_main(email, password, False)

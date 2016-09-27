@@ -687,7 +687,7 @@ def auto_charge():
                     # Send report to PHP
                     # report = [('code', code), ('result', '1'), ('message', result['message'])]
                     # report = urllib.urlencode(report)
-                    # path = 'https://153.121.38.177:9080/vnc_connect/db'
+                    # path = 'https://153.121.38.177:9080/amazon_check/db'
                     # req = urllib2.Request(path, report)
                     # req.add_header("Content-type", "application/x-www-form-urlencoded")
                     # page = urllib2.urlopen(req).read()
@@ -706,7 +706,7 @@ def auto_charge():
 
                 j += 1
 
-                response = requests.get("https://dev01.lifestrage.com/vnc_connect/db", params=report, verify=False)
+                response = requests.get("https://dev01.lifestrage.com/amazon_check/db", params=report, verify=False)
 
                 print response.status_code
 

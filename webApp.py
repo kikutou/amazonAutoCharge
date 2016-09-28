@@ -474,7 +474,7 @@ def download():
     if os.path.exists(url_before):
         zip_file.write(url_before, 'before_charge.html', zipfile.ZIP_DEFLATED)
     if os.path.exists(url_after):
-        zip_file.write(url_before, 'before_charge.html', zipfile.ZIP_DEFLATED)
+        zip_file.write(url_before, 'after_charge.html', zipfile.ZIP_DEFLATED)
     zip_file.close()
 
     response = make_response(send_file(url))

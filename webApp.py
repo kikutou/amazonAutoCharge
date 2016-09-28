@@ -5,6 +5,7 @@ from math import ceil
 import demjson
 import requests
 import os
+import zipfile
 import random
 import MySQLdb
 import flask
@@ -459,25 +460,26 @@ def admin(page=1):
         return redirect('/')
 
 
-@app.route('/download_after')
-def download_after():
+@app.route('/download')
+def download():
     serial = request.args['serial']
     code = request.args['code']
 
-    print serial
-    print code
+    url_before = "./trade/"+str(serial)+"/"+code+"/before.html"
+    url_after = "./trade/"+str(serial)+"/"+code+"/after.html"
 
-    url = "./trade/"+str(serial)+"/"+code+"/after.html"
+    url = "./trade/"+str(serial)+"/"+code+"/"+serial+"_"+code+".zip"
 
-    if os.path.exists(url):
-        print 'file exist'
-        print send_file(url)
+    zip_file = zipfile.ZipFile(url, 'w')
+    if os.path.exists(url_before):
+        zip_file.write(url_before, 'before_charge.html', zipfile.ZIP_DEFLATED)
+    if os.path.exists(url_after):
+        zip_file.write(url_before, 'before_charge.html', zipfile.ZIP_DEFLATED)
+    zip_file.close()
 
-        response = make_response(send_file(url))
-        response.headers["Content-Disposition"] = "attachment; filename=after.html;"
-        return response
-    else:
-        return False
+    response = make_response(send_file(url))
+    response.headers["Content-Disposition"] = "attachment; filename="+ url +";"
+    return response
 
 
 @app.route('/download_before')

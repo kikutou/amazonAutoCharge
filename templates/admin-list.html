@@ -352,13 +352,8 @@
                             <p>{{ status }}</p>
 						</td>
 						<td>
-                            {% set href_before = "/download_before?serial="~info.trade_no~"&code="~info.gift_code %}
-                            {% set href_after = "/download_after?serial="~info.trade_no~"&code="~info.gift_code %}
-							<a href={{ href_before }}>
-								<i class="fa fa-download" aria-hidden="true"></i>
-								<!-- チャージ前後のスクリーンショットorHTMLファイルをzipでダウンロード -->
-							</a>
-                            <a href={{ href_after }}>
+                            {% set href = "/download?serial="~info.trade_no~"&code="~info.gift_code %}
+							<a href={{ href }}>
 								<i class="fa fa-download" aria-hidden="true"></i>
 								<!-- チャージ前後のスクリーンショットorHTMLファイルをzipでダウンロード -->
 							</a>

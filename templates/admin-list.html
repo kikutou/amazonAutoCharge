@@ -286,8 +286,8 @@
 				</ul>
 				<div class="submitbox">
 					<input type="submit" value="検索" />
-																<a class="link-button" href="/trades/?trade_status%5B%5D=3&trade_status%5B%5D=4&trade_status%5B%5D=5&trade_status%5B%5D=7&trade_status%5B%5D=9&trade_status%5B%5D=13&trade_status%5B%5D=6&trade_status%5B%5D=8&trade_status%5B%5D=10&trade_status%5B%5D=11&trade_status%5B%5D=12&csv=1">csvダウンロード</a>
-										<input type="reset" value="クリア" />
+{#                    <a class="link-button" href="/trades/?trade_status%5B%5D=3&trade_status%5B%5D=4&trade_status%5B%5D=5&trade_status%5B%5D=7&trade_status%5B%5D=9&trade_status%5B%5D=13&trade_status%5B%5D=6&trade_status%5B%5D=8&trade_status%5B%5D=10&trade_status%5B%5D=11&trade_status%5B%5D=12&csv=1">csvダウンロード</a>#}
+                    <input type="reset" value="クリア" />
 				</div>
 				</ul>
 			</form>			<ol class="split">
@@ -308,7 +308,10 @@
 {#						<th>出品者</th>#}
 						<th>メールアドレス</th>
 						<th>取引状態</th>
-						<th>SS/DL</th>
+						<th>チャージ前/DL</th>
+						<th>チャージ後/DL</th>
+{#						<th>SS/DL</th>#}
+
 
 					</tr>
                     {% if list %}
@@ -351,8 +354,13 @@
                             <p>{{ status }}</p>
 						</td>
 						<td>
-                            {% set href = "/download?serial="~info.trade_no~"&code="~info.gift_code %}
-							<a href={{ href }}>
+                            {% set href_before = "/download_before?serial="~info.trade_no~"&code="~info.gift_code %}
+                            {% set href_after = "/download_after?serial="~info.trade_no~"&code="~info.gift_code %}
+							<a href={{ href_before }}>
+								<i class="fa fa-download" aria-hidden="true"></i>
+								<!-- チャージ前後のスクリーンショットorHTMLファイルをzipでダウンロード -->
+							</a>
+                            <a href={{ href_after }}>
 								<i class="fa fa-download" aria-hidden="true"></i>
 								<!-- チャージ前後のスクリーンショットorHTMLファイルをzipでダウンロード -->
 							</a>

@@ -459,8 +459,8 @@ def admin(page=1):
         return redirect('/')
 
 
-@app.route('/download')
-def download():
+@app.route('/download_after')
+def download_after():
     serial = request.args['serial']
     code = request.args['code']
 
@@ -468,6 +468,27 @@ def download():
     print code
 
     url = "./trade/"+str(serial)+"/"+code+"/after.html"
+
+    if os.path.exists(url):
+        print 'file exist'
+        print send_file(url)
+
+        response = make_response(send_file(url))
+        response.headers["Content-Disposition"] = "attachment; filename=after.html;"
+        return response
+    else:
+        return False
+
+
+@app.route('/download_before')
+def download_before():
+    serial = request.args['serial']
+    code = request.args['code']
+
+    print serial
+    print code
+
+    url = "./trade/" + str(serial) + "/" + code + "/before.html"
 
     if os.path.exists(url):
         print 'file exist'

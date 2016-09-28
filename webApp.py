@@ -478,7 +478,7 @@ def download():
     zip_file.close()
 
     response = make_response(send_file(url))
-    response.headers["Content-Disposition"] = "attachment; filename="+ url +";"
+    response.headers["Content-Disposition"] = "attachment; filename=" + serial+"_"+code+".zip" + ";"
     return response
 
 

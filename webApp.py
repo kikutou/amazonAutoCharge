@@ -446,7 +446,7 @@ def admin(page=1):
                     'vns_login_time': str(trade_info.start)[11::],
                     'charge_start_date': str(gifcode_info.time)[0:10],
                     'charge_start_time': str(gifcode_info.time)[11::],
-                    'gift_code': gifcode_info.code,
+                    'gift_code': gifcode_info.message,
                     'code_status': gifcode_info.result,
                     'user_email': trade_info.email,
                     'trade_no': trade_info.serial,

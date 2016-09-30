@@ -91,7 +91,7 @@ class Code(db.Model):
     code = db.Column(db.String(30), nullable=False)
     time = db.Column(db.String(20), nullable=True)
     result = db.Column(db.Integer)
-    message = db.Column(db.Text)
+    message = db.Column(db.UnicodeText)
     balance = db.Column(db.Text, nullable=True)
     amount = db.Column(db.Text, nullable=True)
 
@@ -163,7 +163,7 @@ class Code(db.Model):
 #     code = db.Column(db.String(30), nullable=False)
 #     time = db.Column(db.String(20), nullable=True)
 #     result = db.Column(db.Integer)
-#     message = db.Column(db.Text)
+#     message = db.Column(db.UnicodeText)
 #     balance = db.Column(db.Text, nullable=True)
 #     amount = db.Column(db.Text, nullable=True)
 #
@@ -446,7 +446,7 @@ def admin(page=1):
                     'vns_login_time': str(trade_info.start)[11::],
                     'charge_start_date': str(gifcode_info.time)[0:10],
                     'charge_start_time': str(gifcode_info.time)[11::],
-                    'gift_code': gifcode_info.message,
+                    'gift_code': gifcode_info.code,
                     'code_status': gifcode_info.result,
                     'user_email': trade_info.email,
                     'trade_no': trade_info.serial,

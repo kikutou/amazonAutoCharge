@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amazonBrowser.py" afterPath="$PROJECT_DIR$/amazonBrowser.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
@@ -53,11 +52,11 @@
       <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="165" column="42" selection-start-line="165" selection-start-column="42" selection-end-line="165" selection-end-column="42" />
+            <state relative-caret-position="342">
+              <caret line="91" column="50" selection-start-line="91" selection-start-column="50" selection-end-line="91" selection-end-column="50" />
               <folding>
                 <element signature="e#41#52#0" expanded="true" />
-                <marker date="1475220331044" expanded="true" signature="5912:5976" ph="select * fro... accounts" />
+                <marker date="1475220473511" expanded="true" signature="5910:5974" ph="select * fro... accounts" />
               </folding>
             </state>
           </provider>
@@ -930,11 +929,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="165" column="42" selection-start-line="165" selection-start-column="42" selection-end-line="165" selection-end-column="42" />
+        <state relative-caret-position="342">
+          <caret line="91" column="50" selection-start-line="91" selection-start-column="50" selection-end-line="91" selection-end-column="50" />
           <folding>
             <element signature="e#41#52#0" expanded="true" />
-            <marker date="1475220331044" expanded="true" signature="5912:5976" ph="select * fro... accounts" />
+            <marker date="1475220473511" expanded="true" signature="5910:5974" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>

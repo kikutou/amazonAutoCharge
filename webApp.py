@@ -91,7 +91,7 @@ class Code(db.Model):
     code = db.Column(db.String(30), nullable=False)
     time = db.Column(db.String(20), nullable=True)
     result = db.Column(db.Integer)
-    message = db.Column(db.Text)
+    message = db.Column(db.VARCHAR(1000))
     balance = db.Column(db.Text, nullable=True)
     amount = db.Column(db.Text, nullable=True)
 
@@ -163,7 +163,7 @@ class Code(db.Model):
 #     code = db.Column(db.String(30), nullable=False)
 #     time = db.Column(db.String(20), nullable=True)
 #     result = db.Column(db.Integer)
-#     message = db.Column(db.Text)
+#     message = db.Column(db.VARCHAR(1000))
 #     balance = db.Column(db.Text, nullable=True)
 #     amount = db.Column(db.Text, nullable=True)
 #

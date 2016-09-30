@@ -312,7 +312,7 @@ def amazon_charge(browser, code):
 
         return {
             'code': 3,
-            'message': '番号違いでエラーが発生しました。',
+            'message': result,
             'html_code_before_charge': html_code_before_charge,
             'html_code_after_charge': html_code_after_charge
         }

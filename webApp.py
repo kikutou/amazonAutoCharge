@@ -170,19 +170,19 @@ class Code(db.Model):
 #     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
 
 
-def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
-    self.code = code
-    self.time = time
-    if result is None:
-        result = 0
-    self.result = result
-    self.message = message
-    self.balance = balance
-    self.amount = amount
-
-
-def __repr__(self):
-    return '<code: %s>' % (self.code)
+# def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
+#     self.code = code
+#     self.time = time
+#     if result is None:
+#         result = 0
+#     self.result = result
+#     self.message = message
+#     self.balance = balance
+#     self.amount = amount
+# 
+#
+# def __repr__(self):
+#     return '<code: %s>' % (self.code)
 
 
 @app.route('/', methods = ['GET', 'POST'])

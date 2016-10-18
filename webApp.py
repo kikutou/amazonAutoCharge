@@ -465,6 +465,10 @@ def download():
     serial = request.args['serial']
     code = request.args['code']
 
+    yyyymmdd = serial[0:8]
+    hhmm = serial[8:12]
+
+
     url_before = "./trade/"+str(serial)+"/"+code+"/before.html"
     url_after = "./trade/"+str(serial)+"/"+code+"/after.html"
 
@@ -472,9 +476,9 @@ def download():
 
     zip_file = zipfile.ZipFile(url, 'w')
     if os.path.exists(url_before):
-        zip_file.write(url_before, 'before_charge.html', zipfile.ZIP_DEFLATED)
+        zip_file.write(url_before, 'before_'+yyyymmdd+'_'+hhmm+'.html', zipfile.ZIP_DEFLATED)
     if os.path.exists(url_after):
-        zip_file.write(url_after, 'after_charge.html', zipfile.ZIP_DEFLATED)
+        zip_file.write(url_after, 'after'+yyyymmdd+'_'+hhmm+'.html', zipfile.ZIP_DEFLATED)
     zip_file.close()
 
     response = make_response(send_file(url))

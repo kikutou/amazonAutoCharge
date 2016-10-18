@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/amazonAutoCharge.iml" afterPath="$PROJECT_DIR$/.idea/amazonAutoCharge.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
@@ -55,11 +52,11 @@
       <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="194" column="35" selection-start-line="194" selection-start-column="35" selection-end-line="194" selection-end-column="35" />
+            <state relative-caret-position="546">
+              <caret line="480" column="90" selection-start-line="480" selection-start-column="90" selection-end-line="480" selection-end-column="90" />
               <folding>
                 <element signature="e#41#52#0" expanded="true" />
-                <marker date="1476779190239" expanded="true" signature="5917:5981" ph="select * fro... accounts" />
+                <marker date="1476780429515" expanded="true" signature="5917:5981" ph="select * fro... accounts" />
               </folding>
             </state>
           </provider>
@@ -874,11 +871,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="194" column="35" selection-start-line="194" selection-start-column="35" selection-end-line="194" selection-end-column="35" />
+        <state relative-caret-position="546">
+          <caret line="480" column="90" selection-start-line="480" selection-start-column="90" selection-end-line="480" selection-end-column="90" />
           <folding>
             <element signature="e#41#52#0" expanded="true" />
-            <marker date="1476779190239" expanded="true" signature="5917:5981" ph="select * fro... accounts" />
+            <marker date="1476780429515" expanded="true" signature="5917:5981" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>

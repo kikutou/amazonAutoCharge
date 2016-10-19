@@ -468,9 +468,9 @@ def download():
     yyyymmdd = serial[0:8]
     hhmm = serial[8:12]
 
-
     url_before = "./trade/"+str(serial)+"/"+code+"/before.html"
     url_after = "./trade/"+str(serial)+"/"+code+"/after.html"
+    url_end = "./trade/"+str(serial)+"/end.html"
 
     url = "./trade/"+str(serial)+"/"+code+"/"+serial+"_"+code+".zip"
 
@@ -479,6 +479,8 @@ def download():
         zip_file.write(url_before, 'before_'+yyyymmdd+'_'+hhmm+'.html', zipfile.ZIP_DEFLATED)
     if os.path.exists(url_after):
         zip_file.write(url_after, 'after_'+yyyymmdd+'_'+hhmm+'.html', zipfile.ZIP_DEFLATED)
+    if os.path.exists(url_end):
+        zip_file.write(url_end, 'end_' + yyyymmdd + '_' + hhmm + '.html', zipfile.ZIP_DEFLATED)
     zip_file.close()
 
     response = make_response(send_file(url))
@@ -746,6 +748,12 @@ def auto_charge():
         db.session.add(trade)
 
         db.session.commit()
+
+        end_history = browser.html
+        file_end_charge = open("./trade/" + str(serial) + "/end.html", "w")
+        file_end_charge.write(str(end_history))
+        file_end_charge.close()
+
         browser.quit()
 
         # データベースの削除
@@ -767,6 +775,11 @@ def auto_charge():
         db.session.rollback()
 
         browser = BrowserSaver.Browsers().get_browser(email)
+
+        end_history = browser.html
+        file_end_charge = open("./trade/" + str(serial) + "/end.html", "w")
+        file_end_charge.write(str(end_history))
+        file_end_charge.close()
 
         browser.quit()
 

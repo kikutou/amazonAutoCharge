@@ -539,7 +539,7 @@ def get_recent_charge_info(browser, code, html_code_before_charge, html_code_aft
                 'title': 'コード入力後エラー',
                 'message': "コード入力後、正しくチャージ状態を取得できなっかた。",
                 'html_code_before_charge': html_code_before_charge,
-                'html_code_after_charge': html_code_after_charge
+                'html_code_after_charge': browser.html
             }
 
         recent_charged_code = None
@@ -571,7 +571,7 @@ def get_recent_charge_info(browser, code, html_code_before_charge, html_code_aft
                 'title': 'コード入力後エラー',
                 'message': "コード入力後、正しくチャージ状態を取得できなっかた。",
                 'html_code_before_charge': html_code_before_charge,
-                'html_code_after_charge': html_code_after_charge
+                'html_code_after_charge': browser.html
             }
 
     except:

@@ -470,7 +470,7 @@ def download():
 
     url_before = "./trade/"+str(serial)+"/"+code+"/before.html"
     url_after = "./trade/"+str(serial)+"/"+code+"/after.html"
-    url_end = "./trade/"+str(serial)+"/end.html"
+    url_end = "./trade/"+str(serial)+"/"+code+"/history.html"
 
     url = "./trade/"+str(serial)+"/"+code+"/"+serial+"_"+code+".zip"
 
@@ -749,10 +749,10 @@ def auto_charge():
 
         db.session.commit()
 
-        end_history = browser.html
-        file_end_charge = open("./trade/" + str(serial) + "/end.html", "w")
-        file_end_charge.write(str(end_history))
-        file_end_charge.close()
+        # end_history = browser.html
+        # file_end_charge = open("./trade/" + str(serial) + "/end.html", "w")
+        # file_end_charge.write(str(end_history))
+        # file_end_charge.close()
 
         browser.quit()
 

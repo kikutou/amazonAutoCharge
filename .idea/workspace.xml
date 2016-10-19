@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amazonBrowser.py" afterPath="$PROJECT_DIR$/amazonBrowser.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
@@ -42,7 +41,7 @@
       <file leaf-file-name="amazonBrowser.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-210">
+            <state relative-caret-position="10350">
               <caret line="583" column="60" selection-start-line="583" selection-start-column="38" selection-end-line="583" selection-end-column="60" />
               <folding>
                 <element signature="e#15#26#0" expanded="true" />
@@ -54,11 +53,11 @@
       <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="457">
-              <caret line="483" column="20" selection-start-line="483" selection-start-column="20" selection-end-line="483" selection-end-column="20" />
+            <state relative-caret-position="259">
+              <caret line="472" column="55" selection-start-line="472" selection-start-column="55" selection-end-line="472" selection-end-column="55" />
               <folding>
                 <element signature="e#41#52#0" expanded="true" />
-                <marker date="1476859463814" expanded="true" signature="5917:5981" ph="select * fro... accounts" />
+                <marker date="1476872533873" expanded="true" signature="5917:5981" ph="select * fro... accounts" />
               </folding>
             </state>
           </provider>
@@ -817,9 +816,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding>
-            <element signature="e#15#43#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -827,7 +823,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="18">
           <caret line="360" column="25" selection-start-line="360" selection-start-column="25" selection-end-line="360" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -835,13 +830,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/amazonBrowser.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-210">
+        <state relative-caret-position="10350">
           <caret line="583" column="60" selection-start-line="583" selection-start-column="38" selection-end-line="583" selection-end-column="60" />
           <folding>
             <element signature="e#15#26#0" expanded="true" />
@@ -851,11 +845,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/webApp.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="457">
-          <caret line="483" column="20" selection-start-line="483" selection-start-column="20" selection-end-line="483" selection-end-column="20" />
+        <state relative-caret-position="259">
+          <caret line="472" column="55" selection-start-line="472" selection-start-column="55" selection-end-line="472" selection-end-column="55" />
           <folding>
             <element signature="e#41#52#0" expanded="true" />
-            <marker date="1476859463814" expanded="true" signature="5917:5981" ph="select * fro... accounts" />
+            <marker date="1476872533873" expanded="true" signature="5917:5981" ph="select * fro... accounts" />
           </folding>
         </state>
       </provider>

@@ -14,16 +14,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import or_
 import BrowserSaver
 import amazonBrowser
-# import sendMail
 from splinter import Browser
 
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-
-# context = SSL.Context(SSL.SSLv23_METHOD)
-# context.use_privatekey_file('/etc/apache2/ssl/server.key')
-# context.use_certificate_file('/etc/apache2/ssl/server.crt')
 
 app = Flask(__name__)
 
@@ -111,80 +106,6 @@ class Code(db.Model):
         return '<code: %s>' % (self.code)
 
 
-# class Trade(db.Model):
-#     """
-#     取引先のチャージ情報
-#
-#     :param email:amazonログインイーメール
-#     :param start:チャージが始まる時間
-#     :param finish:チャージ終了の時間
-#     :param status:取引処理状態(0:未処理, 1:処理中, 2:処理完了, 3:エラー発生)
-#     """
-#
-#     __tablename__ = 'trades_s'
-#     __bind_key__ = 'slave'
-#     id = db.Column(db.Integer, primary_key=True)
-#     email = db.Column(db.String(120), nullable=False)
-#     start = db.Column(db.DateTime, nullable=True)
-#     finish = db.Column(db.DateTime, nullable=True)
-#     status = db.Column(db.Integer, nullable=True)
-#     serial = db.Column(db.CHAR(50), nullable=False, unique=True)
-#
-#     codes = db.relationship('Code_s', backref='trade_s')
-#
-#     def __init__(self, email, serial, start=None, finish=None, status=0):
-#         self.email = email
-#         self.serial = serial
-#         if start is None:
-#             start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-#         self.start = start
-#         self.finish = finish
-#         self.status = status
-#
-#     def __repr__(self):
-#         return '<user %r traded at %s>' % (self.email, self.start)
-#
-#
-# class Code(db.Model):
-#     """
-#     チャージするコードの情報
-#
-#     :param code:ギフト券番号
-#     :param sum:ギフト券金額
-#     :param result:チャージ結果(0: 確認中, 1: チャージ成功, 2: こーどは無効, 3: エラー発生, 4: ユーザーにメールを送信した)
-#     :param message:結果のメセージ
-#     :param balance:チャージ前の残高(html_code)
-#     :param amount:チャージ後の残高(html_code)
-#     """
-#
-#     __tablename__ = 'codes_s'
-#     __bind_key__ = 'slave'
-#     id = db.Column(db.Integer, primary_key=True)
-#     code = db.Column(db.String(30), nullable=False)
-#     time = db.Column(db.String(20), nullable=True)
-#     result = db.Column(db.Integer)
-#     message = db.Column(db.Text)
-#     balance = db.Column(db.Text, nullable=True)
-#     amount = db.Column(db.Text, nullable=True)
-#
-#     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
-
-
-# def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
-#     self.code = code
-#     self.time = time
-#     if result is None:
-#         result = 0
-#     self.result = result
-#     self.message = message
-#     self.balance = balance
-#     self.amount = amount
-# 
-#
-# def __repr__(self):
-#     return '<code: %s>' % (self.code)
-
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
     """
@@ -202,7 +123,7 @@ def index():
 
             cursor = admindb.cursor()
 
-            sql = 'select * from accounts where account="%s" and password=MD5("%s")' % (u,p)
+            sql = 'select * from accounts where account="%s" and password=MD5("%s")' % (u, p)
 
             cursor.execute(sql)
 
@@ -261,11 +182,8 @@ def admin(page=1):
                 order = request.args['order']
                 limit = request.args['limit']
 
-                # print search, word, ex_s_year, ex_s_month, ex_s_day, ex_e_year, ex_e_month, ex_e_day, ph_s_year, \
-                #     ph_s_month, ph_s_day, ph_e_year, ph_e_month, ph_e_day, status, order, limit
-
                 if len(status) != 0:
-                    status = status + ['', '', '', '']
+                    status = status + ['', '', '', '', '']
 
                 # コード関連情報で輪番
                 if order == '3' or order == '4':
@@ -279,14 +197,14 @@ def admin(page=1):
                             gifcodes_info = gifcodes_info.filter(
                                 or_(Code.result == status[0], Code.result == status[1],
                                     Code.result == status[2], Code.result == status[3],
-                                    Code.result == status[4]))
+                                    Code.result == status[4], Code.result == status[5]))
 
                     else:
                         if len(status) != 0:
                             gifcodes_info = Code.query.filter(
                                 or_(Code.result == status[0], Code.result == status[1],
                                     Code.result == status[2], Code.result == status[3],
-                                    Code.result == status[4]))
+                                    Code.result == status[4], Code.result == status[5]))
                         else:
                             gifcodes_info = Code.query
 
@@ -519,10 +437,6 @@ def amazon_login():
 
     result = data[0]
 
-    # # 登録成功しない場合は、エラーメセージをメールで送信する。
-    # if result['code'] == 4 or result['code'] == 2:
-    #     sendMail.sendGmail('wangrunbo921@gmail.com', result['title'], result['message'])
-
     return flask.jsonify(result)
 
 
@@ -656,14 +570,12 @@ def auto_charge():
                     elif result['code'] == 3:
                         # コードは無効
                         send_result = '23'
-                        # sendMail.sendGmail('wangrunbo921@gmail.com', result['title'], result['message'])
                     elif result['code'] == 25:
                         # コード未入力エラー
                         send_result = '25'
                     else:
                         # 画像認証失敗まだはページエラー
                         send_result = '22'
-                        # sendMail.sendGmail('wangrunbo921@gmail.com', result['title'], result['message'])
 
                     print send_result
 
@@ -783,9 +695,6 @@ def auto_charge():
 
         browser.quit()
 
-        #db.drop_all()
-
-        # return render_template('buy-checklist.html')
         result = {'result': False}
 
         return flask.jsonify(result)
@@ -828,35 +737,6 @@ def changeCaptcha():
 
     return flask.jsonify(result)
 
-
-@app.route('/getReq', methods=['get', 'post'])
-def getReq():
-    # if request.form:
-    #     email = request.form['email']
-    #     password = request.form['password']
-    #
-    #     os.environ['DISPLAY'] = ':1'
-    #
-    #     browser = Browser('firefox')
-    #     browser.visit('https://54.238.194.108/')
-    #
-    #     return 'post data='+email+'and'+password
-    # else:
-    #     email = request.args['email']
-    #     password = request.args['password']
-    #
-    #     os.environ['DISPLAY'] = ':1'
-    #
-    #     browser = Browser('firefox')
-    #     browser.visit('https://54.238.194.108/')
-    #
-    #     return 'get data='+email+'and'+password
-    os.environ['DISPLAY'] = ':1'
-    browser = Browser('firefox')
-    browser.visit('https://www.amazon.co.jp/login')
-
-# context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-# context.load_cert_chain('/etc/apache2/ssl/server.crt', '/etc/apache2/ssl/server.key')
 
 if __name__ == '__main__':
     context = ('/etc/apache2/ssl/server.crt', '/etc/apache2/ssl/server.key')

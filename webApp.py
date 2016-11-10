@@ -652,5 +652,5 @@ def changeCaptcha():
 
 
 if __name__ == '__main__':
-    # context = ('/etc/apache2/ssl/server.crt', '/etc/apache2/ssl/server.key')
-    app.run(debug=True, threaded=True, port=4000, host='0.0.0.0')
+    context = ('/etc/apache2/ssl/server.crt', '/etc/apache2/ssl/server.key')
+    app.run(debug=True, threaded=True, port=4000, host='0.0.0.0', ssl_context=context)

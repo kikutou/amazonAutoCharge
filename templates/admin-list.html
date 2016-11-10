@@ -254,7 +254,6 @@
             <script>
                 $(function () {
                     $("#input_clear").click(function () {
-                        alert('clear');
                         $("#search_word").val("");
                         $("#search_ex_s_year").val("");
                         $("#search_ex_s_month").val("");
@@ -343,7 +342,7 @@
                 <li><i class="fa fa-arrow-left"></i>前へ</li>
             {% endif %}
 
-            {% if total_page <= 9 %}
+            {% if total_page|int <= 9 %}
                 {% for p in range(1, total_page|int + 1) %}
                     <li><a href="{{ url_for('admin', page = p) }}">{{ p }}<i class="next"></i></a></li>
                 {% endfor %}

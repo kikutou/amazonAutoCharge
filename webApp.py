@@ -153,9 +153,7 @@ def logout():
 @app.route('/admin', methods=['GET', 'POST'])
 def admin(page=1):
 
-    print request.remote_addr
-
-    if session and session['account']:
+    if session and 'account' in session:
         db.create_all()
 
         list = []
@@ -165,114 +163,119 @@ def admin(page=1):
 
         if 'search' in request.args:
 
-            try:
-                search = request.args['search']
-                word = request.args['word']
-                ex_s_year = request.args['ex_s_year']
-                ex_s_month = request.args['ex_s_month']
-                ex_s_day = request.args['ex_s_day']
-                ex_e_year = request.args['ex_e_year']
-                ex_e_month = request.args['ex_e_month']
-                ex_e_day = request.args['ex_e_day']
-                ph_s_year = request.args['ph_s_year']
-                ph_s_month = request.args['ph_s_month']
-                ph_s_day = request.args['ph_s_day']
-                ph_e_year = request.args['ph_e_year']
-                ph_e_month = request.args['ph_e_month']
-                ph_e_day = request.args['ph_e_day']
-                status = request.args.getlist('trade_status[]')
-                order = request.args['order']
-                limit = request.args['limit']
+            session['search_data'] = {
+                'search': request.args['search'],
+                'word': request.args['word'],
+                'ex_s_year': request.args['ex_s_year'],
+                'ex_s_month': request.args['ex_s_month'],
+                'ex_s_day': request.args['ex_s_day'],
+                'ex_e_year': request.args['ex_e_year'],
+                'ex_e_month': request.args['ex_e_month'],
+                'ex_e_day': request.args['ex_e_day'],
+                'ph_s_year': request.args['ph_s_year'],
+                'ph_s_month': request.args['ph_s_month'],
+                'ph_s_day': request.args['ph_s_day'],
+                'ph_e_year': request.args['ph_e_year'],
+                'ph_e_month': request.args['ph_e_month'],
+                'ph_e_day': request.args['ph_e_day'],
+                'status': request.args.getlist('trade_status[]'),
+                'order': request.args['order'],
+                'limit': request.args['limit']
+            }
 
-                print request.args
+        if session and 'search_data' in session:
 
-                trades = db.session.query(Trade)
+            search = session['search_data']['search']
+            word = session['search_data']['word']
+            ex_s_year = session['search_data']['ex_s_year']
+            ex_s_month = session['search_data']['ex_s_month']
+            ex_s_day = session['search_data']['ex_s_day']
+            ex_e_year = session['search_data']['ex_e_year']
+            ex_e_month = session['search_data']['ex_e_month']
+            ex_e_day = session['search_data']['ex_e_day']
+            ph_s_year = session['search_data']['ph_s_year']
+            ph_s_month = session['search_data']['ph_s_month']
+            ph_s_day = session['search_data']['ph_s_day']
+            ph_e_year = session['search_data']['ph_e_year']
+            ph_e_month = session['search_data']['ph_e_month']
+            ph_e_day = session['search_data']['ph_e_day']
+            status = session['search_data']['status']
+            order = session['search_data']['order']
+            limit = session['search_data']['limit']
 
-                # 検索対象
-                if search == 'mail_address' and word:
-                    trades = trades.filter(Trade.email == word)
-                elif search == 'trade_code' and word:
-                    trades = trades.filter(Trade.serial == word)
+            trades = Trade.query
 
-                # VNS登録日時
-                if ex_s_year and ex_s_month and ex_s_day and ex_e_year and ex_e_month and ex_e_day:
-                    ex_start_date = ex_s_year+'-'+ex_s_month+'-'+ex_s_day+'00:00:00'
-                    ex_finish_date = ex_e_year+'-'+ex_e_month+'-'+ex_e_day+'23:59:59'
-                    trades = trades.filter(Trade.start > ex_start_date, Trade.start < ex_finish_date)
+            # 検索対象
+            if search == 'mail_address' and word:
+                trades = trades.filter(Trade.email == word)
+            elif search == 'trade_code' and word:
+                trades = trades.filter(Trade.serial == word)
 
-                # ソート順
-                if order == '1':
-                    trades.order_by(Trade.start.asc())
-                elif order == '2':
-                    trades.order_by(Trade.start.desc())
+            # VNS登録日時
+            if ex_s_year and ex_s_month and ex_s_day and ex_e_year and ex_e_month and ex_e_day:
+                ex_start_date = ex_s_year+'-'+ex_s_month+'-'+ex_s_day+'00:00:00'
+                ex_finish_date = ex_e_year+'-'+ex_e_month+'-'+ex_e_day+'23:59:59'
+                trades = trades.filter(Trade.start > ex_start_date, Trade.start < ex_finish_date)
 
-                trades = trades.all()
+            trades = trades.all()
 
-                print trades
+            trade_ids = []
+            for trade in trades:
+                trade_ids.append(trade.id)
 
-                trade_ids = []
-                for trade in trades:
-                    trade_ids.append(trade.id)
+            codes = Code.query.filter(Code.trade_id.in_(trade_ids))
 
-                codes = db.session.query(Code).filter(Code.trade_id.in_(trade_ids))
+            # 検索対象
+            if search == 'gift_no' and word:
+                codes = codes.filter(Code.code == word)
 
-                print codes.all()
+            # チェック日時
+            if ph_s_year and ph_s_month and ph_s_day and ph_e_year and ph_e_month and ph_e_day:
+                ph_start_date = ph_s_year+'-'+ph_s_month+'-'+ph_s_day+'00:00:00'
+                ph_finish_date = ph_e_year+'-'+ph_e_month+'-'+ph_e_day+'23:59:59'
+                codes = codes.filter(Code.time > ph_start_date, Code.time < ph_finish_date)
 
-                # 検索対象
-                if search == 'gift_no' and word:
-                    codes.filter(Code.code == word)
+            # チェック状況
+            if status:
+                codes = codes.filter(Code.result.in_(status))
 
-                # チェック日時
-                if ph_s_year and ph_s_month and ph_s_day and ph_e_year and ph_e_month and ph_e_day:
-                    ph_start_date = ph_s_year+'-'+ph_s_month+'-'+ph_s_day+'00:00:00'
-                    ph_finish_date = ph_e_year+'-'+ph_e_month+'-'+ph_e_day+'23:59:59'
-                    codes = codes.filter(Code.time > ph_start_date, Code.time < ph_finish_date)
+            if order == '3':
+                codes = codes.order_by(Code.time.desc())
+            elif order == '4':
+                codes = codes.order_by(Code.time.asc())
 
-                # チェック状況
-                if status:
-                    codes.filter(Code.result.in_(status))
-
-                if order == '3':
-                    codes.order_by(Code.time.asc())
-                elif order == '4':
-                    codes.order_by(Code.time.desc())
-
-                if limit:
-                    paginate = codes.paginate(int(page), limit, True)
-                else:
-                    paginate = codes.paginate(int(page), 10, True)
-
-                gifcodes_info = paginate.items
-
-                print gifcodes_info
-
-                for gifcode_info in gifcodes_info:
-                    trade_info = gifcode_info.trade
-
-                    info = {
-                        'id': gifcode_info.id,
-                        'vns_login_date': str(trade_info.start)[0:10],
-                        'vns_login_time': str(trade_info.start)[11::],
-                        'charge_start_date': str(gifcode_info.time)[0:10],
-                        'charge_start_time': str(gifcode_info.time)[11::],
-                        'gift_code': gifcode_info.code,
-                        'code_status': gifcode_info.result,
-                        'user_email': trade_info.email,
-                        'trade_no': trade_info.serial,
-                    }
-
-                    list.append(info)
-
-            except:
-
-                return render_template('admin-list.html')
-
-        else:
-            paginate = Code.query.paginate(int(page), 10, True)
+            if limit:
+                paginate = codes.paginate(int(page), int(limit), True)
+            else:
+                paginate = codes.paginate(int(page), 10, True)
 
             gifcodes_info = paginate.items
 
-            print gifcodes_info
+            for gifcode_info in gifcodes_info:
+                trade_info = gifcode_info.trade
+
+                info = {
+                    'id': gifcode_info.id,
+                    'vns_login_date': str(trade_info.start)[0:10],
+                    'vns_login_time': str(trade_info.start)[11::],
+                    'charge_start_date': str(gifcode_info.time)[0:10],
+                    'charge_start_time': str(gifcode_info.time)[11::],
+                    'gift_code': gifcode_info.code,
+                    'code_status': gifcode_info.result,
+                    'user_email': trade_info.email,
+                    'trade_no': trade_info.serial,
+                }
+
+                list.append(info)
+
+            search_data = session['search_data']
+
+        else:
+            search_data = None
+
+            paginate = Code.query.order_by(Code.time.desc()).paginate(int(page), 10, True)
+
+            gifcodes_info = paginate.items
 
             for gifcode_info in gifcodes_info:
                 trade_info = gifcode_info.trade
@@ -296,13 +299,8 @@ def admin(page=1):
 
         count = paginate.total
 
-        print list
-        print total_page
-        print count
-        print page
-
         return render_template('admin-list.html', list=list, paginate=paginate, total_page=total_page,
-                               count=count)
+                               count=count, session=search_data)
     else:
         return redirect('/')
 

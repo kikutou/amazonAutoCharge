@@ -63,10 +63,10 @@
 			<form id="Form" method="get" accept-charset="utf-8">				<ul class="search-form">
 					<li>検索対象</li>
 					<li>
-						<input type="radio" name="search" value="mail_address" id="users02"checked><label for="users02">メールアドレス</label>
-						<input type="radio" name="search" value="trade_code" id="users05"><label for="users05">取引ID</label>
-						<input type="radio" name="search" value="gift_no" id="users06"><label for="users06">ギフト券番号</label>
-						<input type="text" name="word"  placeholder="文字列を入力" />
+						<input type="radio" name="search" value="mail_address" id="users02" {% if not session or session['search'] == 'mail_address' %} checked {% endif %}><label for="users02">メールアドレス</label>
+						<input type="radio" name="search" value="trade_code" id="users05" {% if session['search'] == 'trade_code' %} checked {% endif %}><label for="users05">取引ID</label>
+						<input type="radio" name="search" value="gift_no" id="users06" {% if session['search'] == 'gift_no' %} checked {% endif %}><label for="users06">ギフト券番号</label>
+						<input type="text" name="word"  placeholder="文字列を入力" {% if session['word'] %} value="{{ session['word'] }}" {% endif %} />
 					</li>
 				</ul>
 
@@ -74,11 +74,11 @@
 					<li>VNS登録日時</li>
 					<li>
 					<div style="padding:0px 0px 8px 8px; float:left;">						
-					<input type="text" name="ex_s_year" class="year" style="width:80px" >
+					<input type="text" name="ex_s_year" class="year" style="width:80px" {% if session['ex_s_year'] %} value="{{ session['ex_s_year'] }}" {% endif %} >
 					年
-					<input type="text" name="ex_s_month" class="month" style="width:80px" >
+					<input type="text" name="ex_s_month" class="month" style="width:80px" {% if session['ex_s_month'] %} value="{{ session['ex_s_month'] }}" {% endif %} >
 					月
-					<input type="text" name="ex_s_day" class="date" style="width:80px" >
+					<input type="text" name="ex_s_day" class="date" style="width:80px" {% if session['ex_s_day'] %} value="{{ session['ex_s_day'] }}" {% endif %} >
 					日						
 						<input type="text" value="" class="datepicker" style="display:none;" />
 					　から　
@@ -107,11 +107,11 @@
 					});
 				</script>
 					<div style="padding:0px 0px 8px 8px;  float:left;">
-					<input type="text" name="ex_e_year" class="year" style="width:80px" >
+					<input type="text" name="ex_e_year" class="year" style="width:80px" {% if session['ex_e_year'] %} value="{{ session['ex_e_year'] }}" {% endif %} >
 					年
-					<input type="text" name="ex_e_month" class="month" style="width:80px" >
+					<input type="text" name="ex_e_month" class="month" style="width:80px" {% if session['ex_e_month'] %} value="{{ session['ex_e_month'] }}" {% endif %} >
 					月
-					<input type="text" name="ex_e_day" class="date" style="width:80px" >
+					<input type="text" name="ex_e_day" class="date" style="width:80px" {% if session['ex_e_day'] %} value="{{ session['ex_e_day'] }}" {% endif %} >
 					日				
 						<input type="text" value="" class="datepicker2" style="display:none;" />
 					</div>						
@@ -215,13 +215,11 @@
 					<ul class="search-form">
 						<li>チェック状況</li>
 						<li>
-							
-
-							<input type="checkbox" name="trade_status[]" value="0" id="status01"><label for="status01">コード確認中</label>
-							<input type="checkbox" name="trade_status[]" value="16" id="status02"><label for="status02">チャージ済み</label>
-							<input type="checkbox" name="trade_status[]" value="22" id="status07" checked><label for="status07">エラー:未確認</label>
-							<input type="checkbox" name="trade_status[]" value="23" id="status08" checked><label for="status08">コード無効・返金済み</label>
-							<input type="checkbox" name="trade_status[]" value="25" id="status09"><label for="status09">システムエラー・返金済み</label>
+							<input type="checkbox" name="trade_status[]" value="0" id="status01" {% if "0" in session['status'] %} checked {% endif %} ><label for="status01">コード確認中</label>
+							<input type="checkbox" name="trade_status[]" value="16" id="status02" {% if "16" in session['status'] %} checked {% endif %}><label for="status02">チャージ済み</label>
+							<input type="checkbox" name="trade_status[]" value="22" id="status07" {% if "22" in session['status'] %} checked {% endif %} ><label for="status07">エラー:未確認</label>
+							<input type="checkbox" name="trade_status[]" value="23" id="status08" {% if "23" in session['status'] %} checked {% endif %} ><label for="status08">コード無効・返金済み</label>
+							<input type="checkbox" name="trade_status[]" value="25" id="status09" {% if "25" in session['status'] %} checked {% endif %} ><label for="status09">システムエラー・返金済み</label>
 
 						</li>
 					</ul>
@@ -229,11 +227,9 @@
 				<ul class="search-form">
 					<li>ソート順</li>
 					<li>
-						<select name="order">
-							<option value="1"selected>VNS登録日時・降順</option>
-							<option value="2">VNS登録日時・昇順</option>
-							<option value="3">チェック日時・降順</option>
-							<option value="4">チェック日時・昇順</option>
+						<select name="order" >
+                            <option value="3" {% if (session['order'] and session['order'] == "3") or not session or not session['order'] %} selected {% endif %} >チェック日時・降順</option>
+							<option value="4" {% if session['order'] and session['order'] == "4" %} selected {% endif %} >チェック日時・昇順</option>
 						</select>
 					</li>
 				</ul>
@@ -242,12 +238,11 @@
 					<li>表示件数</li>
 					<li>
 						<select name="limit">
-							<option value="10">10件</option>
-							<option value="20">20件</option>
-							<option value="50"selected>50件</option>
-							<option value="100">100件</option>
-							<option value="1000">1000件</option>
-                            <option value="0">全部</option>
+							<option value="10" {% if session['limit'] and session['limit'] == "10" %} selected {% endif %}>10件</option>
+							<option value="20" {% if session['limit'] and session['limit'] == "20" %} selected {% endif %}>20件</option>
+							<option value="50" {% if (session['limit'] and session['limit'] == "50") or not session or not session['limit'] %} selected {% endif %} >50件</option>
+							<option value="100" {% if session['limit'] and session['limit'] == "100" %} selected {% endif %}>100件</option>
+							<option value="1000" {% if session['limit'] and session['limit'] == "1000" %} selected {% endif %}>1000件</option>
 						</select>
 					</li>						
 				</ul>
@@ -327,11 +322,25 @@
                 <li><i class="fa fa-arrow-left"></i>前へ</li>
             {% endif %}
 
-            {% for p in range(0, total_page|int) %}
-                {% set p=p+1 %}
-                <li><a href="{{ url_for('admin', page = p) }}">{{ p }}<i class="next"></i></a></li>
-            {% endfor %}
-            
+            {% if total_page <= 9 %}
+                {% for p in range(1, total_page|int + 1) %}
+                    <li><a href="{{ url_for('admin', page = p) }}">{{ p }}<i class="next"></i></a></li>
+                {% endfor %}
+            {% else %}
+                {% if paginate.page < 5 %}
+                    {% for p in range(1, 10) %}
+                        <li><a href="{{ url_for('admin', page = p) }}">{{ p }}<i class="next"></i></a></li>
+                    {% endfor %}
+                {% elif paginate.page > (total_page|int - 4) %}
+                    {% for p in range(total_page|int - 8, total_page|int + 1) %}
+                        <li><a href="{{ url_for('admin', page = p) }}">{{ p }}<i class="next"></i></a></li>
+                    {% endfor %}
+                {% else %}
+                    {% for p in range(paginate.page - 4, paginate.page + 4) %}
+                        <li><a href="{{ url_for('admin', page = p) }}">{{ p }}<i class="next"></i></a></li>
+                    {% endfor %}
+                {% endif %}
+            {% endif %}
             
             {% if paginate.has_next %}
                 <li><a href="{{ url_for('admin', page = paginate.next_num) }}">次へ<i class="fa fa-arrow-right"></i></a></li>
@@ -349,6 +358,8 @@
 		</section>
 	</footer><!-- /footer -->
 	</div>
+    </div>
+</div>
 	</body>
 </html>
 

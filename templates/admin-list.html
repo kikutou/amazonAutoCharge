@@ -66,7 +66,7 @@
 						<input type="radio" name="search" value="mail_address" id="users02" {% if not session or session['search'] == 'mail_address' %} checked {% endif %}><label for="users02">メールアドレス</label>
 						<input type="radio" name="search" value="trade_code" id="users05" {% if session['search'] == 'trade_code' %} checked {% endif %}><label for="users05">取引ID</label>
 						<input type="radio" name="search" value="gift_no" id="users06" {% if session['search'] == 'gift_no' %} checked {% endif %}><label for="users06">ギフト券番号</label>
-						<input type="text" name="word"  placeholder="文字列を入力" {% if session['word'] %} value="{{ session['word'] }}" {% endif %} />
+						<input type="text" id="search_word" name="word"  placeholder="文字列を入力" {% if session['word'] %} value="{{ session['word'] }}" {% endif %} />
 					</li>
 				</ul>
 
@@ -74,11 +74,11 @@
 					<li>VNS登録日時</li>
 					<li>
 					<div style="padding:0px 0px 8px 8px; float:left;">						
-					<input type="text" name="ex_s_year" class="year" style="width:80px" {% if session['ex_s_year'] %} value="{{ session['ex_s_year'] }}" {% endif %} >
+					<input type="text" id="search_ex_s_year" name="ex_s_year" class="year" style="width:80px" {% if session['ex_s_year'] %} value="{{ session['ex_s_year'] }}" {% endif %} >
 					年
-					<input type="text" name="ex_s_month" class="month" style="width:80px" {% if session['ex_s_month'] %} value="{{ session['ex_s_month'] }}" {% endif %} >
+					<input type="text" id="search_ex_s_month" name="ex_s_month" class="month" style="width:80px" {% if session['ex_s_month'] %} value="{{ session['ex_s_month'] }}" {% endif %} >
 					月
-					<input type="text" name="ex_s_day" class="date" style="width:80px" {% if session['ex_s_day'] %} value="{{ session['ex_s_day'] }}" {% endif %} >
+					<input type="text" id="search_ex_s_date" name="ex_s_day" class="date" style="width:80px" {% if session['ex_s_day'] %} value="{{ session['ex_s_day'] }}" {% endif %} >
 					日						
 						<input type="text" value="" class="datepicker" style="display:none;" />
 					　から　
@@ -107,11 +107,11 @@
 					});
 				</script>
 					<div style="padding:0px 0px 8px 8px;  float:left;">
-					<input type="text" name="ex_e_year" class="year" style="width:80px" {% if session['ex_e_year'] %} value="{{ session['ex_e_year'] }}" {% endif %} >
+					<input type="text" name="ex_e_year" id="search_ex_e_year" class="year" style="width:80px" {% if session['ex_e_year'] %} value="{{ session['ex_e_year'] }}" {% endif %} >
 					年
-					<input type="text" name="ex_e_month" class="month" style="width:80px" {% if session['ex_e_month'] %} value="{{ session['ex_e_month'] }}" {% endif %} >
+					<input type="text" name="ex_e_month" id="search_ex_e_month" class="month" style="width:80px" {% if session['ex_e_month'] %} value="{{ session['ex_e_month'] }}" {% endif %} >
 					月
-					<input type="text" name="ex_e_day" class="date" style="width:80px" {% if session['ex_e_day'] %} value="{{ session['ex_e_day'] }}" {% endif %} >
+					<input type="text" name="ex_e_day" id="search_ex_e_date" class="date" style="width:80px" {% if session['ex_e_day'] %} value="{{ session['ex_e_day'] }}" {% endif %} >
 					日				
 						<input type="text" value="" class="datepicker2" style="display:none;" />
 					</div>						
@@ -145,11 +145,11 @@
 					<li>チェック日時</li>
 					<li>
 					<div style="padding:0px 0px 8px 8px; float:left;">						
-					<input type="text" name="ph_s_year" class="year" style="width:80px" >
+					<input type="text" name="ph_s_year" id="search_ph_s_year" class="year" style="width:80px" >
 					年
-					<input type="text" name="ph_s_month" class="month" style="width:80px" >
+					<input type="text" name="ph_s_month" id="search_ph_s_month" class="month" style="width:80px" >
 					月
-					<input type="text" name="ph_s_day" class="date" style="width:80px" >
+					<input type="text" name="ph_s_day" id="search_ph_s_date" class="date" style="width:80px" >
 					日						
 						<input type="text" value="" class="datepicker" style="display:none;" />
 					　から　
@@ -178,11 +178,11 @@
 					});						
 				</script>
 					<div style="padding:0px 0px 8px 8px;  float:left;">
-					<input type="text" name="ph_e_year" class="year" style="width:80px" >
+					<input type="text" name="ph_e_year" id="search_ph_e_year" class="year" style="width:80px" >
 					年
-					<input type="text" name="ph_e_month" class="month" style="width:80px" >
+					<input type="text" name="ph_e_month" id="search_ph_e_month" class="month" style="width:80px" >
 					月
-					<input type="text" name="ph_e_day" class="date" style="width:80px" >
+					<input type="text" name="ph_e_day" id="search_ph_e_date" class="date" style="width:80px" >
 					日				
 						<input type="text" value="" class="datepicker2" style="display:none;" />
 					</div>						
@@ -249,8 +249,28 @@
 				<div class="submitbox">
 					<input type="submit" value="検索" />
 {#                    <a class="link-button" href="/trades/?trade_status%5B%5D=3&trade_status%5B%5D=4&trade_status%5B%5D=5&trade_status%5B%5D=7&trade_status%5B%5D=9&trade_status%5B%5D=13&trade_status%5B%5D=6&trade_status%5B%5D=8&trade_status%5B%5D=10&trade_status%5B%5D=11&trade_status%5B%5D=12&csv=1">csvダウンロード</a>#}
-                    <input type="reset" value="クリア" />
+                    <input id="input_clear" type="reset" value="クリア" />
 				</div>
+            <script>
+                $(function () {
+                    $("#input_clear").click(function () {
+                        $("#search_word").val("");
+                        $("#search_ex_s_year").val("");
+                        $("#search_ex_s_month").val("");
+                        $("#search_ex_s_date").val("");
+                        $("#search_ex_e_year").val("");
+                        $("#search_ex_e_month").val("");
+                        $("#search_ex_s_date").val("");
+                        $("#search_ph_s_year").val("");
+                        $("#search_ph_s_month").val("");
+                        $("#search_ph_s_date").val("");
+                        $("#search_ph_e_year").val("");
+                        $("#search_ph_e_month").val("");
+                        $("#search_ph_s_date").val("");
+                        $("[name=trade_status[]]").prop("checked", false)
+                    })
+                })
+            </script>
 				</ul>
 			</form>			<ol class="split">
 				<li><h3>取引リスト/{{ count }}件</h3></li>

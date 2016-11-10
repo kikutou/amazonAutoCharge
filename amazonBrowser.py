@@ -6,7 +6,7 @@ import re
 from splinter import Browser
 from PIL import Image
 import pytesseract
-from xvfbwrapper import Xvfb
+# from xvfbwrapper import Xvfb
 import BrowserSaver
 
 

@@ -53,12 +53,14 @@ class Trade(db.Model):
     finish = db.Column(db.DateTime, nullable=True)
     status = db.Column(db.Integer, nullable=True)
     serial = db.Column(db.CHAR(50), nullable=False, unique=True)
+    gifma_trade_id = db.Column(db.Integer, nullable=True)
 
     codes = db.relationship('Code', backref='trade')
 
-    def __init__(self, email, serial, start=None, finish=None, status=0):
+    def __init__(self, email, serial, gifma_trade_id, start=None, finish=None, status=0):
         self.email = email
         self.serial = serial
+        self.gifma_trade_id = gifma_trade_id
         if start is None:
             start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         self.start = start
@@ -373,6 +375,8 @@ def auto_charge():
     from_url = request.remote_addr
 
     email = request.form['email']
+    gifma_trade_id = request.form['trade_id']
+    print trade_id
     email = email.encode("utf-8")
     codes = []
     trade_codes = []
@@ -403,7 +407,7 @@ def auto_charge():
         serial_no = random.randint(0000, 9999)
         serial = serial_time + str(serial_no)
 
-    trade = Trade(email=email, serial=serial)
+    trade = Trade(email=email, serial=serial, gifma_trade_id=gifma_trade_id)
     trade.codes = set_code_for_trade
 
     if not os.path.exists("./trade"):

@@ -211,7 +211,7 @@ def admin(page=1):
             if search == 'mail_address' and word:
                 trades = trades.filter(Trade.email == word)
             elif search == 'trade_code' and word:
-                trades = trades.filter(Trade.serial == word)
+                trades = trades.filter(Trade.gifma_trade_id == word)
 
             # VNS登録日時
             if ex_s_year and ex_s_month and ex_s_day and ex_e_year and ex_e_month and ex_e_day:
@@ -265,7 +265,7 @@ def admin(page=1):
                     'gift_code': gifcode_info.code,
                     'code_status': gifcode_info.result,
                     'user_email': trade_info.email,
-                    'trade_no': trade_info.serial,
+                    'trade_no': trade_info.gifma_trade_id,
                 }
 
                 list.append(info)
@@ -291,7 +291,7 @@ def admin(page=1):
                     'gift_code': gifcode_info.code,
                     'code_status': gifcode_info.result,
                     'user_email': trade_info.email,
-                    'trade_no': trade_info.serial,
+                    'trade_no': trade_info.gifma_trade_id,
                 }
 
                 list.append(info)
@@ -376,7 +376,7 @@ def auto_charge():
 
     email = request.form['email']
     gifma_trade_id = request.form['trade_id']
-    print trade_id
+    print gifma_trade_id
     email = email.encode("utf-8")
     codes = []
     trade_codes = []

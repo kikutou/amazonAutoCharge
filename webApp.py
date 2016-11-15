@@ -214,8 +214,6 @@ def admin(page=1):
             # 検索対象
             if search == 'mail_address' and word:
                 trades = trades.filter(Trade.email == word)
-            elif search == 'trade_code' and word:
-                trades = trades.filter(Trade.gifma_trade_id == word)
 
             # VNS登録日時
             if ex_s_year and ex_s_month and ex_s_day and ex_e_year and ex_e_month and ex_e_day:
@@ -234,6 +232,8 @@ def admin(page=1):
             # 検索対象
             if search == 'gift_no' and word:
                 codes = codes.filter(Code.code == word)
+            elif search == 'trade_code' and word:
+                codes = codes.filter(Code.gifma_trade_code == word)
 
             # チェック日時
             if ph_s_year and ph_s_month and ph_s_day and ph_e_year and ph_e_month and ph_e_day:

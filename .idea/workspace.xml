@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2ea73973-00a2-4f87-a513-6178c3e47706" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/amazonAutoCharge.iml" afterPath="$PROJECT_DIR$/.idea/amazonAutoCharge.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/amazonBrowser.py" afterPath="$PROJECT_DIR$/amazonBrowser.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/admin-list.html" afterPath="$PROJECT_DIR$/templates/admin-list.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/webApp.py" afterPath="$PROJECT_DIR$/webApp.py" />
     </list>
     <ignored path="amazonAutoCharge.iws" />
@@ -44,17 +39,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="webApp.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="webApp.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/webApp.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="748">
-              <caret line="301" column="47" selection-start-line="301" selection-start-column="47" selection-end-line="301" selection-end-column="47" />
+            <state relative-caret-position="352">
+              <caret line="237" column="20" selection-start-line="237" selection-start-column="20" selection-end-line="237" selection-end-column="20" />
               <folding>
                 <element signature="e#41#52#0" expanded="true" />
                 <element signature="e#4381#4421#0" expanded="false" />
-                <element signature="e#21205#21652#0" expanded="false" />
-                <element signature="e#21727#21898#0" expanded="false" />
-                <marker date="1479187554279" expanded="true" signature="3819:3883" ph="select * fro... accounts" />
+                <element signature="e#21204#21651#0" expanded="false" />
+                <element signature="e#21726#21897#0" expanded="false" />
+                <marker date="1479188538355" expanded="true" signature="3819:3883" ph="select * fro... accounts" />
               </folding>
             </state>
           </provider>
@@ -70,7 +65,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin-list.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="admin-list.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="342">
@@ -120,8 +115,8 @@
         <option value="$PROJECT_DIR$/webApp_backup.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/amazonBrowser.py" />
-        <option value="$PROJECT_DIR$/webApp.py" />
         <option value="$PROJECT_DIR$/templates/admin-list.html" />
+        <option value="$PROJECT_DIR$/webApp.py" />
       </list>
     </option>
   </component>
@@ -716,25 +711,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/webApp.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="301" column="47" selection-start-line="301" selection-start-column="47" selection-end-line="301" selection-end-column="47" />
-          <folding>
-            <element signature="e#41#52#0" expanded="true" />
-            <element signature="e#4381#4421#0" expanded="false" />
-            <element signature="e#21205#21652#0" expanded="false" />
-            <element signature="e#21727#21898#0" expanded="false" />
-            <marker date="1479187554279" expanded="true" signature="3819:3883" ph="select * fro... accounts" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/admin-list.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="320" column="73" selection-start-line="320" selection-start-column="73" selection-end-line="320" selection-end-column="73" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/webApp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="237" column="20" selection-start-line="237" selection-start-column="20" selection-end-line="237" selection-end-column="20" />
+          <folding>
+            <element signature="e#41#52#0" expanded="true" />
+            <element signature="e#4381#4421#0" expanded="false" />
+            <element signature="e#21204#21651#0" expanded="false" />
+            <element signature="e#21726#21897#0" expanded="false" />
+            <marker date="1479188538355" expanded="true" signature="3819:3883" ph="select * fro... accounts" />
+          </folding>
         </state>
       </provider>
     </entry>

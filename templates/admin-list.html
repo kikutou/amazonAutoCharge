@@ -64,7 +64,7 @@
 					<li>検索対象</li>
 					<li>
 						<input type="radio" name="search" value="mail_address" id="users02" {% if not session or session['search'] == 'mail_address' %} checked {% endif %}><label for="users02">メールアドレス</label>
-						<input type="radio" name="search" value="trade_code" id="users05" {% if session['search'] == 'trade_code' %} checked {% endif %}><label for="users05">取引ID</label>
+						<input type="radio" name="search" value="trade_code" id="users05" {% if session['search'] == 'trade_code' %} checked {% endif %}><label for="users05">取引番号</label>
 						<input type="radio" name="search" value="gift_no" id="users06" {% if session['search'] == 'gift_no' %} checked {% endif %}><label for="users06">ギフト券番号</label>
 						<input type="text" id="search_word" name="word"  placeholder="文字列を入力" {% if session['word'] %} value="{{ session['word'] }}" {% endif %} />
 					</li>

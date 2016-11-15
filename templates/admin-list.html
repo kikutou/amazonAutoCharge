@@ -283,6 +283,7 @@
 						<th>取引番号</th>
 						<th>ギフト券番号</th>
 						<th>メールアドレス</th>
+                        <th>チャージされた金額</th>
 						<th>取引状態</th>
 						<th>SS/DL</th>
 
@@ -299,6 +300,7 @@
 						<td>
 							<p>{{ info.user_email }}</p>
 						</td>
+                        <td>{{ info.charge_sum }}</td>
 						<td>
                             {% if info.code_status == 16 %}
                                 {% set status = "チャージ済み" %}
@@ -316,7 +318,7 @@
                             <p>{{ status }}</p>
 						</td>
 						<td>
-                            {% set href = "/download?serial="~info.trade_no~"&code="~info.gift_code %}
+                            {% set href = "/download?serial="~info.serial~"&code="~info.gift_code %}
 							<a href={{ href }}>
 								<i class="fa fa-download" aria-hidden="true"></i>
 								<!-- チャージ前後のスクリーンショットorHTMLファイルをzipでダウンロード -->

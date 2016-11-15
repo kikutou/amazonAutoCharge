@@ -77,7 +77,7 @@ class Code(db.Model):
 
     :param code:ギフト券番号
     :param sum:ギフト券金額
-    :param result:チャージ結果(0: 確認中, 1: チャージ成功, 2: こーどは無効, 3: エラー発生, 4: ユーザーにメールを送信した)
+    :param result:チャージ結果
     :param message:結果のメセージ
     :param balance:チャージ前の残高(html_code)
     :param amount:チャージ後の残高(html_code)
@@ -87,16 +87,19 @@ class Code(db.Model):
     __bind_key__ = 'master'
     id = db.Column(db.Integer, primary_key=True)
     code = db.Column(db.String(30), nullable=False)
+    gifma_trade_code = db.Column(db.Text, nullable=False)
     time = db.Column(db.String(20), nullable=True)
     result = db.Column(db.Integer)
     message = db.Column(db.Text)
     balance = db.Column(db.Text, nullable=True)
     amount = db.Column(db.Text, nullable=True)
+    charge_sum = db.Column(db.Integer)
 
     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
 
-    def __init__(self, code, time=None, result=None, message=None, balance=None, amount=None):
+    def __init__(self, code, gifma_trade_code, time=None, result=None, message=None, balance=None, amount=None, charge_sum=None):
         self.code = code
+        self.gifma_trade_code = gifma_trade_code
         self.time = time
         if result is None:
             result = 0
@@ -104,6 +107,7 @@ class Code(db.Model):
         self.message = message
         self.balance = balance
         self.amount = amount
+        self.charge_sum = charge_sum
 
     def __repr__(self):
         return '<code: %s>' % (self.code)
@@ -265,7 +269,9 @@ def admin(page=1):
                     'gift_code': gifcode_info.code,
                     'code_status': gifcode_info.result,
                     'user_email': trade_info.email,
-                    'trade_no': trade_info.gifma_trade_id,
+                    'trade_no': gifcode_info.gifma_trade_code,
+                    'charge_sum': gifcode_info.charge_sum,
+                    'serial': trade_info.serial
                 }
 
                 list.append(info)
@@ -291,7 +297,9 @@ def admin(page=1):
                     'gift_code': gifcode_info.code,
                     'code_status': gifcode_info.result,
                     'user_email': trade_info.email,
-                    'trade_no': trade_info.gifma_trade_id,
+                    'trade_no': gifcode_info.gifma_trade_code,
+                    'charge_sum': gifcode_info.charge_sum,
+                    'serial': trade_info.serial
                 }
 
                 list.append(info)
@@ -376,7 +384,6 @@ def auto_charge():
 
     email = request.form['email']
     gifma_trade_id = request.form['trade_id']
-    print gifma_trade_id
     email = email.encode("utf-8")
     codes = []
     trade_codes = []
@@ -392,10 +399,12 @@ def auto_charge():
 
     # チャージ開始、ユーザのインフォメーションをダータベースに輸入する
     set_code_for_trade = []
+    i = 0
     for code in codes:
         code = code.encode("utf-8")
-        code_obj = Code(code=code)
+        code_obj = Code(code=code, gifma_trade_code=trade_codes[i])
         set_code_for_trade = set_code_for_trade + [code_obj]
+        i += 1
 
     serial_time = time.strftime("%Y%m%d%H%M%S")
     serial_no = random.randint(0000, 9999)
@@ -486,10 +495,17 @@ def auto_charge():
 
                     send_result = ""
                     trade_code = trade_codes[j]
+                    charge_sum = 0
 
                     if result['code'] == 1:
                         # チャージ成功
                         send_result = '16'
+
+                        charge_sum = int(result['message']\
+                            .replace(unicode('がお客様のギフト券アカウントに追加されました。', 'utf8'), '')\
+                            .replace(unicode('￥', 'utf8'), '')\
+                            .replace(unicode(' ', 'utf8'), '')\
+                            .replace(unicode('　', 'utf8'), ''))
 
                     elif result['code'] == 3:
                         # コードは無効
@@ -522,6 +538,7 @@ def auto_charge():
                         Code.message: result['message'],
                         Code.balance: "./trade/"+str(serial)+"/"+code+"/before.html",
                         Code.amount: "./trade/"+str(serial)+"/"+code+"/after.html",
+                        Code.charge_sum: charge_sum
                     })
 
                     db.session.commit()

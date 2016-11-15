@@ -29,8 +29,6 @@ def amazon_login(browser, email, password, login_captcha):
         url = 'https://www.amazon.co.jp/login'
         browser.visit(url)
 
-        print 'visit ok'
-
         # ログインする
         email_input_field = browser.find_by_id('ap_email')
         password_input_field = browser.find_by_id('ap_password')
@@ -50,8 +48,6 @@ def amazon_login(browser, email, password, login_captcha):
                 'title': 'Amazon接続エラー',
                 'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
             }
-
-        print 'login ok'
         #browser.driver.save_screenshot('./your_screenshot.png')
 
         # gift_link = browser.find_link_by_href('/gp/gc/ref=nav_topnav_giftcert')
@@ -81,8 +77,6 @@ def amazon_login_fail_check(browser, password, login_captcha):
     # ログイン画像認識があるかどうかチェックする
     captcha_image_field = browser.find_by_id('auth-captcha-image')
     if captcha_image_field:
-
-        print 'there is captcha picture in login'
 
         password_input_field = browser.find_by_id('ap_password')
         captcha_input_field = browser.find_by_id('auth-captcha-guess')
@@ -116,8 +110,6 @@ def amazon_login_fail_check(browser, password, login_captcha):
         if login_alert_text:
             result = login_alert_text.value
 
-        print result
-
         if result.find(unicode('お客様のアカウントを強力に保護するため、パスワードを再入力してから、下の画像に表示されている文字を入力してください。', 'utf8')) != -1\
                 or result.find(unicode('画像に表示されている文字を半角で入力してください。', 'utf8')) != -1:
 
@@ -143,8 +135,6 @@ def amazon_login_fail_check(browser, password, login_captcha):
                            'お客様が入力したアカウント・パスワードに問題があるか、'
                            'Amazonのログインに問題が発生している可能性があります。',
             }
-
-    print 'go to charge page'
 
     # テスト用
     # browser_list = BrowserSaver.Browsers()
@@ -194,7 +184,6 @@ def view_amazon_charge(browser):
                 'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。",
             }
 
-    print 'visit charge page ok'
     return
 
 
@@ -206,8 +195,6 @@ def amazon_charge(browser, code):
 
     # チャージ画像認識があるかどうかチェックする
     if captcha_image_field:
-
-        print 'captcha in charge page'
 
         captcha_input_field = browser.find_by_name('captchaInput')
         code_input_field = browser.find_by_id('gc-redemption-input')
@@ -230,24 +217,16 @@ def amazon_charge(browser, code):
 
     else:
 
-        print 'no captcha in charge page'
-
         code_input_field = browser.find_by_id('gc-redemption-input')
         charge_button = browser.find_by_name('applytoaccount')
 
-        print 'begin to charge'
-
         if code_input_field and charge_button:
-
-            print 'get charge field ok'
 
             # チャージする
             code_input_field.fill(code)
             charge_button.click()
 
         else:
-
-            print 'fail to get charge field'
 
             browser.reload()
             code_input_field = browser.find_by_id('gc-redemption-input')
@@ -278,8 +257,6 @@ def amazon_charge(browser, code):
 
     # チャージが完了するまで待ち
     time.sleep(0.5)
-
-    print 'wait for charge result'
 
     success_result_field = browser.find_by_id('alertRedemptionSuccess')
     success_account_field = browser.find_by_id('gc-redemption-success-summary')
@@ -423,15 +400,12 @@ def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field,
 
         captcha_get = True
 
-        print captcha
-
         if captcha == "":
             charge_captcha_change = browser.find_by_id('gc-redemption-form-heading').value
 
             if charge_captcha_change:
                 captcha = 'ERROR'
             else:
-                print 'captcha is empty'
 
                 captcha_get = False
 
@@ -440,8 +414,6 @@ def amazon_captcha_auto_input(browser, captcha_image_field, captcha_input_field,
         # ダウンロードされた画像ファイルを削除する
         os.remove(path)
     except:
-
-        print 'some problem in captcha'
 
         return {
             'code': 4,
@@ -471,11 +443,8 @@ def amazon_captcha_input(browser, non_auto_captcha, captcha_input_field, code, c
     try:
 
         captcha = non_auto_captcha
-        print captcha
 
         if captcha == "":
-
-            print 'captcha is empty'
 
             captcha_get = False
 
@@ -504,8 +473,6 @@ def amazon_captcha_input(browser, non_auto_captcha, captcha_input_field, code, c
         return captcha_get
 
     except:
-
-        print 'some problem in captcha'
 
         return {
             'code': 4,
@@ -609,7 +576,6 @@ def amazon_login_main(email, password, login_captcha):
 
         for x in range(0,3):
             result = [amazon_login(browser, email, password, False)]
-            print result[0]['code']
 
             # 画像認証が失敗した場合は、もう二度と認証してみる
             if result[0]['code'] == 6:
@@ -659,16 +625,12 @@ def amazon_charge_main(browser, code):
 
     result = {}
 
-    print 'チャージ開始...'
-
     for z in range(0,5):
         # remove the element which 'code' == 4 and 6
         # result[:] = [element for element in result if element.get('code') != 4]
         # result[:] = [element for element in result if element.get('code') != 6]
 
         result = amazon_charge(browser, code)
-
-        print result['code']
 
         if result['code'] != 4 and result['code'] != 6:
 
@@ -677,7 +639,6 @@ def amazon_charge_main(browser, code):
     history = save_history(browser)
     result['html_code_history'] = history
 
-    print code
     # vdisplay.stop()
     return result
 

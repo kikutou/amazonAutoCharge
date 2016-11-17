@@ -93,7 +93,7 @@ class Code(db.Model):
     message = db.Column(db.Text)
     balance = db.Column(db.Text, nullable=True)
     amount = db.Column(db.Text, nullable=True)
-    charge_sum = db.Column(db.Integer)
+    charge_sum = db.Column(db.Integer, nullable=True)
 
     trade_id = db.Column(db.Integer, db.ForeignKey('trades.id'))
 
@@ -448,6 +448,8 @@ def auto_charge():
             try:
                 charge_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 
+                db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({Code.time: charge_time})
+
                 check_code = Code.query.filter_by(code=code, result='16').all()
 
                 if len(check_code) > 1:
@@ -501,11 +503,12 @@ def auto_charge():
                         # チャージ成功
                         send_result = '16'
 
-                        charge_sum = int(result['message']\
-                            .replace(unicode('がお客様のギフト券アカウントに追加されました。', 'utf8'), '')\
-                            .replace(unicode('￥', 'utf8'), '')\
-                            .replace(unicode(' ', 'utf8'), '')\
-                            .replace(unicode('　', 'utf8'), ''))
+                        charge_sum = int(result['message']
+                            .replace(unicode('がお客様のギフト券アカウントに追加されました。', 'utf8'), '')
+                            .replace(unicode('￥', 'utf8'), '')
+                            .replace(unicode(' ', 'utf8'), '')
+                            .replace(unicode('　', 'utf8'), '')
+                            .replace(unicode(',', 'utf8'), ''))
 
                     elif result['code'] == 3:
                         # コードは無効

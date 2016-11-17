@@ -62,7 +62,7 @@ class Trade(db.Model):
         self.serial = serial
         self.gifma_trade_id = gifma_trade_id
         if start is None:
-            start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            start = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.mktime(time.localtime())+32400))
         self.start = start
         self.finish = finish
         self.status = status
@@ -446,7 +446,7 @@ def auto_charge():
         for code in codes:
 
             try:
-                charge_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+                charge_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.mktime(time.localtime())+32400))
 
                 db.session.query(Code).filter(Code.code == code, Code.trade == trade).update({Code.time: charge_time})
 
@@ -594,7 +594,7 @@ def auto_charge():
                 return flask.jsonify(result)
 
         trade.status = 2
-        trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        trade.finish = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(time.mktime(time.localtime())+32400))
         db.session.add(trade)
 
         db.session.commit()

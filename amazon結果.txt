@@ -1,3 +1,93 @@
+ログイン過程
+
+リクエストURL：https://13.112.14.13/amazon-login
+リクエストメソッド：POST
+リクエストパラメータ：{"email":"XXXXXX@XXX.XXX", "password":"XXXXXXX"}
+
+レスポンス
+①成功
+{
+	"code": 7,
+	"message": "ユーザー登録成功しました"
+}
+失敗
+{
+	"code": 4,
+	'title': 'Amazon接続エラー',
+        'message': "Amazonに接続できませんでした。Amazonに問題があるか、AWSとの通信に問題が発生している可能性があります。"
+}
+{
+        'code': 2,
+        'title': 'Amazonにログインできない',
+        'message': 'Amazonへログインができないようです。お客様が入力したアカウント・パスワードに問題があるか、Amazonのログインに問題が発生している可能性があります。'
+}
+{
+        'code': 6,
+        'title': 'Amazonにログインできない',
+        'message': '画像認証が通っていません。'
+}
+
+
+
+
+チャージ過程
+リクエストURL：https://13.112.14.13/buy-checklist
+リクエストメソッド：POST
+リクエストパラメータ：
+{
+	"email":"XXXXXX@XXX.XXX",
+	"trade_id":"XXXXX",
+        "code1":"DDDDDDDDDDDDDDDDDD",
+        "trade_code1":"XXXXXXXX",
+        "code2":"AAAAAAAAAAAAAAAAAA",
+        "trade_code2":"XXXXXXXXXXXX"
+	.....
+}
+※trade_id：チャージリクエスト用のID
+※trade_codeX:各コード用のID
+
+結果として、以下の状況がある。
+①すべての処理が完了
+｛
+	"result":True
+｝
+②処理途中で、PHP側から正しいレスポンスが取得できなかった。前処理を止めて、以下のレスポンスを返す。
+｛
+	"result":False
+｝
+
+
+
+チャージ結果通知
+リクエストURL：PHP側のURL
+リクエストメソッド：GET
+リクエストパラメータ：
+{
+	'code': "AAAAAAAAAAAAAAAAAA",
+	'result': "xx",
+	'title': "xxxxxxxxx",
+	'message': "xxxxxxxxx",
+	'trade_code': "XXXXXXXX"
+}
+※result:チャージの状態（チャージ成功：16, コード無効:23, コード未入力エラー：25, 他のエラー：22）
+
+
+
+レスポンス：
+処理が成功の場合：
+｛
+	"result":"SUCCESS"
+｝
+処理が失敗で、チャージを止めたい場合：
+{
+	"result":"ERROR"
+}
+
+
+
+
+
+
 結果として、以下の状況がある。
 
 ①成功
@@ -57,7 +147,7 @@
 	"htmlcode": captcha_image_field['src']
 }
 
-○認証画像を解析ができない場合は、画像を取って得意先に送信する必要なデータ
+➈認証画像を解析ができない場合は、画像を取って得意先に送信する必要なデータ
 ｛
 	"code": 0,
 	"message": "認証画面が得意先に送信する"

@@ -566,10 +566,18 @@ def auto_charge():
                     if 'title' in result:
                         report['title'] = result['title']
 
+                # TODO テスト用
+                report = {
+                    'code': code,
+                    'result': '16',
+                    'title': "",
+                    'message': '￥200がお客様のギフト券アカウントに追加されました。',
+                    'trade_code': trade_codes[j]
+                }
+
                 j += 1
 
-                # response = requests.get("https://"+from_url+"/amazon_check/db", params=report, verify=False)
-                response = requests.get("https://kaitori.chobitoku.shop/proc/api/charge_fin.json", params=report, verify=False)
+                response = requests.get("https://"+from_url+"/amazon_check/db", params=report, verify=False)
 
                 response_text = demjson.decode(response.text)
 
@@ -678,5 +686,4 @@ def changeCaptcha():
 
 if __name__ == '__main__':
     context = ('/etc/apache2/ssl/server.crt', '/etc/apache2/ssl/server.key')
-    # app.run(debug=True, threaded=True, port=4000, host='0.0.0.0')
     app.run(debug=True, threaded=True, port=4000, host='0.0.0.0', ssl_context=context)
